@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Smarthr - Bootstrap Admin Template">
+<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+<meta name="robots" content="noindex, nofollow">
+<title>Login - sdHr admin template</title>
+
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/favicon.ico}">
+<link rel="stylesheet" th:href="@{/css/custom-forms.css}" />
+<link rel="stylesheet" th:href="@{/css/tailwind-dist.css}">
+</head>
+<body class="font-CircularStd bg-body flex items-center">
+
+<div class="main-wrapper media-max-w-xs:flex-col flex flex-wrap justify-center w-full">
+
+<div class="page-wrapper">
+<div class="py-5 media-max-w-xs:px-3">
+
+<div class="text-center mb-[30px]">
+<a href="https://aiqicha.baidu.com/detail/compinfo?pid=xlTM-TogKuTw1NEo0snAUxRi7h9pJ1oMZAmd&rq=ef&pd=ee&from=ps"><img th:src="@{/images/sdLog.png}" alt="Dreamguy's Technologies" class="w-[100px] mx-auto"></a>
+</div>
+
+<div class="bg-white shadow-header border border-cardBorder rounded w-full sm:w-[480px] mx-auto overflow-hidden">
+<div class="p-[30px]">
+<h3 class="text-[26px] mb-[5px] text-center">登陆</h3>
+<h3 class="text-[26px] mb-[5px] text-center">沈阳东硕信息技术有限公司</h3>
+<p class="text-[#4c4c4c] text-lg mb-[30px] text-center">把人才作为资产来经营管理</p>
+    <p style="color: red" th:text="${msg}"></p>
+<form action="admin-dashboard.html">
+<div class="mb-[25px]">
+<label class="text-base mb-[5px]">账号</label>
+<input class="block w-full inputStyle !bg-[#fbfbfb]" name="userId" type="text" value="">
+</div>
+<div class="mb-[25px]">
+<div class="flex items-center justify-between">
+<div>
+<label class="text-base mb-[5px]">密码</label>
+</div>
+<div>
+<a class="text-muted mb-[5px]" th:href="@{/forgot-password.html}">
+</a>
+</div>
+</div>
+<input class="block w-full inputStyle !bg-[#fbfbfb]" name="passworld" type="password" value="">
+
+</div>
+<div class="mb-[25px] text-center">
+<button class="bg-gradient-to-r from-[#ff9b44] to-[#fc6075] text-white rounded block text-[22px] px-[26px] py-[10px] w-full hover:opacity-80" type="submit">Login</button>
+</div>
+<div class="text-center">
+<p>没有账户? <a th:href="@{/register.html}" class="text-primary">注册</a>
+</p>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

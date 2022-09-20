@@ -1,0 +1,1252 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Smarthr - Bootstrap Admin Template">
+<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard - HRMS admin template</title>
+
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/static/favicon.ico}" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" th:href="@{../static/css/all.min.css}" />
+<link rel="stylesheet" th:href="@{../static/css/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{../static/css/line-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{../static/charts/morris/morris.css}" />
+<link rel="stylesheet" th:href="@{../static/css/custom-forms.css}" />
+<link rel="stylesheet" th:href="@{../static/css/index.min.css}" />
+<link rel="stylesheet" th:href="@{../static/css/tailwind-dist.css}" />
+</head>
+<body class="font-CircularStd bg-body" x-data="{modal:false}" @click.away="modal=false" x-cloak>
+<div class="main-wrapper">
+
+<header class="fixed left-0 right-0 top-0 bg-gradient-to-r from-[#ff9b44] to-[#fc6075] h-[60px] flex items-center border-b border-transparent shadow-header z-[9999]">
+
+<div class="logo media-max-w-md:max-w-full max-w-[230px] w-full media-max-w-md:absolute px-5 transition-all ease-in-out duration-[0.2s]">
+<a th:href="@{/index.html}">
+<img th:src="@{../static/images/logo.png}" alt="logo" class="w-[40px] h-[40px] mx-auto">
+</a>
+</div>
+
+<a th:href="@{javascript:';'}" class="media-max-w-md:hidden flex px-[10px]" id="toggle_btn">
+<span class="bar-icon inline-block w-[21px]">
+<span class="w-[21px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[15px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[21px] h-[2px] bg-white block float-left"></span>
+</span>
+</a>
+
+<div class="px-5 media-max-w-lg:hidden">
+<h3 class="text-[20px] font-normal text-white leading-[1.2]">Dreamguy's Technologies</h3>
+</div>
+
+<a id="mobile_btn" class="media-min-w-md:hidden px-5 w-[60px] h-[60px] leading-[60px] absolute top-0 left-0 text-white text-2xl" th:href="@{#sidebar}"><i class="fa fa-bars"></i></a>
+
+<div class="ml-auto">
+<ul class="hidden sm:flex items-center">
+
+<li>
+<div class="relative" x-data="{mobSearch:false}">
+<a th:href="@{javascript:void(0)';'}" class="media-min-w-md:hidden inline-block h-[60px] leading-[60px] text-white text-xl sm:px-[10px] md:px-[15px] responsive-search" @click="mobSearch = ! mobSearch">
+<i class="fa fa-search"></i>
+</a>
+<form x-show="mobSearch" action="javascript:;" class="flex items-center w-[230px] absolute left-0 mt-[10px] z-50">
+<input class="bg-white w-full h-[40px] py-[10px] pl-[15px] pr-[50px] border border-[#e3e3e3] rounded-[50px] text-[#333333] placeholder:text-blackOverlay outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-[#333333]"></i>
+</button>
+</form>
+<form action="javascript:;" class=" media-max-w-md:hidden flex items-center w-[230px] relative">
+<input class="bg-searchbg !border-transparent focus:ring-0 w-full h-[40px] py-[10px] pl-[15px] pr-[50px] rounded-[50px] text-white placeholder:text-whiteOpacity outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-whiteOpacity"></i>
+</button>
+</form>
+</div>
+</li>
+
+
+<li class="relative" x-data="{transLang:false}" @click.away="transLang=false">
+<a th:href="@{javascript:';'}" class="sm:px-[10px] md:px-[15px] text-white text-[15px] flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':transLang === true, 'after:rotate-0': transLang === false}" @click="transLang = ! transLang"><img src="../static/images/flags/us.png" class="w-5 h-5 media-max-w-md:mr-0 mr-2" alt=""><span class="media-max-w-md:hidden leading-[60px]">English</span></a>
+<div x-show="transLang" class="py-2 bg-white absolute left-0 right-0 border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50">
+<a th:href="@{javascript:';'}" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/us.png" class="w-4 h-4 mr-2" alt="">English</a>
+<a th:href="@{javascript:';'}" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/fr.png" class="w-4 h-4 mr-2" alt="">French</a>
+<a th:href="@{javascript:';'}" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/es.png" class="w-4 h-4 mr-2" alt="">Spanish</a>
+<a th:href="@{javascript:';'}" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/de.png" class="w-4 h-4 mr-2" alt="">German</a>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a th:href="@{javascript:';'}" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-bell-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a th:href="@{javascript:void(0)}" class="text-[#f83f37] text-[11px] uppercase"> Clear All </a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{activities.html}" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">John Doe</span> added new task <span class="text-notiTitle">Patient appointment booking</span></p>
+<p class="text-notiTime text-xs"><span>4 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{activities.html}" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Tarah Shropshire</span> changed the task name <span class="text-notiTitle">Appointment booking with payment gateway</span></p>
+<p class="text-notiTime text-xs"><span>6 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{activities.html}" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-06.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Misty Tison</span> added <span class="text-notiTitle">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+<p class="text-notiTime text-xs"><span>8 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{activities.html}" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-17.jpg" class="w-full rounded-full">
+</span>
+<div class="media-body flex-grow-1">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Rolland Webber</span> completed task <span class="text-notiTitle">Patient and Doctor video conferencing</span></p>
+<p class="text-notiTime text-xs"><span>12 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a th:href="@{activities.html}" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-13.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Bernardo Galaviz</span> added new task <span class="text-notiTitle">Private chat module</span></p>
+<p class="text-notiTime text-xs"><span>2 days ago</span></p>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a th:href="@{activities.html}" class="text-xs block text-[#333333]">View all Notifications</a>
+</div>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a th:href="@{javascript:';'}" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-comment-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a th:href="@{javascript:void(0)}" class="text-[#f83f37] text-[11px] uppercase"> Clear All </a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{chat.html}" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-09.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Richard Miles </span>
+<span class="text-[#666666] text-[11px] float-right">12:28 AM</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{chat.html}" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">John Doe</span>
+<span class="text-[#666666] text-[11px] float-right">6 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{chat.html}" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Tarah Shropshire </span>
+<span class="text-[#666666] text-[11px] float-right">5 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{chat.html}" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-05.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Mike Litorus</span>
+<span class="text-[#666666] text-[11px] float-right">3 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a th:href="@{chat.html}" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-08.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Catherine Manseau </span>
+<span class="text-[#666666] text-[11px] float-right">27 Feb</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a th:href="@{chat.html}" class="text-xs block text-[#333333]">View all Messages</a>
+</div>
+</div>
+</li>
+
+<li class="relative" x-data="{profile:false}" @click.away="profile=false">
+<a th:href="@{javascript:';'}" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<div class="inline-block relative leading-[60px] h-[60px] media-min-w-md:mr-2"><img src="../static/images/profiles/avatar-21.jpg" class="inline-block w-[30px] h-[30px] rounded-full" alt=""><span class="w-[10px] h-[10px] bg-statusOnline rounded-full border-2 border-white absolute right-0 bottom-3"></span></div><span class="media-max-w-md:hidden text-[15px] leading-[60px]">Admin</span></a>
+<div x-show="profile" class="py-2 bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[130px] max-h-[150px] overflow-y-auto z-50">
+<a th:href="@{profile.html}" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">my profile</a>
+<a th:href="@{settings.html}" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">settings</a>
+<a th:href="@{index.html}" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">logout</a>
+</div>
+</li>
+</ul>
+
+
+<div class="block sm:hidden relative" x-data="{profile:false}" @click.away="profile=false">
+<a th:href="@{javascript:';'}" class="text-white flex items-center h-[60px] px-5" @click="profile = ! profile"><i class="fa fa-ellipsis-v text-2xl"></i></a>
+<div class="py-2 bg-white absolute right-0 media-max-w-xs:right-[18px] border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50" x-show="profile">
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" th:href="@{profile.html}">My Profile</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" th:href="@{settings.html}">Settings</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" th:href="@{index.html}">Logout</a>
+</div>
+</div>
+
+</div>
+</header>
+
+
+<div class="sidebar bg-sidebar media-max-w-md:-ml-[225px] media-max-w-md:w-[225px] transition-all ease-in-out duration-[0.2s] w-[230px] fixed top-[60px] bottom-0 left-0 py-[10px] z-[401]" id="sidebar">
+<div class="h-full pb-5 scrollbar-thin scrollbar-thumb-scrollbar scroll">
+<div id="sidebar-menu" class="sidebar-menu">
+<ul>
+<li class="menu-title">
+<span>Main</span>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span>
+</span></a>
+<ul style="display: none;">
+<li><a th:href="@{admin-dashboard.html}" class="active">Admin Dashboard</a></li>
+<li><a th:href="@{employee-dashboard.html}">Employee Dashboard</a></li>
+</ul>
+</li>
+<li class="submenu relative">
+    <a th:href="@{javascript:';'}"><i class="la la-cube"></i> <span> Apps</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{chat.html}">Chat</a></li>
+<li class="submenu relative">
+    <a th:href="@{javascript:';'}"><span> Calls</span> <span class="absolute right-[10px]"><span class="relative material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{voice-call.html}">Voice Call</a></li>
+<li><a th:href="@{video-call.html}">Video Call</a></li>
+<li><a th:href="@{outgoing-call.html}">Outgoing Call</a></li>
+<li><a th:href="@{incoming-call.html}">Incoming Call</a></li>
+</ul>
+</li>
+<li><a th:href="@{events.html}">Calendar</a></li>
+<li><a th:href="@{contacts.html}">Contacts</a></li>
+<li><a th:href="@{inbox.html}">Email</a></li>
+<li><a th:href="@{file-manager.html}">File Manager</a></li>
+</ul>
+</li>
+<li class="menu-title">
+<span>Employees</span>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}" class="noti-dot before:w-[5px] before:h-[5px] before:bg-primary before:border-[5px] before:border-primary before:rounded-[30px] before:absolute before:right-[37px] before:top-[15px] after:border-[3px] after:border-primary after:bg-transparent after:rounded-[60px] after:w-3 after:h-3 after:absolute after:top-[14px] after:right-[36px] after:animate-customPulse">
+<i class="la la-user"></i> <span> Employees</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span>
+</span></a>
+<ul style="display: none;">
+<li><a th:href="@{employees.html}">All Employees</a></li>
+<li><a th:href="@{holidays.html}">Holidays</a></li>
+<li><a th:href="@{leaves.html}" class="flex justify-between">Leaves (Admin) <span class="bg-primary text-white font-bold float-right rounded-[50rem] w-[18px] h-[18px] flex items-center justify-center text-[0.75em]">1</span></a></li>
+<li><a th:href="@{leaves-employee.html}">Leaves (Employee)</a></li>
+<li><a th:href="@{leave-settings.html}">Leave Settings</a></li>
+<li><a th:href="@{attendance.html}">Attendance (Admin)</a></li>
+<li><a th:href="@{attendance-employee.html}">Attendance (Employee)</a></li>
+<li><a th:href="@{departments.html}">Departments</a></li>
+<li><a th:href="@{designations.html}">Designations</a></li>
+<li><a th:href="@{timesheet.html}">Timesheet</a></li>
+<li><a th:href="@{shift-scheduling.html}">Shift & Schedule</a></li>
+<li><a th:href="@{overtime.html}">Overtime</a></li>
+</ul>
+</li>
+<li>
+<a th:href="@{clients.html}"><i class="la la-users"></i> <span>Clients</span></a>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-rocket"></i> <span> Projects</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{projects.html}">Projects</a></li>
+<li><a th:href="@{tasks.html}">Tasks</a></li>
+<li><a th:href="@{task-board.html}">Task Board</a></li>
+</ul>
+</li>
+<li>
+<a th:href="@{leads.html}"><i class="la la-user-secret"></i> <span>Leads</span></a>
+</li>
+<li>
+<a th:href="@{tickets.html}"><i class="la la-ticket"></i> <span>Tickets</span></a>
+</li>
+<li class="menu-title">
+<span>HR</span>
+</li>
+<li class="submenu relative">
+    <a th:href="@{javascript:';'}"><i class="la la-files-o"></i> <span> Sales </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{estimates.html}">Estimates</a></li>
+<li><a th:href="@{invoices.html}">Invoices</a></li>
+<li><a th:href="@{payments.html}">Payments</a></li>
+<li><a th:href="@{expenses.html}">Expenses</a></li>
+<li><a th:href="@{provident-fund.html}">Provident Fund</a></li>
+<li><a th:href="@{taxes.html}">Taxes</a></li>
+</ul>
+</li>
+<li class="submenu relative">
+    <a th:href="@{javascript:';'}"><i class="la la-files-o"></i> <span> Accounting </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{categories.html}">Categories</a></li>
+<li><a th:href="@{budgets.html}">Budgets</a></li>
+<li><a th:href="@{budget-expenses.html}">Budget Expenses</a></li>
+<li><a th:href="@{budget-revenues.html}">Budget Revenues</a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-money"></i> <span> Payroll </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{salary.html}"> Employee Salary </a></li>
+<li><a th:href="@{salary-view.html}"> Payslip </a></li>
+<li><a th:href="@{payroll-items.html}"> Payroll Items </a></li>
+</ul>
+</li>
+<li>
+<a th:href="policies.html"><i class="la la-file-pdf-o"></i> <span>Policies</span></a>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{expense-reports.html}"> Expense Report </a></li>
+<li><a th:href="@{invoice-reports.html}"> Invoice Report </a></li>
+<li><a th:href="@{payments-reports.html}"> Payments Report </a></li>
+<li><a th:href="@{project-reports.html}"> Project Report </a></li>
+<li><a th:href="@{task-reports.html}"> Task Report </a></li>
+<li><a th:href="@{user-reports.html}"> User Report </a></li>
+<li><a th:href="@{employee-reports.html}"> Employee Report </a></li>
+<li><a th:href="@{payslip-reports.html}"> Payslip Report </a></li>
+<li><a th:href="@{attendance-reports.html}"> Attendance Report </a></li>
+<li><a th:href="@{leave-reports.html}"> Leave Report </a></li>
+<li><a th:href="@{daily-reports.html}"> Daily Report </a></li>
+</ul>
+</li>
+<li class="menu-title">
+<span>Performance</span>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-graduation-cap"></i> <span> Performance </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{performance-indicator.html}"> Performance Indicator </a></li>
+<li><a th:href="@{performance.html}"> Performance Review </a></li>
+<li><a th:href="@{performance-appraisal.html}"> Performance Appraisal </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-crosshairs"></i> <span> Goals </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{goal-tracking.html}"> Goal List </a></li>
+<li><a th:href="@{goal-type.html}"> Goal Type </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-edit"></i> <span> Training </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{training.html}"> Training List </a></li>
+<li><a th:href="@{trainers.html}"> Trainers</a></li>
+<li><a th:href="@{training-type.html}"> Training Type </a></li>
+</ul>
+</li>
+<li><a th:href="@{promotion.html}"><i class="la la-bullhorn"></i> <span>Promotion</span></a></li>
+<li><a th:href="@{resignation.html}"><i class="la la-external-link-square"></i> <span>Resignation</span></a></li>
+<li><a th:href="@{termination.html}"><i class="la la-times-circle"></i> <span>Termination</span></a></li>
+<li class="menu-title">
+<span>Administration</span>
+</li>
+<li>
+<a th:href="@{assets.html}"><i class="la la-object-ungroup"></i> <span>Assets</span></a>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-briefcase"></i> <span> Jobs </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{user-dashboard.html}"> User Dasboard </a></li>
+<li><a th:href="@{jobs-dashboard.html}"> Jobs Dasboard </a></li>
+<li><a th:href="@{jobs.html}"> Manage Jobs </a></li>
+<li><a th:href="@{manage-resumes.html}"> Manage Resumes </a></li>
+<li><a th:href="@{shortlist-candidates.html}"> Shortlist Candidates </a></li>
+<li><a th:href="@{interview-questions.html}"> Interview Questions </a></li>
+<li><a th:href="@{offer_approvals.html}"> Offer Approvals </a></li>
+<li><a th:href="@{experiance-level.html}"> Experience Level </a></li>
+<li><a th:href="@{candidates.html}"> Candidates List </a></li>
+<li><a th:href="@{schedule-timing.html}"> Schedule timing </a></li>
+<li><a th:href="@{apptitude-result.html}"> Aptitude Results </a></li>
+</ul>
+</li>
+<li>
+<a th:href="@{knowledgebase.html}"><i class="la la-question"></i> <span>Knowledgebase</span></a>
+</li>
+<li>
+<a th:href="@{activities.html}"><i class="la la-bell"></i> <span>Activities</span></a>
+</li>
+<li>
+<a th:href="@{users.html}"><i class="la la-user-plus"></i> <span>Users</span></a>
+</li>
+<li>
+<a th:href="@{settings.html}"><i class="la la-cog"></i> <span>Settings</span></a>
+</li>
+<li class="menu-title">
+<span>Pages</span>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-user"></i> <span> Profile </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{profile.html}"> Employee Profile </a></li>
+<li><a th:href="@{client-profile.html}"> Client Profile </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-key"></i> <span> Authentication </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{index.html}"> Login </a></li>
+<li><a th:href="@{register.html}"> Register </a></li>
+<li><a th:href="@{forgot-password.html}"> Forgot Password </a></li>
+<li><a th:href="@{otp.html}"> OTP </a></li>
+<li><a th:href="@{lock-screen.html}"> Lock Screen </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-exclamation-triangle"></i> <span> Error Pages </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{error-404.html}">404 Error </a></li>
+<li><a th:href="@{error-500.html}">500 Error </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-hand-o-up"></i> <span> Subscriptions </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{subscriptions.html}"> Subscriptions (Admin) </a></li>
+<li><a th:href="@{subscriptions-company.html}"> Subscriptions (Company) </a></li>
+<li><a th:href="@{subscribed-companies.html}"> Subscribed Companies</a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-columns"></i> <span> Pages </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{search.html}"> Search </a></li>
+<li><a th:href="@{faq.html}"> FAQ </a></li>
+<li><a th:href="@{terms.html}"> Terms </a></li>
+<li><a th:href="@{privacy-policy.html}"> Privacy Policy </a></li>
+<li><a th:href="@{blank-page.html}"> Blank Page </a></li>
+</ul>
+</li>
+<li class="menu-title">
+<span>UI Interface</span>
+</li>
+<li>
+<a th:href="@{components.html}"><i class="la la-puzzle-piece"></i> <span>Components</span></a>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-object-group"></i> <span> Forms </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{form-basic-inputs.html}">Basic Inputs </a></li>
+<li><a th:href="@{form-input-groups.html}">Input Groups </a></li>
+<li><a th:href="@{form-horizontal.html}">Horizontal Form </a></li>
+<li><a th:href="@{form-vertical.html}"> Vertical Form </a></li>
+<li><a th:href="@{form-mask.html}"> Form Mask </a></li>
+<li><a th:href="@{form-validation.html}"> Form Validation </a></li>
+</ul>
+</li>
+<li class="submenu relative">
+<a th:href="@{javascript:';'}"><i class="la la-table"></i> <span> Tables </span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{tables-basic.html}">Basic Tables </a></li>
+<li><a th:href="@{data-tables.html}">Data Table </a></li>
+</ul>
+</li>
+<li class="menu-title">
+<span>Extras</span>
+</li>
+<li>
+<a th:href="@{javascript:';'}"><i class="la la-file-text"></i> <span>Documentation</span></a>
+</li>
+<li>
+<a th:href="@{javascript:void(0)';'}"><i class="la la-info"></i> <span>Change Log</span> <span class="inline-block bg-primary !ml-auto leading-none text-white rounded py-[0.35em] px-[0.65em] text-[0.75em] font-bold">v3.4</span></a>
+</li>
+<li class="submenu relative">
+    <a th:href="@{javascript:void(0)';'}"><i class="la la-share-alt"></i> <span>Multi Level</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li class="submenu">
+    <a th:href="@{javascript:void(0)';'}"> <span>Level 1</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{javascript:void(0)';'}"><span>Level 2</span></a></li>
+<li class="submenu">
+    <a th:href="@{javascript:void(0)';'}"> <span> Level 2</span> <span class="absolute right-[10px]"><span class="material-icons text-lg menu-arrow transition-all ease-in-out duration-[0.2s]">navigate_next</span></span></a>
+<ul style="display: none;">
+<li><a th:href="@{javascript:void(0)';'}">Level 3</a></li>
+<li><a th:href="@{javascript:void(0)';'}">Level 3</a></li>
+</ul>
+</li>
+<li><a th:href="@{javascript:void(0)';'}"> <span>Level 2</span></a></li>
+</ul>
+</li>
+<li>
+<a th:href="@{javascript:void(0)';'}"> <span>Level 1</span></a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="page-wrapper flex-1 relative left-0 pt-[60px] media-min-w-md:ml-[230px]">
+<div class="p-[15px] sm:p-[30px]">
+<div class="page-header mb-[1.875rem]">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-pageTitle text-lg sm:text-2xl md:text-[26px] font-medium sm:mb-[5px] leading-[1.2]">Welcome Admin!</h3>
+<ul class="hidden text-[14px] md:text-base font-medium sm:flex flex-wrap">
+<li class="text-[#6c757d]">Dashboard</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-[30px]">
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4">
+<span class="bg-dashboardIconOverlay rounded-full w-[60px] h-[60px] text-primary text-3xl float-left flex items-center justify-center">
+<i class="fa fa-cubes"></i>
+</span>
+<div class="text-right">
+<h3 class="font-semibold mb-2 text-3xl">112</h3>
+<span class="text-base">Projects</span>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4">
+<span class="bg-dashboardIconOverlay rounded-full w-[60px] h-[60px] text-primary text-3xl float-left flex items-center justify-center">
+<i class="fa fa-usd"></i>
+</span>
+<div class="text-right">
+<h3 class="font-semibold mb-2 text-3xl">44</h3>
+<span class="text-base">Clients</span>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4">
+<span class="bg-dashboardIconOverlay rounded-full w-[60px] h-[60px] text-primary text-3xl float-left flex items-center justify-center">
+<i class="fa fa-diamond"></i>
+</span>
+<div class="text-right">
+<h3 class="font-semibold mb-2 text-3xl">37</h3>
+<span class="text-base">Tasks</span>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4">
+<span class="bg-dashboardIconOverlay rounded-full w-[60px] h-[60px] text-primary text-3xl float-left flex items-center justify-center">
+<i class="fa fa-user"></i>
+</span>
+<div class="text-right">
+<h3 class="font-semibold mb-2 text-3xl">218</h3>
+<span class="text-base">Employees</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-[30px]">
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4 text-center">
+<h3 class="text-[#1f1f1f] text-xl mb-5">Total Revenue</h3>
+<div id="bar-charts"></div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded break-words">
+<div class="p-4 text-center">
+<h3 class="text-[#1f1f1f] text-xl mb-5">Sales Overview</h3>
+<div id="line-charts"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-0 mb-[30px]">
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded sm:rounded-tr-none sm:rounded-br-none break-words">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[15px] text-[#1f1f1f]">New Employees</span>
+<span class="text-[15px] text-success">+10%</span>
+</div>
+<div>
+<h3 class="text-2xl mb-4">10</h3>
+<div class="w-full bg-[#e9ecef] rounded-full h-[5px] mb-2">
+<div class="bg-primary h-[5px] rounded-full" style="width: 70%"></div>
+</div>
+<p>Overall Employees 218</p>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white break-words">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[15px] text-[#1f1f1f]">Earnings</span>
+<span class="text-[15px] text-success">+12.5%</span>
+</div>
+<div>
+<h3 class="text-2xl mb-4">$1,42,300</h3>
+<div class="w-full bg-[#e9ecef] rounded-full h-[5px] mb-2">
+<div class="bg-primary h-[5px] rounded-full" style="width: 70%"></div>
+</div>
+<p>Previous Month <span class="text-muted">$1,15,852</span></p>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white break-words">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[15px] text-[#1f1f1f]">Expenses</span>
+<span class="text-[15px] text-danger">-2.8%</span>
+</div>
+<div>
+<h3 class="text-2xl mb-4">$8,500</h3>
+<div class="w-full bg-[#e9ecef] rounded-full h-[5px] mb-2">
+<div class="bg-primary h-[5px] rounded-full" style="width: 70%"></div>
+</div>
+<p>Previous Month <span class="text-muted">$7,500</span></p>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col bg-white rounded sm:rounded-tl-none sm:rounded-bl-none break-words">
+<div class="p-4">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[15px] text-[#1f1f1f]">Profit</span>
+<span class="text-[15px] text-danger">-75%</span>
+</div>
+<div>
+<h3 class="text-2xl mb-4">$1,12,000</h3>
+<div class="w-full bg-[#e9ecef] rounded-full h-[5px] mb-2">
+<div class="bg-primary h-[5px] rounded-full" style="width: 70%"></div>
+</div>
+<p>Previous Month <span class="text-muted">$1,42,000</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="media-min-w-md:grid media-max-w-lg:grid-cols-2 grid-cols-3 gap-x-6">
+<div class="border media-max-w-lg:col-span-2 border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto mb-[30px]">
+<div class="p-4">
+<h5 class="text-[#1f1f1f] text-xl mb-5">Statistics</h5>
+<div class="bg-white border border-[#e5e5e5] rounded p-[15px] text-center mb-[5px]">
+<p class="flex justify-between text-xs mb-[5px]">Today Leave<strong>4 <small>/ 65</small></strong></p>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-primary h-1 rounded-full" style="width: 31%"></div>
+</div>
+</div>
+<div class="bg-white border border-[#e5e5e5] rounded p-[15px] text-center mb-[5px]">
+<p class="flex justify-between text-xs mb-[5px]">Pending Invoice <strong>15 <small>/ 92</small></strong></p>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#ffbc34] h-1 rounded-full" style="width: 31%"></div>
+</div>
+</div>
+<div class="bg-white border border-[#e5e5e5] rounded p-[15px] text-center mb-[5px]">
+<p class="flex justify-between text-xs mb-[5px]">Completed Projects <strong>86 <small>/ 112</small></strong></p>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-success h-1 rounded-full" style="width: 62%"></div>
+</div>
+</div>
+<div class="bg-white border border-[#e5e5e5] rounded p-[15px] text-center mb-[5px]">
+<p class="flex justify-between text-xs mb-[5px]">Open Tickets <strong>190 <small>/ 212</small></strong></p>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-danger h-1 rounded-full" style="width: 62%"></div>
+</div>
+</div>
+<div class="bg-white border border-[#e5e5e5] rounded p-[15px] text-center">
+<p class="flex justify-between text-xs mb-[5px]">Closed Tickets <strong>22<small>/ 212</small></strong></p>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#009efb] h-1 rounded-full" style="width: 22%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto mb-[30px]">
+<div class="p-4">
+<h5 class="text-[#1f1f1f] text-xl mb-5">Task Statistics</h5>
+<div class="grid grid-cols-2 gap-[10px] mb-6">
+<div class="bg-[#f9f9f9] border border-btnBorder p-[5px] text-center">
+<p class="text-xs leading-normal">Total Tasks</p>
+<h3 class="text-2xl mb-2">385</h3>
+</div>
+<div class="bg-[#f9f9f9] border border-btnBorder p-[5px] text-center">
+<p class="text-xs leading-normal">Overdue Tasks</p>
+<h3 class="text-2xl mb-2">19</h3>
+</div>
+</div>
+<div>
+<div class="flex items-center w-full bg-[#e9ecef] rounded h-4 overflow-hidden mb-6">
+<div class="bg-[#7460ee] h-4 flex items-center justify-center" style="width: 30%"><span class="text-white text-xs">30%</span></div>
+<div class="bg-[#ffbc34] h-4 flex items-center justify-center" style="width: 22%"><span class="text-white text-xs">22%</span></div>
+<div class="bg-success h-4 flex items-center justify-center" style="width: 24%"><span class="text-white text-xs">24%</span></div>
+<div class="bg-danger h-4 flex items-center justify-center" style="width: 21%"><span class="text-white text-xs">21%</span></div>
+<div class="bg-[#009efb] h-4 flex items-center justify-center" style="width: 10%"><span class="text-white text-xs">10%</span></div>
+</div>
+<div>
+<ul>
+<li class="mb-4"><p class="flex items-center justify-between"><span><i class="fa fa-dot-circle-o text-[#7460ee] mr-2"></i>Completed Tasks</span><span>166</span></p></li>
+<li class="mb-4"><p class="flex items-center justify-between"><span><i class="fa fa-dot-circle-o text-[#ffbc34] mr-2"></i>Inprogress Tasks</span><span>115</span></p></li>
+<li class="mb-4"><p class="flex items-center justify-between"><span><i class="fa fa-dot-circle-o text-success mr-2"></i>On Hold Tasks</span><span>31</span></p></li>
+<li class="mb-4"><p class="flex items-center justify-between"><span><i class="fa fa-dot-circle-o text-danger mr-2"></i>Pending Tasks</span><span>47</span></p></li>
+<li><p class="flex items-center justify-between"><span><i class="fa fa-dot-circle-o text-[#009efb] mr-2"></i>Review Tasks</span><span>5</span></p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto mb-[30px]">
+<div class="p-4">
+<h5 class="text-[#1f1f1f] text-xl mb-5">Today Absent <span class="bg-dashboardIconOverlay2 text-danger ml-2 inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">5</span></h5>
+<div class="border border-[#e5e5e5] p-[15px] mb-[15px]">
+<div class="flex items-center mb-4">
+<div class="w-[38px] h-[38px] mr-[10px] whitespace-nowrap">
+<a th:href="@{profile.html}" class="w-"><img alt="" src="../static/images/user.jpg" class="rounded-full"></a>
+</div>
+<div>
+<p class="text-sm">Martin Lewis</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h6 class="text-xs">4 Mar 2022</h6>
+<span class="text-sm text-muted">Leave Date</span>
+</div>
+<div>
+<span class="bg-dashboardIconOverlay2 text-danger inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">Pending</span>
+</div>
+</div>
+</div>
+<div class="border border-[#e5e5e5] p-[15px] mb-[15px]">
+<div class="flex items-center mb-4">
+<div class="w-[38px] h-[38px] mr-[10px] whitespace-nowrap">
+<a th:href="@{profile.html}" class="w-"><img alt="" src="../static/images/user.jpg" class="rounded-full"></a>
+</div>
+<div>
+<p class="text-sm">Martin Lewis</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h6 class="text-xs">4 Mar 2022</h6>
+<span class="text-sm text-muted">Leave Date</span>
+</div>
+<div>
+<span class="bg-dashboardIconOverlay3 text-success1 inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">Approved</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center text-center">
+<a th:href="@{javascript:';'}" class="border border-tableStripe rounded-[3px] shadow-loadmore block text-sm px-[15px] py-[5px]">Load More</a>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto">
+<div class="p-[15px]">
+<h3 class="text-xl">Invoices</h3>
+</div>
+<div class="whitespace-nowrap bg-white overflow-x-auto tableStyle">
+<table class="table row-bordered w-full custom-table">
+<thead>
+<tr class="text-left border border-[#dee2e6]">
+<th>Invoice ID</th>
+<th>Client</th>
+<th>Due Date</th>
+<th>Total</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0001</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Global Technologies</a></h2>
+</td>
+<td>11 Mar 2019</td>
+<td>$380</td>
+<td>
+<span class="bg-dashboardIconOverlay4 text-warning inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">Partially Paid</span>
+</td>
+</tr>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0002</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Delta Infotech</a></h2>
+</td>
+<td>8 Feb 2019</td>
+<td>$500</td>
+<td>
+<span class="bg-dashboardIconOverlay3 text-success1 inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">Paid</span>
+</td>
+</tr>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0003</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Cream Inc</a></h2>
+</td>
+<td>23 Jan 2019</td>
+<td>$60</td>
+<td>
+<span class="bg-dashboardIconOverlay2 text-danger inline-block px-[0.65em] py-[0.35em] text-xs font-bold text-center whitespace-nowrap align-baseline rounded">Unpaid</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="text-center border-t border-cardBorder px-4 py-2">
+<a th:href="@{invoices.html}" class="text-[#333333]">View all invoices</a>
+</div>
+</div>
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto">
+<div class="p-[15px]">
+<h3 class="text-xl">Payments</h3>
+</div>
+<div class="whitespace-nowrap bg-white overflow-x-auto tableStyle">
+<table class="table row-bordered w-full custom-table">
+<thead>
+<tr class="text-left border border-[#dee2e6]">
+<th>Invoice ID</th>
+<th>Client</th>
+<th>Payment Type</th>
+<th>Paid Date</th>
+<th>Paid Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0001</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Global Technologies</a></h2>
+</td>
+<td>Paypal</td>
+<td>11 Mar 2019</td>
+<td>$380</td>
+</tr>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0002</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Delta Infotech</a></h2>
+</td>
+<td>Paypal</td>
+<td>8 Feb 2019</td>
+<td>$500</td>
+</tr>
+<tr>
+<td><a th:href="@{invoice-view.html}" class="text-[#0d6efd]">#INV-0003</a></td>
+<td>
+<h2><a th:href="@{javascript:';'}" class="text-orange">Cream Inc</a></h2>
+</td>
+<td>Paypal</td>
+<td>23 Jan 2019</td>
+<td>$60</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="text-center border-t border-cardBorder px-4 py-2">
+<a th:href="@{payments.html}" class="text-[#333333]">View all payments</a>
+</div>
+</div>
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded flex-grow flex-shrink basis-auto">
+<div class="p-[15px]">
+<h3 class="text-xl">Clients</h3>
+</div>
+<div class="whitespace-nowrap bg-white overflow-x-auto tableStyle">
+<table class="table row-bordered w-full custom-table">
+<thead>
+<tr class="text-left border border-[#dee2e6]">
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+<th class="text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<h2 class="items-center inline-flex align-middle whitespace-nowrap font-normal text-[15px]">
+<a th:href="@{javascript:';'}" class="text-[#fe8259] w-[38px] h-[38px] inline-block rounded-full relative mr-[10px]"><img alt="" src="../static/images/profiles/avatar-19.jpg" class="rounded-full w-full"></a>
+<a th:href="@{client-profile.html}" class="text-[#fe8259]">Barry Cuda <span class="text-[#666666] block text-xs mt-[3px]">CEO</span></a>
+</h2>
+</td>
+<td><a th:href="@{/cdn-cgi/l/email-protection}" class="__cf_email__" data-cfemail="187a796a6a617b6d7c79587d60797568747d367b7775">[email&#160;protected]</a></td>
+<td>
+<div class="relative" x-data="{tableAction:false}" @click.away="tableAction=false">
+<a th:href="@{javascript:';'}" class="p-1 rounded-[50px] inline-block min-w-[103px] bg-white text-[#333333] border border-btnBorder text-center text-[13px]" @click="tableAction = ! tableAction"><i class="fa fa-dot-circle-o text-success pr-1"></i> Active <i class="fa fa-chevron-down text-xs inline-block transition-all ease-in-out duration-[0.2s]" :class="{'rotate-180':tableAction === true, 'rotate-0': tableAction === false}" aria-hidden="true"></i>
+</a>
+<div class="absolute left-0 min-w-[120px] border border-blackOpacity rounded-[3px] bg-white text-[13px] mt-1 z-50" x-show="tableAction">
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-success pr-2"></i> Active</a>
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-danger pr-2"></i> Inactive</a>
+</div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<h2 class="items-center inline-flex align-middle whitespace-nowrap font-normal text-[15px]">
+<a th:href="@{javascript:';'}" class="text-[#fe8259] w-[38px] h-[38px] inline-block rounded-full relative mr-[10px]"><img alt="" src="../static/images/profiles/avatar-19.jpg" class="rounded-full w-full"></a>
+<a th:href="@{client-profile.html}" class="text-[#fe8259]">Tressa Wexler <span class="text-[#666666] block text-xs mt-[3px]">Manager</span></a>
+</h2>
+</td>
+<td><a th:href="@{/cdn-cgi/l/email-protection}" class="__cf_email__" data-cfemail="3541475046465442504d59504775504d54584559501b565a58">[email&#160;protected]</a></td>
+<td>
+<div class="relative" x-data="{tableAction:false}" @click.away="tableAction=false">
+<a th:href="@{javascript:';'}" class="p-1 rounded-[50px] inline-block min-w-[103px] bg-white text-[#333333] border border-btnBorder text-center text-[13px]" @click="tableAction = ! tableAction"><i class="fa fa-dot-circle-o text-danger pr-1"></i> Inactive <i class="fa fa-chevron-down text-xs inline-block transition-all ease-in-out duration-[0.2s]" :class="{'rotate-180':tableAction === true, 'rotate-0': tableAction === false}" aria-hidden="true"></i>
+</a>
+<div class="absolute left-0 min-w-[120px] border border-blackOpacity rounded-[3px] bg-white text-[13px] mt-1 z-50" x-show="tableAction">
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-success pr-2"></i> Active</a>
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-danger pr-2"></i> Inactive</a>
+</div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<h2 class="items-center inline-flex align-middle whitespace-nowrap font-normal text-[15px]">
+<a th:href="@{client-profile.html}" class="text-[#fe8259] w-[38px] h-[38px] inline-block rounded-full relative mr-[10px]"><img alt="" src="../static/images/profiles/avatar-07.jpg" class="rounded-full w-full"></a>
+<a th:href="@{client-profile.html}" class="text-[#fe8259]">Ruby Bartlett <span class="text-[#666666] block text-xs mt-[3px]">CEO</span></a>
+ </h2>
+</td>
+<td><a th:href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="83f1f6e1fae1e2f1f7efe6f7f7c3e6fbe2eef3efe6ade0ecee">[email&#160;protected]</a></td>
+<td>
+<div class="relative" x-data="{tableAction:false}" @click.away="tableAction=false">
+<a th:href="@{javascript:';'}" class="p-1 rounded-[50px] inline-block min-w-[103px] bg-white text-[#333333] border border-btnBorder text-center text-[13px]" @click="tableAction = ! tableAction"><i class="fa fa-dot-circle-o text-danger pr-1"></i> Inactive <i class="fa fa-chevron-down text-xs inline-block transition-all ease-in-out duration-[0.2s]" :class="{'rotate-180':tableAction === true, 'rotate-0': tableAction === false}" aria-hidden="true"></i>
+</a>
+<div class="absolute left-0 min-w-[120px] border border-blackOpacity rounded-[3px] bg-white text-[13px] mt-1 z-50" x-show="tableAction">
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-success pr-2"></i> Active</a>
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-danger pr-2"></i> Inactive</a>
+</div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<h2 class="items-center inline-flex align-middle whitespace-nowrap font-normal text-[15px]">
+<a th:href="@{client-profile.html}" class="text-[#fe8259] w-[38px] h-[38px] inline-block rounded-full relative mr-[10px]"><img alt="" src="../static/images/profiles/avatar-06.jpg" class="rounded-full w-full"></a>
+<a th:href="@{client-profile.html}" class="text-[#fe8259]"> Misty Tison <span class="text-[#666666] block text-xs mt-[3px]">CEO</span></a>
+</h2>
+</td>
+<td><a th:href="@{/cdn-cgi/l/email-protection}" class="__cf_email__" data-cfemail="34595d47404d405d475b5a74514c55594458511a575b59">[email&#160;protected]</a></td>
+<td>
+<div class="relative" x-data="{tableAction:false}" @click.away="tableAction=false">
+<a th:href="@{javascript:';'}" class="p-1 rounded-[50px] inline-block min-w-[103px] bg-white text-[#333333] border border-btnBorder text-center text-[13px]" @click="tableAction = ! tableAction"><i class="fa fa-dot-circle-o text-success pr-1"></i> Active <i class="fa fa-chevron-down text-xs inline-block transition-all ease-in-out duration-[0.2s]" :class="{'rotate-180':tableAction === true, 'rotate-0': tableAction === false}" aria-hidden="true"></i>
+</a>
+<div class="absolute left-0 min-w-[120px] border border-blackOpacity rounded-[3px] bg-white text-[13px] mt-1 z-50" x-show="tableAction">
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-success pr-2"></i> Active</a>
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-danger pr-2"></i> Inactive</a>
+</div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<h2 class="items-center inline-flex align-middle whitespace-nowrap font-normal text-[15px]">
+<a th:href="@{client-profile.html}" class="text-[#fe8259] w-[38px] h-[38px] inline-block rounded-full relative mr-[10px]"><img alt="" src="../static/images/profiles/avatar-14.jpg" class="rounded-full w-full"></a>
+<a th:href="@{client-profile.html}" class="text-[#fe8259]"> Daniel Deacon <span class="text-[#666666] block text-xs mt-[3px]">CEO</span></a>
+</h2>
+</td>
+<td><a th:href="@{/cdn-cgi/l/email-protection}" class="__cf_email__" data-cfemail="fb9f9a95929e979f9e9a989495bb9e839a968b979ed5989496">[email&#160;protected]</a></td>
+<td>
+<div class="relative" x-data="{tableAction:false}" @click.away="tableAction=false">
+<a th:href="@{javascript:';'}" class="p-1 rounded-[50px] inline-block min-w-[103px] bg-white text-[#333333] border border-btnBorder text-center text-[13px]" @click="tableAction = ! tableAction"><i class="fa fa-dot-circle-o text-danger pr-1"></i> Inactive <i class="fa fa-chevron-down text-xs inline-block transition-all ease-in-out duration-[0.2s]" :class="{'rotate-180':tableAction === true, 'rotate-0': tableAction === false}" aria-hidden="true"></i>
+</a>
+<div class="absolute left-0 min-w-[120px] border border-black  pacity rounded-[3px] bg-white text-[13px] mt-1 z-50" x-show="tableAction">
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-success pr-2"></i> Active</a>
+<a class="block clear-both px-[10px] py-[4px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}" @click.prevent="tableAction=false"><i class="fa fa-dot-circle-o text-danger pr-2"></i> Inactive</a>
+</div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="text-center border-t border-cardBorder px-4 py-2">
+<a th:href="@{clients.html}" class="text-[#333333]">View all clients</a>
+</div>
+</div>
+<div class="border border-cardBorder shadow-header relative flex flex-col break-words bg-white rounded">
+<div class="p-[15px]">
+<h3 class="text-xl">Recent Projects</h3>
+</div>
+<div class="whitespace-nowrap bg-white overflow-x-auto flex-grow flex-shrink basis-auto tableStyle">
+<table class="table row-bordered w-full custom-table">
+<thead>
+<tr class="text-left border border-[#dee2e6]">
+<th>Project Name </th>
+<th>Progress</th>
+<th class="text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="shadow-tableShadow">
+<td>
+<h2><a th:href="@{project-view.html}" class="text-orange">Office Management</a></h2>
+<small class="text-sm block text-ellipsis leading-normal">
+<span>1</span> <span class="text-muted">open tasks, </span>
+<span>9</span> <span class="text-muted">tasks completed</span>
+</small>
+</td>
+<td>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#25628F] h-1 rounded-full" style="width: 65%"></div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr class="shadow-tableShadow">
+<td>
+<h2><a th:href="@{project-view.html}" class="text-orange">Project Management</a></h2>
+<small class="text-sm block text-ellipsis leading-normal">
+<span>2</span> <span class="text-muted">open tasks, </span>
+<span>5</span> <span class="text-muted">tasks completed</span>
+</small>
+</td>
+<td>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#25628F] h-1 rounded-full" style="width: 15%"></div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr class="shadow-tableShadow">
+<td>
+<h2><a th:href="@{project-view.html}" class="text-orange">Video Calling App</a></h2>
+<small class="text-sm block text-ellipsis leading-normal">
+<span>3</span> <span class="text-muted">open tasks, </span>
+<span>3</span> <span class="text-muted">tasks completed</span>
+</small>
+</td>
+<td>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#25628F] h-1 rounded-full" style="width: 49%"></div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr class="shadow-tableShadow">
+<td>
+<h2><a th:href="@{project-view.html}" class="text-orange">Hospital Administration</a></h2>
+<small class="text-sm block text-ellipsis leading-normal">
+<span>12</span> <span class="text-muted">open tasks, </span>
+<span>4</span> <span class="text-muted">tasks completed</span>
+</small>
+</td>
+<td>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#25628F] h-1 rounded-full" style="width: 88%"></div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+<tr class="shadow-tableShadow">
+<td>
+<h2><a th:href="@{project-view.html}" class="text-orange">Digital Marketplace</a></h2>
+<small class="text-sm block text-ellipsis leading-normal">
+<span>7</span> <span class="text-muted">open tasks, </span>
+<span>14</span> <span class="text-muted">tasks completed</span>
+</small>
+</td>
+<td>
+<div class="w-full bg-[#e9ecef] rounded-full h-1">
+<div class="bg-[#25628F] h-1 rounded-full" style="width: 100%"></div>
+</div>
+</td>
+<td>
+<div class="text-right relative" x-data="{cardAction:false}" @click.away="cardAction=false">
+<a th:href="@{javascript:';'}" class="text-[#777777] text-lg inline-block" @click="cardAction = ! cardAction"><i class="material-icons">more_vert</i></a>
+<div class="absolute right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[120px] z-50" x-show="cardAction">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-pencil mr-[5px]"></i> Edit</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" th:href="@{javascript:';'}"><i class="fa fa-trash-o mr-[5px]"></i> Delete</a>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="text-center border-t border-cardBorder px-4 py-2">
+<a th:href="@{projects.html}" class="text-[#333333]">View all projects</a>
+</div>
+</div>
+</div>
+</div>
+
+<script th:src="@{../static/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{../static/js/alpine.min.js}" defer></script>
+<script th:src="@{../static/charts/morris/morris.min.js}"></script>
+<script th:src="@{../static/charts/raphael/raphael.min.js}"></script>
+<script th:src="@{../static/js/chart.js}"></script>
+<script th:src="@{../static/js/app.js}"></script>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,833 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Smarthr - Bootstrap Admin Template">
+<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+<meta name="robots" content="noindex, nofollow">
+<title>Tasks - HRMS admin template</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../static/css/all.min.css" />
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/css/line-awesome.min.css">
+<link rel="stylesheet" href="../static/css/custom-forms.css" />
+<link rel="stylesheet" href="../static/css/index.min.css" />
+<link rel="stylesheet" href="../static/css/tailwind-dist.css">
+</head>
+<body class="font-CircularStd bg-body" x-data="{modalOpen:false}" @click.away="modalOpen=false" x-cloak>
+<div class="main-wrapper">
+
+<header class="fixed left-0 right-0 top-0 bg-gradient-to-r from-[#ff9b44] to-[#fc6075] h-[60px] flex items-center border-b border-transparent shadow-header z-[500]">
+
+<div class="logo media-max-w-md:max-w-full max-w-[230px] w-full media-max-w-md:absolute px-5 transition-all ease-in-out duration-[0.2s]">
+<a href="index.html">
+<img src="../static/images/logo.png" alt="" class="w-[40px] h-[40px] mx-auto">
+</a>
+</div>
+
+<a href="javascript:;" class="media-max-w-md:hidden flex px-[10px]" id="toggle_btn">
+<span class="bar-icon inline-block w-[21px]">
+<span class="w-[21px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[15px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[21px] h-[2px] bg-white block float-left"></span>
+</span>
+</a>
+
+<div class="px-5 media-max-w-lg:hidden">
+<h3 class="text-[20px] font-normal text-white leading-[1.2]">Dreamguy's Technologies</h3>
+</div>
+
+<a id="mobile_btn" class="media-min-w-md:hidden px-5 w-[60px] h-[60px] leading-[60px] absolute top-0 left-0 text-white text-2xl" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+<div class="ml-auto">
+<ul class="hidden sm:flex items-center">
+
+<li>
+<div class="relative" x-data="{mobSearch:false}">
+<a href="javascript:void(0);" class="media-min-w-md:hidden inline-block h-[60px] leading-[60px] text-white text-xl sm:px-[10px] md:px-[15px] responsive-search" @click="mobSearch = ! mobSearch">
+<i class="fa fa-search"></i>
+</a>
+<form x-show="mobSearch" action="javascript:;" class="flex items-center w-[230px] absolute left-0 mt-[10px] z-50">
+<input class="bg-white w-full h-[40px] py-[10px] pl-[15px] pr-[50px] border border-[#e3e3e3] rounded-[50px] text-[#333333] placeholder:text-blackOverlay outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-[#333333]"></i>
+</button>
+</form>
+<form action="javascript:;" class=" media-max-w-md:hidden flex items-center w-[230px] relative">
+<input class="bg-searchbg !border-transparent focus:ring-0 w-full h-[40px] py-[10px] pl-[15px] pr-[50px] rounded-[50px] text-white placeholder:text-whiteOpacity outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-whiteOpacity"></i>
+</button>
+</form>
+</div>
+ </li>
+
+
+<li class="relative" x-data="{transLang:false}" @click.away="transLang=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white text-[15px] flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':transLang === true, 'after:rotate-0': transLang === false}" @click="transLang = ! transLang"><img src="../static/images/flags/us.png" class="w-5 h-5 media-max-w-md:mr-0 mr-2" alt=""><span class="media-max-w-md:hidden leading-[60px]">English</span></a>
+<div x-show="transLang" class="py-2 bg-white absolute left-0 right-0 border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/us.png" class="w-4 h-4 mr-2" alt="">English</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/fr.png" class="w-4 h-4 mr-2" alt="">French</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/es.png" class="w-4 h-4 mr-2" alt="">Spanish</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/de.png" class="w-4 h-4 mr-2" alt="">German</a>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-bell-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">John Doe</span> added new task <span class="text-notiTitle">Patient appointment booking</span>
+</p>
+<p class="text-notiTime text-xs"><span>4 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+ </span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Tarah Shropshire</span> changed the
+task name <span class="text-notiTitle">Appointment booking with
+payment gateway</span></p>
+<p class="text-notiTime text-xs"><span>6 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-06.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Misty Tison</span> added <span class="text-notiTitle">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+<p class="text-notiTime text-xs"><span>8 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-17.jpg" class="w-full rounded-full">
+</span>
+<div class="media-body flex-grow-1">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Rolland Webber</span> completed task
+<span class="text-notiTitle">Patient and Doctor video
+conferencing</span></p>
+<p class="text-notiTime text-xs"><span>12 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-13.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Bernardo Galaviz</span> added new
+task <span class="text-notiTitle">Private chat module</span></p>
+<p class="text-notiTime text-xs"><span>2 days ago</span></p>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="activities.html" class="text-xs block text-[#333333]">View all
+Notifications</a>
+</div>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-comment-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-09.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Richard
+Miles </span>
+<span class="text-[#666666] text-[11px] float-right">12:28 AM</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">John
+Doe</span>
+<span class="text-[#666666] text-[11px] float-right">6 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Tarah
+Shropshire </span>
+<span class="text-[#666666] text-[11px] float-right">5 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-05.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Mike
+Litorus</span>
+<span class="text-[#666666] text-[11px] float-right">3 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-08.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Catherine
+Manseau </span>
+<span class="text-[#666666] text-[11px] float-right">27 Feb</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="chat.html" class="text-xs block text-[#333333]">View all Messages</a>
+</div>
+</div>
+</li>
+
+<li class="relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<div class="inline-block relative leading-[60px] h-[60px] media-min-w-md:mr-2"><img src="../static/images/profiles/avatar-21.jpg" class="inline-block w-[30px] h-[30px] rounded-full" alt=""><span class="w-[10px] h-[10px] bg-statusOnline rounded-full border-2 border-white absolute right-0 bottom-3"></span></div><span class="media-max-w-md:hidden text-[15px] leading-[60px]">Admin</span></a>
+<div x-show="profile" class="py-2 bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[130px] max-h-[150px] overflow-y-auto z-50">
+<a href="profile.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">my profile</a>
+<a href="settings.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">settings</a>
+<a href="index.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">logout</a>
+</div>
+</li>
+</ul>
+
+
+<div class="block sm:hidden relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="text-white flex items-center h-[60px] px-5" @click="profile = ! profile"><i class="fa fa-ellipsis-v text-2xl"></i></a>
+<div class="py-2 bg-white absolute right-0 media-max-w-xs:right-[18px] border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50" x-show="profile">
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="profile.html">My Profile</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="settings.html">Settings</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="index.html">Logout</a>
+</div>
+</div>
+
+</div>
+</header>
+
+
+<div class="sidebar bg-sidebar media-max-w-md:-ml-[225px] media-max-w-md:w-[225px] transition-all ease-in-out duration-[0.2s] w-[230px] fixed top-[60px] bottom-0 left-0 py-[10px] z-[401]" id="sidebar">
+<div class="h-full pb-5 scrollbar-thin scrollbar-thumb-scrollbar scroll">
+<div id="sidebar-menu" class="sidebar-menu">
+<ul>
+<li>
+<a href="admin-dashboard.html"><i class="la la-home"></i> <span>Back to Home</span></a>
+</li>
+<li class="menu-title"><span>Projects</span> <a href="javascript:;" class="inline-block ml-auto !p-0 text-primary"><i class="fa fa-plus !text-base text-right text-primary"></i></a></li>
+<li>
+<a href="tasks.html">
+<span class="whitespace-nowrap !ml-0">Project Management</span>
+</a>
+</li>
+<li class="active">
+<a href="tasks.html">
+<span class="whitespace-nowrap !ml-0">Hospital Administration</span>
+</a>
+</li>
+<li>
+<a href="tasks.html">
+<span class="whitespace-nowrap !ml-0">Video Calling App</span>
+</a>
+</li>
+<li>
+<a href="tasks.html">
+<span class="whitespace-nowrap !ml-0">Office Management</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="page-wrapper flex-1 relative right-0 pt-[60px] media-min-w-md:ml-[230px]">
+<div class="absolute top-0 bottom-0 left-0 right-0 pt-[inherit] pb-[inherit]">
+<div class="table table-fixed w-full border border-[#e0e3e4] h-full">
+<div class="table-cell static media-max-w-md:w-full w-[58.3333%] media-max-w-lg:mr-0 mr-[300px] transition-all ease-in-out duration-[0.2s]">
+<div class="bg-[#f7f7f7] table table-fixed w-full h-full">
+<div class="bg-white flex items-center border-b border-[#e0e3e4] justify-between px-[15px] py-[10px]">
+<div class="flex mr-auto">
+<div class="add-task-btn-wrapper">
+<span class="add-task-btn text-sm cursor-pointer uppercase px-[10px] py-[6px] bg-white border border-btnBorder text-link rounded-[5px] inline-block">
+Add Task
+</span>
+</div>
+</div>
+<ul class="flex items-center">
+<li>
+<span class="relative text-[#333333] inline-block text-xl"><a class="media-min-w-md:hidden text-[#bbbbbb] text-[26px] ml-[15px]" id="task_chat" href="#task_window"><i class="fa fa-comments"></i></a></span>
+</li>
+<li class="relative" x-data="{settings:false}">
+<span class="relative text-[#333333] inline-block text-xl">
+<a href="javascript:void(0)" class="text-[#bbbbbb] text-[26px] ml-[15px]" @click="settings = ! settings"><i class="fa fa-cog"></i></a>
+</span>
+<div class="absolute py-2 right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[10rem] z-50" x-show="settings">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="settings=false">Pending Tasks</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="settings=false">Completed Tasks</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="settings=false">All Tasks</a>
+</div>
+</li>
+</ul>
+</div>
+<div class="table-row h-full">
+<div class="relative w-full h-full">
+<div class="absolute inset-0 overflow-auto">
+<div class="task-wrapper p-5 w-full mx-auto">
+<div class="task-list-container">
+<div class="task-list-body max-h-[500px] overflow-auto">
+<ul id="task-list" class="border-b border-[#eaeaea]">
+<li class="task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+<span class="table-cell align-middle w-10 text-left task-action-btn task-check">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all outline-none" contenteditable="true">Patient appointment
+booking</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+<li class="task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+<span class="table-cell align-middle w-10 text-left task-action-btn task-check">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all" contenteditable="true">Appointment booking with
+payment gateway</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+<li class="completed task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+ <span class="table-cell align-middle w-10 text-left">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all">Doctor
+available module</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+<li class="task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+<span class="table-cell align-middle w-10 text-left task-action-btn task-check">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all" contenteditable="true">Patient and Doctor video
+conferencing</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+<li class="task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+<span class="table-cell align-middle w-10 text-left task-action-btn task-check">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all" contenteditable="true">Private chat module</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+<li class="task group">
+<div class="task-container hover:bg-[#EBEEEF] listStyle cursor-pointer table bg-white px-[15px] py-2 w-full border border-[#eaeaes] relative transition-all ease-in-out duration-[0.2s]">
+<span class="table-cell align-middle w-10 text-left task-action-btn task-check">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center transition-all ease-in-out duration-[0.2s] action-circle large complete-btn" title="Mark Complete">
+<i class="material-icons text-base text-[#cccccc]">check</i>
+</span>
+</span>
+<span class="task-label table-cell align-middle text-[#333333] break-all" contenteditable="true">Patient Profile add</span>
+<span class="hidden task-action-btn task-btn-right group-hover:block text-right">
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large" title="Assign">
+<i class="material-icons text-base text-[#cccccc]">person_add</i>
+</span>
+<span class="w-6 h-6 bg-white border border-btnBorder rounded-full inline-block text-center action-circle transition-all ease-in-out duration-[0.2s] action-circle large delete-btn" title="Delete Task">
+<i class="material-icons text-base text-[#cccccc]">delete</i>
+</span>
+</span>
+</div>
+</li>
+</ul>
+</div>
+<div class="task-list-footer relative">
+<div class="new-task-wrapper max-h-0 overflow-hidden">
+<textarea id="new-task" class="w-full border border-tableStripe h-[45px] outline-none resize-none px-[15px] py-[10px] mb-5" placeholder="Enter new task here. . ."></textarea>
+<span class="error-message hidden text-[#D93737] italic">You
+need to enter a task first</span>
+<span class="add-new-task-btn btn bg-white border border-[#cccccc] px-3 py-[6px] float-right cursor-pointer rounded-[5px]" id="add-task">Add Task</span>
+<span class="btn px-3 py-[6px] float-right cursor-pointer rounded-[5px]" id="close-task-panel">Close</span>
+</div>
+</div>
+</div>
+</div>
+<div class="notification-popup hide opacity-80 fixed z-[1051] top-5 right-[10px] w-[300px] inline-block bg-[#1F8FEF] border border-[#1F8FEF] text-white p-5 rounded-sm">
+<p>
+<span class="task overflow-hidden whitespace-nowrap overflow-ellipsis max-w-full inline-block"></span>
+<span class="notification-text text-sm inline-block overflow-hidden"></span>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="task_window" class="chat-sidebar table-cell align-top border-l border-[#e0e3e4] fixed media-max-w-md:right-0 media-min-w-md:static w-[300px] h-full media-max-w-md:-mr-[300px] z-[68] transition-all ease-in-out duration-[0.2s]">
+<div class="table table-fixed w-full h-full bg-body">
+<div class="bg-white border-b border-tableStripe px-[15px] py-[10px]">
+<div class="flex items-center justify-between bg-white text-[#324148]">
+<div class="task-assign">
+<a class="flex items-center bg-white border border-btnBorder rounded-[5px] text-sm px-[10px] py-[6px] text-link" id="task_complete" href="javascript:void(0);">
+<i class="material-icons text-xl mr-[3px] leading-none">check</i> Mark
+Complete
+</a>
+</div>
+<div class="relative" x-data="{settings:false}">
+<span class="relative text-[#333333] inline-block text-xl">
+<a href="javascript:void(0)" class="text-[#bbbbbb] ml-[15px]" @click="settings = ! settings"><i class="fa fa-ellipsis-v"></i></a>
+</span>
+<div class="absolute py-2 right-0 border border-blackOpacity rounded-[3px] bg-white min-w-[10rem] z-50" x-show="settings">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="settings=false">Delete Task</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-[10px] py-[5px] hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="settings=false">Settings</a>
+</div>
+</div>
+</div>
+</div>
+<div class="table-row h-full bg-white">
+<div class="relative w-full h-full">
+<div class="absolute inset-0 overflow-auto w-full">
+<div>
+<div class="px-[15px] pt-[15px] pb-[30px] w-full bg-white">
+<h4 class="text-lg mb-2">Hospital Administration Phase 1</h4>
+<div class="text-sm font-medium px-[15px] pt-[15px] pb-[5px] flex ">
+<div class="group inline-flex items-center border border-transparent rounded-[10px] pr-[10px] pl-[5px] py-[5px] relative grow-0 shrink basis-[180px] hover:border-select">
+<a href="javascript:;" class="flex items-center text-link">
+<div class="w-[30px] h-[30px] mr-[10px] block">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="rounded-full w-full">
+</div>
+<div>
+<div class="text-[#8e8e8e] text-xs">Assigned To</div>
+<div class="text-[13px] max-w-[120px] overflow-hidden overflow-ellipsis whitespace-nowrap">
+John Doe</div>
+</div>
+</a>
+<span class="flex items-center bg-select rounded-full text-link cursor-pointer w-5 h-5 justify-center mr-[10px] absolute top-1/2 right-0 -translate-y-1/2 invisible group-hover:visible">
+<i class="fa fa-close text-muted text-xs"></i>
+</span>
+</div>
+<div class="group flex items-center border border-transparent rounded-[10px] grow-0 shrink-0 basis-[160px] ml-[10px] pr-[10px] pl-[5px] py-[5px] relative hover:border-select">
+<a href="javascript:;" class="flex items-center text-link">
+<div>
+<span class="flex items-center bg-white border border-btnBorder rounded-full text-btnBorder w-[30px] h-[30px] mr-[10px] justify-center">
+ <i class="material-icons text-lg">date_range</i>
+</span>
+</div>
+<div>
+<div class="text-[#8e8e8e] text-xs">Due Date</div>
+<div class="text-[#f62d51] text-[13px]">Mar 26, 2019
+</div>
+</div>
+</a>
+<span class="flex items-center bg-select rounded-full text-link cursor-pointer w-5 h-5 justify-center mr-[10px] absolute top-1/2 right-0 -translate-y-1/2 invisible group-hover:visible">
+<i class="fa fa-close text-muted text-xs"></i>
+</span>
+</div>
+</div>
+<hr class="h-[1px] border-0 border-tableStripe my-4 opacity-25 bg-current">
+<div class="items-start flex mt-[5px] mb-[15px]">
+<div class="text-btnBorder mt-[5px] mr-[10px]">
+<i class="material-icons">subject</i>
+</div>
+<div class="flex w-full group">
+<textarea class="block w-full outline-none px-3 py-[0.375rem] border border-transparent rounded-[5px] text-[13px] resize-none h-auto group-hover:border-btnBorder" placeholder="Description"></textarea>
+</div>
+</div>
+<hr class="h-[1px] border-0 border-tableStripe my-4 opacity-25 bg-current">
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">Lesley Grauer</a> <span>created
+task</span></span>
+<div class="inline-block pl-[10px]">Jan 20, 2019</div>
+</div>
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">Lesley Grauer</a> <span>added to
+Hospital Administration</span></span>
+<div class="inline-block pl-[10px]">Jan 20, 2019</div>
+</div>
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">Lesley Grauer</a> <span>created
+task</span></span>
+<div class="inline-block pl-[10px]">Jan 20, 2019</div>
+</div>
+<hr class="h-[1px] border-0 border-tableStripe my-4 opacity-25 bg-current">
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">John Doe</a> <span>changed the due date
+to Sep 28</span></span>
+<div class="inline-block pl-[10px]">9:09pm</div>
+</div>
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">John Doe</a> <span>assigned to
+you</span></span>
+<div class="inline-block pl-[10px]">9:10pm</div>
+</div>
+<div class="flex items-start mb-5">
+<div class="relative">
+<a href="profile.html" class="block w-[30px] h-[30px] mt-[10px] mr-[20px]">
+<img alt="John Doe" src="../static/images/profiles/avatar-02.jpg" class="rounded-full">
+</a>
+</div>
+<div>
+<div class="block w-full mt-[10px] pr-[20px] mb-[10px]">
+<div class="text-[#666666]">
+<span class="text-link text-[13px]">John Doe</span>
+<span class="text-[#666666] inline-block text-[11px]">8:35
+am</span>
+<div>
+<p class="text-[13px]">I'm just looking around.</p>
+ <p class="text-[13px]">Will you tell me something
+about yourself? </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="ml-[50px] mb-[30px]"><span class="text-success text-[13px]"><a href="javascript:;" class="text-success">John Doe</a> completed this
+task.</span> <span class="inline-block text-[11px] text-[#a3a3a3]">Today at
+9:27am</span></div>
+<div class="flex items-start mb-5">
+<div class="relative">
+<a href="profile.html" class="block w-[30px] h-[30px] mr-[10px]">
+<img alt="John Doe" src="../static/images/profiles/avatar-02.jpg" class="rounded-full">
+</a>
+</div>
+<div>
+<div class="block w-full mb-[10px]">
+<div class="text-[#666666]">
+<span class="text-link text-[13px]">John Doe</span>
+<span class="text-link text-[13px]">attached 3 files <i class="fa fa-paperclip text-base"></i></span>
+<span class="text-[#666666] inline-block text-[11px]">Feb
+17, 2019 at 4:32am</span>
+<div class="flex pt-[5px]">
+<ul class="attach-list">
+<li><i class="fa fa-file text-[#a3a3a3] mr-[3px] text-base"></i>
+<a href="javascript:;" class="text-[#0d6efd]">project_document.avi</a>
+</li>
+<li><i class="fa fa-file text-[#a3a3a3] mr-[3px] text-base"></i>
+<a href="javascript:;" class="text-[#0d6efd]">video_conferencing.psd</a>
+</li>
+<li><i class="fa fa-file text-[#a3a3a3] mr-[3px] text-base"></i>
+<a href="javascript:;" class="text-[#0d6efd]">landing_page.psd</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-start mb-5">
+<div class="relative">
+<a href="profile.html" class="block w-[30px] h-[30px] mr-[10px]">
+<img alt="John Doe" src="../static/images/profiles/avatar-16.jpg" class="rounded-full">
+</a>
+</div>
+<div>
+<div class="block w-full mb-[10px]">
+<div class="text-[#666666]">
+<span class="text-link text-[13px]">Jeffery Lalor
+</span> <span class="text-link text-[13px]">attached
+file <i class="fa fa-paperclip text-base"></i></span>
+<span class="text-[#666666] inline-block text-[11px]">Yesterday
+at 9:16pm</span>
+<div class="flex pt-[5px]">
+<ul class="attach-list">
+<li><i class="fa fa-file-pdf-o text-[#a3a3a3] mr-[3px] text-base"></i>
+<a href="javascript:;" class="text-[#0d6efd]">Document_2016.pdf</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-start mb-5">
+<div class="relative">
+<a href="profile.html" class="block w-[30px] h-[30px] mr-[10px]">
+<img alt="John Doe" src="../static/images/profiles/avatar-16.jpg" class="rounded-full">
+</a>
+</div>
+<div>
+<div class="block w-full mb-[10px]">
+<div class="text-[#666666]">
+<span class="text-link text-[13px]">Jeffery Lalor
+</span> <span class="text-link text-[13px]">attached
+file <i class="fa fa-paperclip text-base"></i></span>
+<span class="text-[#666666] inline-block text-[11px]">Yesterday
+at 12:42pm</span>
+<div class="flex pt-[5px]">
+<ul class="attach-list">
+<li class="img-file">
+<div class="mb-[5px]"><a href="javascript:;" class="text-[#0d6efd]">avatar-1.jpg</a>
+</div>
+<div class="mb-5"><img src="../static/images/user.jpg" class="max-w-full border border-tableStripe" alt=""></div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-[#a3a3a3] text-[11px] leading-[17px] min-w-[1px] ml-[50px]">
+<span class="break-words"><a class="text-[#666666] font-medium" href="javascript:;">John Doe</a> <span>marked task as
+incomplete</span></span>
+<div class="inline-block pl-[10px]">1:16pm</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white border-t border-tableStripe p-[15px] w-full">
+<div class="table h-11 relative w-full">
+<div class="table-row w-full h-full px-2">
+<a class="text-[#777777] table-cell text-xl px-[10px] relative align-middle w-[30px]" href="javascript:;"><img src="../static/images/attachment.png" class="max-w-none" alt=""></a>
+<div class="table-cell">
+<div class="relative flex flex-wrap items-stretch w-full">
+<textarea class="bg-white min-w-0 w-[1%] relative outline-none flex-grow flex-shrink basis-auto border border-tableStripe text-[#555555] block text-sm h-11 px-3 py-[6px] resize-none" placeholder="Type message..."></textarea>
+<button class="flex items-center justify-center text-white bg-primary border-primary rounded-tl-none rounded-bl-none rounded-[5px] -ml-[1px] w-[50px] h-11 relative z-10" type="button"><i class="fa fa-send"></i></button>
+</div>
+</div>
+</div>
+</div>
+<div class="flex mt-[15px]">
+<span class="mt-[5px] mr-[10px]">Followers</span>
+<a class="w-[30px] h-[30px] mr-[10px] inline-block" href="javascript:;" title="Jeffery Lalor">
+<img alt="" class="w-full rounded-full hover:shadow-img" src="../static/images/profiles/avatar-16.jpg">
+</a>
+<a class="w-[30px] h-[30px] mr-[10px] inline-block" href="javascript:;" title="Richard Miles">
+<img alt="" class="w-full rounded-full hover:shadow-img" src="../static/images/profiles/avatar-09.jpg">
+</a>
+<a class="w-[30px] h-[30px] mr-[10px] inline-block" href="javascript:;" title="John Smith">
+<img alt="" class="w-full rounded-full hover:shadow-img" src="../static/images/profiles/avatar-10.jpg">
+</a>
+<a class="w-[30px] h-[30px] mr-[10px] inline-block" href="javascript:;" title="Mike Litorus">
+<img alt="" class="w-full rounded-full hover:shadow-img" src="../static/images/profiles/avatar-05.jpg">
+</a>
+<a href="javascript:;" class="bg-white border border-btnBorder text-btnBorder inline-block text-xl w-[30px] h-[30px] text-center rounded-full" @click="modalOpen = ! modalOpen"><i class="material-icons leading-7">add</i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div x-show="modalOpen" class="fixed top-0 left-0 right-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto z-[500]" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div class="flex items-center justify-center min-h-screen">
+<div x-cloak @click="modalOpen = false" x-show="modalOpen" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity bg-blackOverlay bg-opacity-40" aria-hidden="true"></div>
+<div x-cloak x-show="modalOpen" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="bg-white m-2 sm:mx-auto sm:my-7 sm:max-w-[500px] sm:w-full rounded-[10px] relative z-[9999] transition-all transform">
+<div class="pt-[30px] px-[30px] text-center">
+<h5 class="text-[22px] !leading-normal">Add followers to this task</h5>
+<button type="button" class="bg-[#a0a0a0] w-5 h-5 rounded-full absolute top-[10px] right-[10px] text-white leading-5 z-50" @click="modalOpen = false">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="p-[30px]">
+<div class="relative flex flex-wrap items-stretch w-full mb-[30px]">
+<input placeholder="Search to add" class="relative w-[1%] min-w-0 grow shrink basis-auto appearance-none outline-none block inputStyle rounded-tr-none rounded-br-none" type="text">
+<button class="bg-primary border border-primary rounded-[5px] rounded-tl-none rounded-bl-none inline-block px-3 py-[0.375rem] text-white text-base text-center leading-normal -ml-[1px]">Search</button>
+</div>
+<div>
+<ul class="chat-user-list">
+<li>
+<a href="javascript:;">
+<div class="border-b border-tableStripe p-[10px] bg-white flex hover:bg-body">
+<span class="w-[38px] h-[38px] mr-[10px] inline-block"><img alt="" src="../static/images/profiles/avatar-16.jpg" class="rounded-full w-full"></span>
+<div class="whitespace-nowrap">
+<div class="text-link">Jeffery Lalor</div>
+<span class="text-[#9e9e9e] text-xs">Team Leader</span>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a href="javascript:;">
+<div class="border-b border-tableStripe p-[10px] bg-white flex hover:bg-body">
+<span class="w-[38px] h-[38px] mr-[10px] inline-block"><img alt="" src="../static/images/profiles/avatar-08.jpg" class="rounded-full w-full"></span>
+<div class="whitespace-nowrap">
+<div class="text-link">Catherine Manseau</div>
+<span class="text-[#9e9e9e] text-xs">Android Developer</span>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a href="javascript:;">
+<div class="border-b border-tableStripe p-[10px] bg-white flex hover:bg-body">
+<span class="w-[38px] h-[38px] mr-[10px] inline-block"><img alt="" src="../static/images/profiles/avatar-26.jpg" class="rounded-full w-full"></span>
+<div class="whitespace-nowrap">
+<div class="text-link">Wilmer Deluna</div>
+<span class="text-[#9e9e9e] text-xs">Team Leader</span>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-10 text-center">
+<button class="submit-btn" @click="modalOpen = false">Add to Follow</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="../static/js/jquery-3.6.0.min.js"></script>
+<script src="../static/js/index.min.js"></script>
+<script src="../static/js/alpine.min.js" defer></script>
+
+<script src="../static/js/task.js"></script>
+
+<script src="../static/js/app.js"></script>
+</body>
+</html>

@@ -10,13 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 //单元测试
 @SpringBootTest
 class SdHrApplicationTests {
-    @Autowired
+    //@Autowired
     //Dog dog;
-   private Person person;
+   //private Person person;
     @Test
     void contextLoads() {
         //System.out.println(dog);
-        System.out.println(person);
+      //  System.out.println(person);
     }
 
 }

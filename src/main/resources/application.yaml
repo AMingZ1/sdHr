@@ -19,20 +19,20 @@
 
 #pets1: [cat,dog,pig]
 #
-person:
-  name: 高强
-  age: 18
-  isHappy: true
-  birth: 2022/08/12
-  maps: {k1: v1,K2: v2}
-  lists:
-    - code
-    - music
-    - girl
-  dog:
-    name: 旺财
-    age: 1
+#person:
+#  name: 高强
+#  age: 18
+#  isHappy: true
+#  birth: 2022/08/12
+#  maps: {k1: v1,K2: v2}
+#  lists:
+#    - code
+#    - music
+#    - girl
+#  dog:
+#    name: 旺财
+#    age: 1
 #springBoot的多环境配置:可以选择激活哪一个配置文件
 #spring:
 #  profiles:
-#    active: dev(环境配置文件)
+#    active: dev(使用哪个环境配置文件)

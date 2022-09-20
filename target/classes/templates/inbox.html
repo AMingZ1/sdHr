@@ -1,0 +1,579 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Smarthr - Bootstrap Admin Template">
+<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+<meta name="robots" content="noindex, nofollow">
+<title>Inbox - HRMS admin template</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../static/css/all.min.css" />
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/css/line-awesome.min.css">
+<link rel="stylesheet" href="../static/css/custom-forms.css" />
+<link rel="stylesheet" href="../static/css/index.min.css" />
+<link rel="stylesheet" href="../static/css/tailwind-dist.css">
+</head>
+<body class="font-CircularStd bg-body" x-data="{modal:false}" @click.away="modal=false" x-cloak>
+<div class="main-wrapper">
+
+<header class="fixed left-0 right-0 top-0 bg-gradient-to-r from-[#ff9b44] to-[#fc6075] h-[60px] flex items-center border-b border-transparent shadow-header z-[500]">
+
+<div class="logo media-max-w-md:max-w-full max-w-[230px] w-full media-max-w-md:absolute px-5 transition-all ease-in-out duration-[0.2s]">
+<a href="admin-dashboard.html">
+<img src="../static/images/logo.png" alt="logo" class="w-[40px] h-[40px] mx-auto">
+</a>
+</div>
+
+<a href="javascript:;" class="media-max-w-md:hidden flex px-[10px]" id="toggle_btn">
+<span class="bar-icon inline-block w-[21px]">
+<span class="w-[21px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[15px] h-[2px] bg-white mb-[5px] block float-left"></span>
+<span class="w-[21px] h-[2px] bg-white block float-left"></span>
+</span>
+</a>
+
+<div class="px-5 media-max-w-lg:hidden">
+<h3 class="text-[20px] font-normal text-white leading-[1.2]">Dreamguy's Technologies</h3>
+</div>
+
+<a id="mobile_btn" class="media-min-w-md:hidden px-5 w-[60px] h-[60px] leading-[60px] absolute top-0 left-0 text-white text-2xl" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+<div class="ml-auto">
+<ul class="hidden sm:flex items-center">
+
+<li>
+<div class="relative" x-data="{mobSearch:false}">
+<a href="javascript:void(0);" class="media-min-w-md:hidden inline-block h-[60px] leading-[60px] text-white text-xl sm:px-[10px] md:px-[15px] responsive-search" @click="mobSearch = ! mobSearch">
+<i class="fa fa-search"></i>
+</a>
+<form x-show="mobSearch" action="javascript:;" class="flex items-center w-[230px] absolute left-0 mt-[10px] z-50">
+<input class="bg-white w-full h-[40px] py-[10px] pl-[15px] pr-[50px] border border-[#e3e3e3] rounded-[50px] text-[#333333] placeholder:text-blackOverlay outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-[#333333]"></i>
+</button>
+</form>
+<form action="javascript:;" class=" media-max-w-md:hidden flex items-center w-[230px] relative">
+<input class="bg-searchbg !border-transparent focus:ring-0 w-full h-[40px] py-[10px] pl-[15px] pr-[50px] rounded-[50px] text-white placeholder:text-whiteOpacity outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-whiteOpacity"></i>
+</button>
+</form>
+</div>
+</li>
+
+
+<li class="relative" x-data="{transLang:false}" @click.away="transLang=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white text-[15px] flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':transLang === true, 'after:rotate-0': transLang === false}" @click="transLang = ! transLang"><img src="../static/images/flags/us.png" class="w-5 h-5 media-max-w-md:mr-0 mr-2" alt=""><span class="media-max-w-md:hidden leading-[60px]">English</span></a>
+<div x-show="transLang" class="py-2 bg-white absolute left-0 right-0 border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/us.png" class="w-4 h-4 mr-2" alt="">English</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/fr.png" class="w-4 h-4 mr-2" alt="">French</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/es.png" class="w-4 h-4 mr-2" alt="">Spanish</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/de.png" class="w-4 h-4 mr-2" alt="">German</a>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-bell-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">John Doe</span> added new task <span class="text-notiTitle">Patient appointment booking</span>
+</p>
+<p class="text-notiTime text-xs"><span>4 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+ </span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Tarah Shropshire</span> changed the
+task name <span class="text-notiTitle">Appointment booking with
+payment gateway</span></p>
+<p class="text-notiTime text-xs"><span>6 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-06.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Misty Tison</span> added <span class="text-notiTitle">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+<p class="text-notiTime text-xs"><span>8 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-17.jpg" class="w-full rounded-full">
+</span>
+<div class="media-body flex-grow-1">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Rolland Webber</span> completed task
+<span class="text-notiTitle">Patient and Doctor video
+conferencing</span></p>
+<p class="text-notiTime text-xs"><span>12 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-13.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Bernardo Galaviz</span> added new
+task <span class="text-notiTitle">Private chat module</span></p>
+<p class="text-notiTime text-xs"><span>2 days ago</span></p>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="activities.html" class="text-xs block text-[#333333]">View all
+Notifications</a>
+</div>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-comment-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-09.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Richard
+Miles </span>
+<span class="text-[#666666] text-[11px] float-right">12:28 AM</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">John
+Doe</span>
+<span class="text-[#666666] text-[11px] float-right">6 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Tarah
+Shropshire </span>
+<span class="text-[#666666] text-[11px] float-right">5 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-05.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Mike
+Litorus</span>
+<span class="text-[#666666] text-[11px] float-right">3 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-08.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Catherine
+Manseau </span>
+<span class="text-[#666666] text-[11px] float-right">27 Feb</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="chat.html" class="text-xs block text-[#333333]">View all Messages</a>
+</div>
+</div>
+</li>
+
+<li class="relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<div class="inline-block relative leading-[60px] h-[60px] media-min-w-md:mr-2"><img src="../static/images/profiles/avatar-21.jpg" class="inline-block w-[30px] h-[30px] rounded-full" alt=""><span class="w-[10px] h-[10px] bg-statusOnline rounded-full border-2 border-white absolute right-0 bottom-3"></span></div><span class="media-max-w-md:hidden text-[15px] leading-[60px]">Admin</span></a>
+<div x-show="profile" class="py-2 bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[130px] max-h-[150px] overflow-y-auto z-50">
+<a href="profile.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">my profile</a>
+<a href="settings.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">settings</a>
+<a href="index.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">logout</a>
+</div>
+</li>
+</ul>
+
+
+<div class="block sm:hidden relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="text-white flex items-center h-[60px] px-5" @click="profile = ! profile"><i class="fa fa-ellipsis-v text-2xl"></i></a>
+<div class="py-2 bg-white absolute right-0 media-max-w-xs:right-[18px] border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50" x-show="profile">
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="profile.html">My Profile</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="settings.html">Settings</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="index.html">Logout</a>
+</div>
+</div>
+
+</div>
+</header>
+
+
+<div class="sidebar bg-sidebar media-max-w-md:-ml-[225px] media-max-w-md:w-[225px] transition-all ease-in-out duration-[0.2s] w-[230px] fixed top-[60px] bottom-0 left-0 py-[10px] z-[401]" id="sidebar">
+<div class="h-full pb-5 scrollbar-thin scrollbar-thumb-scrollbar scroll">
+<div id="sidebar-menu" class="sidebar-menu">
+<ul>
+<li>
+<a href="admin-dashboard.html"><i class="la la-home"></i> <span>Back to Home</span></a>
+</li>
+<li class="active">
+<a href="inbox.html">Inbox <span class="mail-count">(21)</span></a>
+</li>
+<li>
+<a href="javascript:;">Starred</a>
+</li>
+<li>
+<a href="javascript:;">Sent Mail</a>
+</li>
+<li>
+<a href="javascript:;">Trash</a>
+</li>
+<li>
+<a href="javascript:;">Draft <span class="mail-count">(8)</span></a>
+</li>
+<li class="menu-title">Label <a href="javascript:;" class="inline-block ml-auto !p-0 text-primary"><i class="fa fa-plus !text-base text-right text-primary"></i></a></li>
+<li>
+<a href="javascript:;"><i class="fa fa-circle text-success !w-5 !text-base mr-[5px]"></i>
+Work</a>
+</li>
+<li>
+<a href="javascript:;"><i class="fa fa-circle text-danger !w-5 !text-base mr-[5px]"></i>
+Office</a>
+</li>
+<li>
+<a href="javascript:;"><i class="fa fa-circle text-warning1 !w-5 !text-base mr-[5px]"></i>
+Personal</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="page-wrapper flex-1 relative left-0 pt-[60px] media-min-w-md:ml-[230px]">
+<div class="p-[15px] sm:p-[30px]">
+<div class="page-header mb-[1.875rem]">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-pageTitle text-lg sm:text-2xl md:text-[26px] font-medium sm:mb-[5px] leading-[1.2]">
+Inbox</h3>
+<ul class="hidden text-[14px] md:text-base font-medium sm:flex flex-wrap">
+<li><a href="index.html" class="text-[#333333]">Dashboard</a></li>
+<li><span class="px-2">/</span></li>
+<li class="text-[#6c757d]">Inbox</li>
+</ul>
+</div>
+<div>
+<a href="compose.html" class="add-btn media-max-w-sm:text-sm media-max-w-xs:min-w-[inherit]" @click="modal = ! modal"><i class="fa fa-plus mr-[5px]"></i> Compose</a>
+</div>
+</div>
+</div>
+<div class="shadow-header border border-cardBorder relative flex flex-col break-words bg-white rounded">
+<div class="flex-auto p-4">
+<div class="flex items-start">
+<div class="flex flex-wrap items-center gap-1">
+<div class="relative" x-data="{dropDown:false}" @click.away="dropDown=false">
+<button type="button" class="relative flex-auto bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body" @click="dropDown = ! dropDown">
+Select <i class="fa fa-angle-down"></i>
+</button>
+<div class="absolute mt-[2px] border border-dropDown rounded-[3px] bg-white min-w-[10rem] z-[77] py-2" x-show="dropDown">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">All</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">None</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Read</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Unread</a>
+</div>
+</div>
+<div class="relative" x-data="{dropDown:false}" @click.away="dropDown=false">
+<button type="button" class="relative flex-auto bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body" @click="dropDown = ! dropDown">
+Actions <i class="fa fa-angle-down"></i>
+</button>
+<div class="absolute mt-[2px] border border-dropDown rounded-[3px] bg-white min-w-[10rem] z-[77] py-2" x-show="dropDown">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Reply</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Forward</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Archive</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Mark As Read</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Mark As Unread</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;" @click.prevent="dropDown=false">Delete</a>
+</div>
+</div>
+<div class="relative" x-data="{dropDown:false}" @click.away="dropDown=false">
+<button type="button" class="relative flex-auto bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body" @click="dropDown = ! dropDown">
+<i class="fa fa-folder"></i> <i class="fa fa-angle-down"></i>
+</button>
+<div class="absolute mt-[2px] border border-dropDown rounded-[3px] bg-white min-w-[10rem] z-[77] py-2" x-show="dropDown">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Social</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Forums</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Updates</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Spam</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Trash</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">New</a>
+</div>
+</div>
+<div class="relative" x-data="{dropDown:false}" @click.away="dropDown=false">
+<button type="button" class="relative flex-auto bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body" @click="dropDown = ! dropDown">
+<i class="fa fa-tags"></i> <i class="fa fa-angle-down"></i>
+</button>
+<div class="absolute mt-[2px] border border-dropDown rounded-[3px] bg-white min-w-[10rem] z-[77] py-2" x-show="dropDown">
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Work</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Family</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Social</a>
+<div class="border-t border-seperator h-0 my-1"></div>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Primary</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Promotions</a>
+<a class="block clear-both w-full text-left text-[13px] whitespace-nowrap px-4 py-1 hover:bg-[#e9ecef]" href="javascript:;">Forums</a>
+</div>
+</div>
+<div class="hidden sm:flex">
+<input class="relative flex-auto bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] outline-none" type="text" placeholder="Search Messages">
+</div>
+</div>
+<div class="ml-auto text-right">
+<div class="flex text-right justify-end gap-1">
+<button type="button" class="relative hidden md:inline-block bg-white border border-btnBorder text-link rounded-[5px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body"><i class="fa fa-refresh"></i></button>
+<div class="flex">
+<a class="relative bg-white border border-btnBorder text-link rounded-[5px] rounded-r-none whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body"><i class="fa fa-angle-left"></i></a>
+<a class="relative bg-white border border-btnBorder text-link rounded-[5px] rounded-l-none -ml-[1px] whitespace-nowrap text-base px-3 py-[0.375rem] hover:bg-body focus:bg-body"><i class="fa fa-angle-right"></i></a>
+</div>
+</div>
+<div>
+<span class="text-muted hidden md:inline-block">Showing 10 of 112 </span>
+</div>
+</div>
+</div>
+<div class="whitespace-nowrap bg-white overflow-x-auto tableStyle">
+<table class="table hover row-border w-full mail-table custom-table">
+<thead class="text-left border-b border-[#dee2e6]">
+<tr>
+<th colspan="6">
+<input type="checkbox" class="checkbox-all">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star text-favourite"></i></span></td>
+<td class="text-black font-semibold">John Doe</td>
+<td class="text-black font-semibold">Lorem ipsum dolor sit amet, consectetuer
+adipiscing elit</td>
+<td><i class="fa fa-paperclip"></i></td>
+<td class="text-black font-semibold">13:14</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="text-black font-semibold">Envato Account</td>
+<td class="text-black font-semibold">Important account security update from
+Envato</td>
+<td></td>
+<td class="text-black font-semibold">8:42</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="name">Twitter</td>
+<td class="subject">HRMS Bootstrap Admin Template</td>
+ <td></td>
+<td class="mail-date">30 Nov</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="text-black font-semibold">Richard Parker</td>
+<td class="text-black font-semibold">Lorem ipsum dolor sit amet, consectetuer
+adipiscing elit</td>
+<td></td>
+<td class="text-black font-semibold">18 Sep</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="name">John Smith</td>
+<td class="subject">Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+</td>
+<td></td>
+<td class="mail-date">21 Aug</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="name">me, Robert Smith (3)</td>
+<td class="subject">Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+</td>
+<td></td>
+<td class="mail-date">1 Aug</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="text-black font-semibold">Codecanyon</td>
+<td class="text-black font-semibold">Welcome To Codecanyon</td>
+<td></td>
+<td class="text-black font-semibold">Jul 13</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="name">Richard Miles</td>
+<td class="subject">Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+</td>
+<td><i class="fa fa-paperclip"></i></td>
+<td class="mail-date">May 14</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star-o"></i></span></td>
+<td class="text-black font-semibold">John Smith</td>
+<td class="text-black font-semibold">Lorem ipsum dolor sit amet, consectetuer
+adipiscing elit</td>
+<td></td>
+<td class="text-black font-semibold">11/11/16</td>
+</tr>
+<tr class="clickable-row border-b border-[#dee2e6]" data-href="mail-view.html">
+<td>
+<input type="checkbox" class="checkmail">
+</td>
+<td><span><i class="fa fa-star text-favourite"></i></span></td>
+<td class="name">Mike Litorus</td>
+<td class="subject">Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+</td>
+<td></td>
+<td class="mail-date">10/31/16</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="../static/js/jquery-3.6.0.min.js"></script>
+<script src="../static/js/alpine.min.js" defer></script>
+
+<script src="../static/js/app.js"></script>
+</body>
+</html>

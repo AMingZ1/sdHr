@@ -1,0 +1,1670 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Smarthr - Bootstrap Admin Template">
+<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+<meta name="author" content="Dreamguys - Bootstrap Admin Template">
+<meta name="robots" content="noindex, nofollow">
+<title>Components - HRMS admin template</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="../static/images/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../static/css/all.min.css" />
+<link rel="stylesheet" href="../static/css/flowbite.min.css" />
+<link rel="stylesheet" href="../static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../static/css/line-awesome.min.css">
+<link rel="stylesheet" href="../static/css/custom-forms.css" />
+<link rel="stylesheet" href="../static/css/index.min.css" />
+<link rel="stylesheet" href="../static/css/tailwind-dist.css">
+</head>
+<body class="font-CircularStd bg-body" x-data="{modal:false}" @click.away="modal=false" x-cloak>
+<div class="main-wrapper">
+
+<header class="fixed left-0 right-0 top-0 bg-gradient-to-r from-[#ff9b44] to-[#fc6075] h-[60px] flex items-center border-b border-transparent shadow-header z-[500]">
+
+<div class="logo media-max-w-md:max-w-full max-w-[230px] w-full media-max-w-md:absolute px-5 transition-all ease-in-out duration-[0.2s]">
+<a href="admin-dashboard.html">
+<img src="../static/images/logo.png" alt="logo" class="w-[40px] h-[40px] mx-auto">
+</a>
+</div>
+
+
+<div class="px-5 media-max-w-lg:hidden">
+<h3 class="text-[20px] font-normal text-white leading-[1.2]">Dreamguy's Technologies</h3>
+</div>
+
+<a id="mobile_btn" class="media-min-w-md:hidden px-5 w-[60px] h-[60px] leading-[60px] absolute top-0 left-0 text-white text-2xl" href="#sidebar"><i class="fa fa-bars"></i></a>
+
+<div class="ml-auto">
+<ul class="hidden sm:flex items-center">
+
+<li>
+<div class="relative" x-data="{mobSearch:false}">
+<a href="javascript:void(0);" class="media-min-w-md:hidden inline-block h-[60px] leading-[60px] text-white text-xl sm:px-[10px] md:px-[15px] responsive-search" @click="mobSearch = ! mobSearch">
+<i class="fa fa-search"></i>
+</a>
+<form x-show="mobSearch" action="javascript:;" class="flex items-center w-[230px] absolute left-0 mt-[10px] z-50">
+<input class="bg-white w-full h-[40px] py-[10px] pl-[15px] pr-[50px] border border-[#e3e3e3] rounded-[50px] text-[#333333] placeholder:text-blackOverlay outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-[#333333]"></i>
+</button>
+</form>
+<form action="javascript:;" class=" media-max-w-md:hidden flex items-center w-[230px] relative">
+<input class="bg-searchbg !border-transparent focus:ring-0 w-full h-[40px] py-[10px] pl-[15px] pr-[50px] rounded-[50px] text-white placeholder:text-whiteOpacity outline-none focus:outline-none" type="text" placeholder="Search here">
+<button class="flex absolute right-3" type="submit">
+<i class="fa fa-search text-whiteOpacity"></i>
+</button>
+</form>
+</div>
+</li>
+
+
+<li class="relative" x-data="{transLang:false}" @click.away="transLang=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white text-[15px] flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':transLang === true, 'after:rotate-0': transLang === false}" @click="transLang = ! transLang"><img src="../static/images/flags/us.png" class="w-5 h-5 media-max-w-md:mr-0 mr-2" alt=""><span class="media-max-w-md:hidden leading-[60px]">English</span></a>
+<div x-show="transLang" class="py-2 bg-white absolute left-0 right-0 border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/us.png" class="w-4 h-4 mr-2" alt="">English</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/fr.png" class="w-4 h-4 mr-2" alt="">French</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/es.png" class="w-4 h-4 mr-2" alt="">Spanish</a>
+<a href="javascript:;" @click.prevent="transLang=false" class="px-3 py-1 flex items-center text-[13px] hover:text-dropdownColor hover:bg-dropdownhoverColor"><img src="../static/images/flags/de.png" class="w-4 h-4 mr-2" alt="">German</a>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-bell-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">John Doe</span> added new task <span class="text-notiTitle">Patient appointment booking</span>
+</p>
+<p class="text-notiTime text-xs"><span>4 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Tarah Shropshire</span> changed the
+task name <span class="text-notiTitle">Appointment booking with
+payment gateway</span></p>
+<p class="text-notiTime text-xs"><span>6 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-06.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Misty Tison</span> added <span class="text-notiTitle">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+<p class="text-notiTime text-xs"><span>8 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-17.jpg" class="w-full rounded-full">
+</span>
+<div class="media-body flex-grow-1">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Rolland Webber</span> completed task
+<span class="text-notiTitle">Patient and Doctor video
+conferencing</span></p>
+<p class="text-notiTime text-xs"><span>12 mins ago</span></p>
+</div>
+</div>
+</a>
+</li>
+<li>
+<a href="activities.html" class="block p-3 rounded-sm">
+<div class="flex">
+<span class="w-[38px] shrink-0 mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-13.jpg" class="w-full rounded-full">
+</span>
+<div class="grow">
+<p class="text-notiDetails text-[13px]"><span class="text-notiTitle">Bernardo Galaviz</span> added new
+task <span class="text-notiTitle">Private chat module</span></p>
+<p class="text-notiTime text-xs"><span>2 days ago</span></p>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="activities.html" class="text-xs block text-[#333333]">View all
+Notifications</a>
+</div>
+</div>
+</li>
+
+
+<li class="relative" x-data="{notify:false}" @click.away="notify=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity" @click="notify = ! notify"><i class="fa fa-comment-o relative text-xl"></i><span class="bg-countBubble w-5 h-5 flex items-center text-xs justify-center font-semibold text-white rounded-full absolute top-[6px] right-[3px]">3</span></a>
+<div x-show="notify" class="bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[10rem] z-50">
+<div class="h-8 leading-8 px-3 flex items-center justify-between border-b border-dropdownBorderBtm">
+<span class="text-sm block text-[#333333]">Notifications</span>
+<a href="javascript:void(0)" class="text-[#f83f37] text-[11px] uppercase"> Clear All
+</a>
+</div>
+<div class="w-[350px] h-[290px] overflow-y-auto">
+<ul>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-09.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Richard
+Miles </span>
+<span class="text-[#666666] text-[11px] float-right">12:28 AM</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-02.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">John
+Doe</span>
+<span class="text-[#666666] text-[11px] float-right">6 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-03.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Tarah
+Shropshire </span>
+<span class="text-[#666666] text-[11px] float-right">5 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-05.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Mike
+Litorus</span>
+<span class="text-[#666666] text-[11px] float-right">3 Mar</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+<li class="border-b border-dropdownBorderBtm">
+<a href="chat.html" class="block p-3 rounded-sm">
+<div class="relative">
+<div class="absolute w-[48px] h-[48px]">
+<span class="inline-block w-[38px] h-[38px] mr-[10px]">
+<img alt="" src="../static/images/profiles/avatar-08.jpg" class="w-full rounded-full">
+</span>
+</div>
+<div class="pl-[50px] pr-0 py-0">
+<span class="text-[13px] text-[#333333] font-medium w-[175px] block float-left max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Catherine
+Manseau </span>
+<span class="text-[#666666] text-[11px] float-right">27 Feb</span>
+<div class="clear-both"></div>
+<span class="text-[13px] text-[#333333] block max-w-full overflow-hidden text-ellipsis whitespace-nowrap">Lorem
+ipsum dolor sit amet, consectetur adipiscing</span>
+</div>
+</div>
+</a>
+</li>
+</ul>
+</div>
+<div class="border border-dropdownBorderBtm h-8 leading-8 px-3 flex items-center justify-center">
+<a href="chat.html" class="text-xs block text-[#333333]">View all Messages</a>
+</div>
+</div>
+</li>
+
+<li class="relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="sm:px-[10px] md:px-[15px] text-white flex items-center h-[60px] hover:bg-blackOpacity focus:bg-blackOpacity after:media-max-w-md:hidden after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<div class="inline-block relative leading-[60px] h-[60px] media-min-w-md:mr-2"><img src="../static/images/profiles/avatar-21.jpg" class="inline-block w-[30px] h-[30px] rounded-full" alt=""><span class="w-[10px] h-[10px] bg-statusOnline rounded-full border-2 border-white absolute right-0 bottom-3"></span></div><span class="media-max-w-md:hidden text-[15px] leading-[60px]">Admin</span></a>
+<div x-show="profile" class="py-2 bg-white absolute right-0 border border-dropdownBorder shadow rounded-sm min-w-[130px] max-h-[150px] overflow-y-auto z-50">
+<a href="profile.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">my profile</a>
+<a href="settings.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">settings</a>
+<a href="index.html" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">logout</a>
+</div>
+</li>
+</ul>
+
+
+<div class="block sm:hidden relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="text-white flex items-center h-[60px] px-5" @click="profile = ! profile"><i class="fa fa-ellipsis-v text-2xl"></i></a>
+<div class="py-2 bg-white absolute right-0 media-max-w-xs:right-[18px] border border-dropdownBorder shadow rounded-sm min-w-[120px] max-h-[150px] overflow-y-auto z-50" x-show="profile">
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="profile.html">My Profile</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="settings.html">Settings</a>
+<a class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor" href="index.html">Logout</a>
+</div>
+</div>
+
+</div>
+</header>
+
+
+<div class="sidebar bg-sidebar stickyside media-max-w-md:-ml-[225px] media-max-w-md:w-[225px] transition-all ease-in-out duration-[0.2s] w-[230px] fixed top-[60px] bottom-0 left-0 py-[10px] z-[401]" id="sidebar">
+<div class="h-full pb-5 scrollbar-thin scrollbar-thumb-scrollbar scroll">
+<div id="sidebar-menu" class="sidebar-menu">
+<ul>
+<li class="menu-title">
+Components
+</li>
+<li>
+<a href="#comp_alerts" class="active">Alerts</a>
+</li>
+<li>
+<a href="#comp_breadcrumbs">Breadcrumbs</a>
+</li>
+<li>
+<a href="#comp_buttons">Buttons</a>
+</li>
+<li>
+<a href="#comp_cards">Cards</a>
+</li>
+<li>
+<a href="#comp_dropdowns">Dropdowns</a>
+</li>
+<li>
+<a href="#comp_pagination">Pagination</a>
+</li>
+<li>
+<a href="#comp_progress">Progress</a>
+</li>
+<li>
+<a href="#comp_tabs">Tabs</a>
+</li>
+<li>
+<a href="#comp_typography">Typography</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div class="page-wrapper flex-1 relative left-0 pt-[60px] media-min-w-md:ml-[230px]">
+<div class="p-[15px] sm:p-[30px]">
+<div class="page-header mb-[1.875rem]">
+<div>
+<div>
+<h3 class="text-pageTitle text-lg sm:text-2xl md:text-[26px] font-medium sm:mb-[5px] leading-[1.2]">
+Components</h3>
+<ul class="hidden text-[14px] md:text-base font-medium sm:flex flex-wrap">
+<li><a href="index.html" class="text-[#333333]">Dashboard</a></li>
+<li><span class="px-2">/</span></li>
+<li class="text-[#6c757d]">Components</li>
+</ul>
+</div>
+</div>
+</div>
+
+<section class="py-[30px] mb-[30px]" id="comp_alerts">
+<h3 class="underline uppercase text-lg mb-5">Alerts</h3>
+<div>
+<div class="alert bg-alertPrimary-bgColor text-alertPrimary-fontColor border-alertPrimary-borderColor flex items-center justify-between mb-4" id="alert-1" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-1" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertSecondary-bgColor text-alertSecondary-fontColor border-alertSecondary-borderColor flex items-center justify-between mb-4" id="alert-2" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-2" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertWarning-bgColor text-alertWarning-fontColor border-alertWarning-borderColor flex items-center justify-between mb-4" id="alert-3" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-3" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertDanger-bgColor text-alertDanger-fontColor border-alertDanger-borderColor flex items-center justify-between mb-4" id="alert-4" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-4" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertSuccess-bgColor text-alertSuccess-fontColor border-alertSuccess-borderColor flex items-center justify-between mb-4" id="alert-5" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-5" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertInfo-bgColor text-alertInfo-fontColor border-alertInfo-borderColor flex items-center justify-between mb-4" id="alert-6" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-6" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertLight-bgColor text-alertLight-fontColor border-alertLight-borderColor flex items-center justify-between mb-4" id="alert-7" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-7" aria-label="Close">close</span>
+</div>
+<div class="alert bg-alertDark-bgColor text-alertDark-fontColor border-alertDark-borderColor flex items-center justify-between" id="alert-8" role="alert">
+<p class="pr-12"><strong>Holy guacamole!</strong> You should check in on some of those
+fields below.</p>
+<span class="material-icons-outlined cursor-pointer" data-dismiss-target="#alert-8" aria-label="Close">close</span>
+</div>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_breadcrumbs">
+<h3 class="underline uppercase text-lg mb-5">Breadcrumbs</h3>
+<div>
+<ol class="text-base font-medium flex flex-wrap mb-4">
+<li class="text-[#6c757d]">Home</li>
+</ol>
+<ol class="text-base font-medium flex flex-wrap mb-4">
+<li><a href="index.html" class="text-[#0d6efd]">Home</a></li>
+<li><span class="px-2">/</span></li>
+<li class="text-[#6c757d]">Products</li>
+</ol>
+<ol class="text-base font-medium flex flex-wrap">
+<li><a href="index.html" class="text-[#0d6efd]">Home</a></li>
+<li><span class="px-2">/</span></li>
+<li class="text-[#6c757d]">Products</li>
+<li><span class="px-2">/</span></li>
+<li class="text-[#6c757d]">Accessories</li>
+</ol>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_buttons">
+<h3 class="underline uppercase text-lg mb-5">Buttons</h3>
+<div>
+<h4 class="text-xl mb-5">Default Button</h4>
+<button type="button" class="btn bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor mb-[5px]">Primary</button>
+<button type="button" class="btn bg-btnSecondary-bgColor text-btnSecondary-fontColor border-btnSecondary-borderColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor mb-[5px]">Secondary</button>
+<button type="button" class="btn bg-btnSuccess-bgColor text-btnSuccess-fontColor border-btnSuccess-borderColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor mb-[5px]">Success</button>
+<button type="button" class="btn bg-btnDanger-bgColor text-btnDanger-fontColor border-btnDanger-borderColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor mb-[5px]">Danger</button>
+<button type="button" class="btn bg-btnWarning-bgColor text-btnWarning-fontColor border-btnWarning-borderColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor mb-[5px]">Warning</button>
+<button type="button" class="btn bg-btnInfo-bgColor text-btnInfo-fontColor border-btnInfo-borderColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor mb-[5px]">Info</button>
+<button type="button" class="btn bg-btnLight-bgColor text-btnLight-fontColor border-btnLight-borderColor hover:bg-btnLight-hoverbgColor hover:border-btnLight-hoverborderColor mb-[5px]">Light</button>
+<button type="button" class="btn bg-btnDark-bgColor text-btnDark-fontColor border-btnDark-borderColor hover:bg-btnDark-hoverbgColor hover:border-btnDark-hoverborderColor mb-[5px]">Dark</button>
+<button type="button" class="btn text-btnLink-fontColor hover:text-btnLink-hoverfontColor underline mb-[5px]">Link</button>
+<hr class="my-4 border-black opacity-25">
+<h4 class="text-xl mb-5">Button Sizes</h4>
+<p class="mb-4">
+<button type="button" class="btn-lg bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor mb-[5px]">Primary</button>
+<button type="button" class="btn-lg bg-btnSecondary-bgColor text-btnSecondary-fontColor border-btnSecondary-borderColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor mb-[5px]">Secondary</button>
+<button type="button" class="btn-lg bg-btnSuccess-bgColor text-btnSuccess-fontColor border-btnSuccess-borderColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor mb-[5px]">Success</button>
+<button type="button" class="btn-lg bg-btnDanger-bgColor text-btnDanger-fontColor border-btnDanger-borderColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor mb-[5px]">Danger</button>
+<button type="button" class="btn-lg bg-btnWarning-bgColor text-btnWarning-fontColor border-btnWarning-borderColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor mb-[5px]">Warning</button>
+<button type="button" class="btn-lg bg-btnInfo-bgColor text-btnInfo-fontColor border-btnInfo-borderColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor mb-[5px]">Info</button>
+<button type="button" class="btn-lg bg-btnLight-bgColor text-btnLight-fontColor border-btnLight-borderColor hover:bg-btnLight-hoverbgColor hover:border-btnLight-hoverborderColor mb-[5px]">Light</button>
+<button type="button" class="btn-lg bg-btnDark-bgColor text-btnDark-fontColor border-btnDark-borderColor hover:bg-btnDark-hoverbgColor hover:border-btnDark-hoverborderColor mb-[5px]">Dark</button>
+<button type="button" class="btn-lg text-btnLink-fontColor hover:text-btnLink-hoverfontColor underline mb-[5px]">Link</button>
+</p>
+<p class="mb-4">
+<button type="button" class="btn bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor mb-[5px]">Primary</button>
+<button type="button" class="btn bg-btnSecondary-bgColor text-btnSecondary-fontColor border-btnSecondary-borderColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor mb-[5px]">Secondary</button>
+<button type="button" class="btn bg-btnSuccess-bgColor text-btnSuccess-fontColor border-btnSuccess-borderColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor mb-[5px]">Success</button>
+<button type="button" class="btn bg-btnDanger-bgColor text-btnDanger-fontColor border-btnDanger-borderColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor mb-[5px]">Danger</button>
+<button type="button" class="btn bg-btnWarning-bgColor text-btnWarning-fontColor border-btnWarning-borderColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor mb-[5px]">Warning</button>
+<button type="button" class="btn bg-btnInfo-bgColor text-btnInfo-fontColor border-btnInfo-borderColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor mb-[5px]">Info</button>
+<button type="button" class="btn bg-btnLight-bgColor text-btnLight-fontColor border-btnLight-borderColor hover:bg-btnLight-hoverbgColor hover:border-btnLight-hoverborderColor mb-[5px]">Light</button>
+<button type="button" class="btn bg-btnDark-bgColor text-btnDark-fontColor border-btnDark-borderColor hover:bg-btnDark-hoverbgColor hover:border-btnDark-hoverborderColor mb-[5px]">Dark</button>
+<button type="button" class="btn text-btnLink-fontColor hover:text-btnLink-hoverfontColor underline mb-[5px]">Link</button>
+</p>
+<p class="mb-4">
+<button type="button" class="btn-sm bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor mb-[5px]">Primary</button>
+<button type="button" class="btn-sm bg-btnSecondary-bgColor text-btnSecondary-fontColor border-btnSecondary-borderColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor mb-[5px]">Secondary</button>
+<button type="button" class="btn-sm bg-btnSuccess-bgColor text-btnSuccess-fontColor border-btnSuccess-borderColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor mb-[5px]">Success</button>
+<button type="button" class="btn-sm bg-btnDanger-bgColor text-btnDanger-fontColor border-btnDanger-borderColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor mb-[5px]">Danger</button>
+<button type="button" class="btn-sm bg-btnWarning-bgColor text-btnWarning-fontColor border-btnWarning-borderColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor mb-[5px]">Warning</button>
+<button type="button" class="btn-sm bg-btnInfo-bgColor text-btnInfo-fontColor border-btnInfo-borderColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor mb-[5px]">Info</button>
+<button type="button" class="btn-sm bg-btnLight-bgColor text-btnLight-fontColor border-btnLight-borderColor hover:bg-btnLight-hoverbgColor hover:border-btnLight-hoverborderColor mb-[5px]">Light</button>
+<button type="button" class="btn-sm bg-btnDark-bgColor text-btnDark-fontColor border-btnDark-borderColor hover:bg-btnDark-hoverbgColor hover:border-btnDark-hoverborderColor mb-[5px]">Dark</button>
+<button type="button" class="btn-sm text-btnLink-fontColor hover:text-btnLink-hoverfontColor underline mb-[5px]">Link</button>
+</p>
+<hr class="my-4 border-black opacity-25">
+<h4 class="text-xl mb-5">Button Groups</h4>
+<p class="mb-4">
+<div class="flex flex-wrap justify-start">
+<div class="relative inline-flex align-middle">
+<button type="button" class="btn-lg bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tr-none !rounded-br-none mb-[5px]">Left</button>
+<button type="button" class="btn-lg bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-none mb-[5px]">Middle</button>
+<button type="button" class="btn-lg bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tl-none !rounded-bl-none mb-[5px]">Right</button>
+</div>
+</div>
+</p>
+<p class="mb-4">
+<div class="flex flex-wrap justify-start">
+<div class="relative inline-flex align-middle">
+<button type="button" class="btn bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tr-none !rounded-br-none mb-[5px]">Left</button>
+<button type="button" class="btn bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-none mb-[5px]">Middle</button>
+<button type="button" class="btn bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tl-none !rounded-bl-none mb-[5px]">Right</button>
+</div>
+</div>
+</p>
+<p class="mb-4">
+<div class="flex flex-wrap justify-start">
+<div class="relative inline-flex align-middle">
+<button type="button" class="btn-sm bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tr-none !rounded-br-none mb-[5px]">Left</button>
+<button type="button" class="btn-sm bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-none mb-[5px]">Middle</button>
+<button type="button" class="btn-sm bg-btnPrimary-bgColor text-btnPrimary-fontColor border-btnPrimary-borderColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor !rounded-tl-none !rounded-bl-none mb-[5px]">Right</button>
+</div>
+</div>
+</p>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_cards">
+<h3 class="underline uppercase text-lg mb-5">cards</h3>
+<div>
+<div class="md:grid grid-cols-12 gap-x-6">
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<img alt="" src="../static/images/img-01.jpg" class="w-full rounded-tl rounded-tr">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with image and links</h5>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<p class="mb-4">Some quick example text to build on the card title and make up
+the bulk of the card's content.</p>
+<a class="text-[#0d6efd]" href="javascript:;">Card link</a>
+<a class="text-[#0d6efd] ml-4" href="javascript:;">Another link</a>
+</div>
+</div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<img alt="" src="../static/images/img-01.jpg" class="w-full rounded-tl rounded-tr">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with image and button</h5>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<p class="mb-4">Some quick example text to build on the card title and make up
+the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+</div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<img alt="" src="../static/images/img-01.jpg" class="w-full rounded-tl rounded-tr">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with image and list</h5>
+</div>
+<div class="flex-grow flex-shrink basis-auto">
+<ul class="">
+<li class="border-b border-select px-4 py-2 block relative">Cras justo odio
+</li>
+<li class="border-b border-select px-4 py-2 block relative">Dapibus ac
+facilisis in</li>
+<li class="border-b border-select px-4 py-2 block relative">Vestibulum at
+eros</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6">
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with links</h5>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<p class="mb-4">Some quick example text to build on the card title and make up
+the bulk of the card's content.</p>
+<a class="text-[#0d6efd]" href="javascript:;">Card link</a>
+<a class="text-[#0d6efd] ml-4" href="javascript:;">Another link</a>
+</div>
+ </div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with button</h5>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<p class="mb-4">Some quick example text to build on the card title and make up
+the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+</div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px] flex-grow flex-shrink basis-auto">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<h5 class="text-xl">Card with list</h5>
+</div>
+<div class="flex-grow flex-shrink basis-auto">
+<ul class="">
+<li class="border-b border-select px-4 py-2 block relative">Cras justo odio
+</li>
+<li class="border-b border-select px-4 py-2 block relative">Dapibus ac
+facilisis in</li>
+<li class="border-b border-select px-4 py-2 block relative">Vestibulum at
+eros</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6">
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<p>This is my header</p>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h5 class="text-xl mb-4">Special title treatment</h5>
+<p class="mb-4">Some quick example text to build on the card title and make up
+the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+<div class="bg-white px-4 py-2 border-t border-separate text-muted">
+<p>This is my footer</p>
+</div>
+</div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]" x-data="{ tab: 'activeTab' }">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<ul class="bg-white flex flex-wrap justify-end -mx-2 -mb-2 border-b-0">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'activeTab', 'border-b-white border-[#dee2e6] text-[#495057]': tab === 'activeTab' }" x-on:click.prevent="tab = 'activeTab'">Active</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'linkTab', 'border-b-white border-[#dee2e6]': tab === 'linkTab', 'text-[#495057]': tab === 'linkTab' }" x-on:click.prevent="tab = 'linkTab'">Link</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] pointer-events-none" :class="{ 'active': tab === 'disabledTab', 'border-b-white border-[#dee2e6]': tab === 'disabledTab', 'text-[#495057]': tab === 'disabledTab' }" x-on:click.prevent="tab = 'disabledTab'">Disabled</a></li>
+</ul>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<div x-show="tab === 'activeTab'">
+ <h5 class="text-xl mb-4">Card with tabs</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+<div class="text-center" x-show="tab === 'linkTab'">
+<h5 class="text-xl mb-4">Card with tabs</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+<div class="text-center" x-show="tab === 'disabledTab'">
+<h5 class="text-xl mb-4">Card with tabs</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-6 media-min-w-md:col-span-4 flex">
+<div class="card shadow-header border-cardBorder mb-[30px]" x-data="{ tab: 'activeTab' }">
+<div class="bg-white px-4 py-2 border-b border-separate">
+<ul class="bg-white flex flex-wrap justify-end">
+<li class="inline-block"><a href="javascript:;" class="block rounded px-4 py-2 bg-transparent text-[#0d6efd]" :class="{ 'active': tab === 'activeTab', 'bg-[#0d6efd] text-[#ffffff]': tab === 'activeTab' }" x-on:click.prevent="tab = 'activeTab'">Active</a></li>
+<li class="inline-block"><a href="javascript:;" class="block rounded px-4 py-2 bg-transparent text-[#0d6efd]" :class="{ 'active': tab === 'linkTab', 'bg-[#0d6efd]': tab === 'linkTab', 'text-[#ffffff]': tab === 'linkTab' }" x-on:click.prevent="tab = 'linkTab'">Link</a></li>
+<li class="inline-block"><a href="javascript:;" class="block rounded px-4 py-2 bg-transparent text-[#666666] pointer-events-none" :class="{ 'active': tab === 'disabledTab', 'bg-[#0d6efd]': tab === 'disabledTab', 'text-white': tab === 'disabledTab' }" x-on:click.prevent="tab = 'disabledTab'">Disabled</a></li>
+</ul>
+</div>
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<div x-show="tab === 'activeTab'">
+<h5 class="text-xl mb-4">Card with pills</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+<div class="text-center" x-show="tab === 'linkTab'">
+<h5 class="text-xl mb-4">Card with pills</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+<div class="text-center" x-show="tab === 'disabledTab'">
+<h5 class="text-xl mb-4">Card with pills</h5>
+<p class="mb-4">Some quick example text to build on the card title and make
+up the bulk of the card's content.</p>
+<a class="btn bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor" href="javascript:;">Go somewhere</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_dropdowns">
+<h3 class="underline uppercase text-lg mb-5">Dropdowns</h3>
+<div>
+<h4 class="text-xl mb-5">Dropdowns within Text</h4>
+<div class="relative" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="flex items-center text-[#0d6efd] after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Dropdown</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-7 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+</div>
+</div>
+<hr class="my-4 border-black opacity-25">
+<h4 class="text-xl mb-5">Dropdowns within Buttons</h4>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnSecondary-bgColor border-btnSecondary-borderColor text-btnSecondary-fontColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor  after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnInfo-bgColor border-btnInfo-borderColor text-btnInfo-fontColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnSuccess-bgColor border-btnSuccess-borderColor text-btnSuccess-fontColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnWarning-bgColor border-btnWarning-borderColor text-btnWarning-fontColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class="text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<div class="relative inline-flex align-middle" x-data="{profile:false}" @click.away="profile=false">
+<a href="javascript:;" class="mb-[5px] inline-flex text-base	 items-center px-3 py-[6px] rounded-[5px] leading-[1.2] bg-btnDanger-bgColor border-btnDanger-borderColor text-btnDanger-fontColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:pl-[5px] after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px] after:pr-[5px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile">
+<span class=" text-[15px]">Action</span></a>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+<hr class="my-4 border-black opacity-25">
+<h4 class="text-xl mb-5">Split button dropdowns</h4>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor">
+Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnPrimary-bgColor border-btnPrimary-borderColor text-btnPrimary-fontColor hover:bg-btnPrimary-hoverbgColor hover:border-btnPrimary-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnSecondary-bgColor border-btnSecondary-borderColor text-btnSecondary-fontColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor">
+Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnSecondary-bgColor border-btnSecondary-borderColor text-btnSecondary-fontColor hover:bg-btnSecondary-hoverbgColor hover:border-btnSecondary-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnInfo-bgColor border-btnInfo-borderColor text-btnInfo-fontColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor">
+Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnInfo-bgColor border-btnInfo-borderColor text-btnInfo-fontColor hover:bg-btnInfo-hoverbgColor hover:border-btnInfo-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnSuccess-bgColor border-btnSuccess-borderColor text-btnSuccess-fontColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor">
+Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnSuccess-bgColor border-btnSuccess-borderColor text-btnSuccess-fontColor hover:bg-btnSuccess-hoverbgColor hover:border-btnSuccess-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnWarning-bgColor border-btnWarning-borderColor text-btnWarning-fontColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor">
+ Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnWarning-bgColor border-btnWarning-borderColor text-btnWarning-fontColor hover:bg-btnWarning-hoverbgColor hover:border-btnWarning-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+<div class="inline-flex align-middle mb-[5px]" x-data="{profile:false}" @click.away="profile=false">
+<button type="button" class="inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tr-none rounded-br-none leading-[1.2] bg-btnDanger-bgColor border-btnDanger-borderColor text-btnDanger-fontColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor">
+Action</button>
+<div class="relative">
+<button type="button" class="relative inline-flex text-base items-center px-3 py-[6px] rounded-[5px] rounded-tl-none rounded-bl-none leading-[1.2] bg-btnDanger-bgColor border-btnDanger-borderColor text-btnDanger-fontColor hover:bg-btnDanger-hoverbgColor hover:border-btnDanger-hoverborderColor after:content-['\f107'] after:font-FontAwesome after:text-[20px] after:transition-all after:ease-in-out after:duration-[0.2s]" :class="{'after:rotate-180 after:pl-[0px]':profile === true, 'after:rotate-0': profile === false}" @click="profile = ! profile"></button>
+<div x-show="profile" class="py-2 bg-white absolute left-0 top-10 border border-dropdownBorder rounded-sm min-w-[10rem] max-h-[150px] overflow-y-auto z-50">
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Action</a>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Another
+action</a>
+<span class="border-t border-seperator block my-2 h-0"></span>
+<a href="javascript:;" @click.prevent="profile=false" class="px-3 py-1 flex items-center text-[13px] capitalize hover:text-dropdownColor hover:bg-dropdownhoverColor">Separated
+link</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_pagination">
+<h3 class="underline uppercase text-lg mb-5">Pagination</h3>
+<div>
+<div class="mb-4">
+<ul class="inline-flex bg-white items-center border border-pagination rounded">
+<li>
+<a class="block rounded-tl rounded-bl border-r border-pagination px-3 py-[6px] pointer-events-none" href="javascript:;">
+<span>Previous</span>
+</a>
+</li>
+<li><a class="block border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">1</a></li>
+<li><a class="block border-r border-pagination px-3 py-[6px] bg-primary text-white hover:bg-dropdownhoverColor" href="javascript:;">2</a></li>
+<li><a class="block border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">3</a></li>
+<li>
+<a class="block rounded-tr rounded-br px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">
+<span>Next</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-4">
+<ul class="inline-flex bg-white items-center border border-pagination rounded">
+<li>
+<a class="block rounded-tl rounded-bl border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">
+<span>«</span>
+</a>
+</li>
+<li><a class="block border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">1</a></li>
+<li><a class="block border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">2</a></li>
+<li><a class="block border-r border-pagination px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">3</a></li>
+<li>
+<a class="block rounded-tr rounded-br px-3 py-[6px] text-primary hover:bg-dropdownhoverColor" href="javascript:;">
+<span>»</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-4">
+<ul class="inline-flex bg-white items-center border border-pagination rounded text-xl">
+<li>
+<a class="block rounded-tl rounded-bl border-r border-pagination px-6 py-3 pointer-events-none" href="javascript:;">
+<span>Previous</span>
+</a>
+</li>
+<li><a class="block border-r border-pagination px-6 py-3 text-primary hover:bg-dropdownhoverColor" href="javascript:;">1</a></li>
+<li><a class="block border-r border-pagination px-6 py-3 bg-primary text-white hover:bg-dropdownhoverColor" href="javascript:;">2</a></li>
+<li><a class="block border-r border-pagination px-6 py-3 text-primary hover:bg-dropdownhoverColor" href="javascript:;">3</a></li>
+<li>
+<a class="block rounded-tr rounded-br px-6 py-3 text-primary hover:bg-dropdownhoverColor" href="javascript:;">
+<span>Next</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mb-4">
+<ul class="inline-flex bg-white items-center border border-pagination rounded text-sm">
+<li>
+<a class="block rounded-tl rounded-bl border-r border-pagination px-2 py-1 pointer-events-none" href="javascript:;">
+<span>Previous</span>
+</a>
+</li>
+<li><a class="block border-r border-pagination px-2 py-1 text-primary hover:bg-dropdownhoverColor" href="javascript:;">1</a></li>
+<li><a class="block border-r border-pagination px-2 py-1 bg-primary text-white hover:bg-dropdownhoverColor" href="javascript:;">2</a></li>
+<li><a class="block border-r border-pagination px-2 py-1 text-primary hover:bg-dropdownhoverColor" href="javascript:;">3</a></li>
+<li>
+<a class="block rounded-tr rounded-br px-2 py-1 text-primary hover:bg-dropdownhoverColor" href="javascript:;">
+<span>Next</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_progress">
+<h3 class="underline uppercase text-lg mb-5">Progress</h3>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<h5 class="text-muted mb-2">Large Progress Bars</h5>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-[#25628F] h-[18px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-success h-[18px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-info h-[18px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-warning h-[18px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-danger h-[18px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div>
+<div class="w-full bg-[#e9ecef] progressGradient rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-[#25628F] h-[18px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-success h-[18px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-info h-[18px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-warning h-[18px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-danger h-[18px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<h5 class="text-muted mb-2">Default Progress Bars</h5>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-[#25628F] h-[18px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-success h-[18px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-info h-[18px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-warning h-[18px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-danger h-[18px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div>
+<div class="w-full bg-[#e9ecef] progressGradient rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-[#25628F] h-[18px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-success h-[18px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-info h-[18px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-warning h-[18px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[18px] mb-6">
+<div class="bg-danger h-[18px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<h5 class="text-muted mb-2">Medium Progress Bars</h5>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-[#25628F] h-2" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-success h-2" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-info h-2" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-warning h-2" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-danger h-2" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div>
+<div class="w-full bg-[#e9ecef] progressGradient rounded overflow-hidden h-2 mb-6">
+<div class="bg-[#25628F] h-2" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-success h-2" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-info h-2" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-warning h-2" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-2 mb-6">
+<div class="bg-danger h-2" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<h5 class="text-muted mb-2">Small Progress Bars</h5>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-[#25628F] h-[6px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-success h-[6px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-info h-[6px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-warning h-[6px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-danger h-[6px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div>
+<div class="w-full bg-[#e9ecef] progressGradient rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-[#25628F] h-[6px]" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-success h-[6px]" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-info h-[6px]" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-warning h-[6px]" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-[6px] mb-6">
+<div class="bg-danger h-[6px]" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<h5 class="text-muted mb-2">Extra Small Progress Bars</h5>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-[#25628F] h-1" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-success h-1" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-info h-1" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-warning h-1" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-danger h-1" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div>
+<div class="w-full bg-[#e9ecef] progressGradient rounded overflow-hidden h-1 mb-6">
+<div class="bg-[#25628F] h-1" style="width: 10%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-success h-1" style="width: 25%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-info h-1" style="width: 50%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-warning h-1" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="w-full bg-[#e9ecef] rounded overflow-hidden h-1 mb-6">
+<div class="bg-danger h-1" style="width: 100%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="py-[30px] mb-[30px]" id="comp_tabs">
+<h3 class="underline uppercase text-lg mb-5">Tabs</h3>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Basic tabs</h4>
+<div x-data="{ tab: 'profile' }">
+<ul class="bg-white flex flex-wrap -mb-2 border-b border-pagination">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'hme', 'border-b-white border-[#dee2e6] text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'profile', 'border-b-white border-[#dee2e6]': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'msg', 'border-b-white border-[#dee2e6]': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+ </div>
+</div>
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Basic justified tabs</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-white grid grid-cols-3 gap-x-1 -mb-2 border-b border-pagination">
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border border-transparent  text-[#666666] hover:bg-[#eeeeee] whitespace-nowrap" :class="{ 'active': tab === 'hme', 'border-b-white border-[#dee2e6] text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border border-transparent  text-[#666666] hover:bg-[#eeeeee] whitespace-nowrap" :class="{ 'active': tab === 'profile', 'border-b-white border-[#dee2e6]': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border border-transparent  text-[#666666] hover:bg-[#eeeeee] whitespace-nowrap" :class="{ 'active': tab === 'msg', 'border-b-white border-[#dee2e6]': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Top line tabs</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-white flex flex-wrap -mb-2 border-b border-pagination">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-t-2 border-b border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'hme', 'border-b-white border-primary text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-t-2 border-b border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'profile', 'border-b-white border-primary': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-t-2 border-b border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'msg', 'border-b-white border-primary': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Top line justified</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-white grid grid-cols-3 gap-x-1 -mb-2 border-b border-pagination">
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-t-2 border-b border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'hme', 'border-b-white border-primary text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-t-2 border-b border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'profile', 'border-b-white border-primary': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-t-2 border-b border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'msg', 'border-b-white border-primary': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Bottom line tabs</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-white flex flex-wrap -mb-2 border-b border-pagination">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-b-2 border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'hme', 'border-b-primary  text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-b-2 border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'profile', 'border-b-primary ': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 border-b-2 border-transparent -mb-[1px] text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'msg', 'border-b-primary ': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Bottom line justified</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-white grid grid-cols-3 gap-x-1 -mb-2 border-b border-pagination">
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-b-2 border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'hme', 'border-b-primary text-[#495057]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-b-2 border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'profile', 'border-b-primary': tab === 'profile', 'text-[#495057]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 border-b-2 border-transparent  text-[#666666] hover:bg-[#eeeeee]" :class="{ 'active': tab === 'msg', 'border-b-primary': tab === 'msg', 'text-[#495057]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Solid tabs</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-[#fafafa] flex flex-wrap">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'hme', 'bg-[#ff9b44]  text-[#ffffff]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'profile', 'bg-[#ff9b44] ': tab === 'profile', 'text-[#ffffff]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'msg', 'bg-[#ff9b44] ': tab === 'msg', 'text-[#ffffff]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Solid justified</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-[#fafafa] grid grid-cols-3 gap-x-1">
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent  text-[#666666]" :class="{ 'active': tab === 'hme', 'bg-[#ff9b44] text-[#ffffff]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent  text-[#666666]" :class="{ 'active': tab === 'profile', 'bg-[#ff9b44]': tab === 'profile', 'text-[#ffffff]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent  text-[#666666]" :class="{ 'active': tab === 'msg', 'bg-[#ff9b44]': tab === 'msg', 'text-[#ffffff]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6 items-end">
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Solid Rounded</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-[#fafafa] flex flex-wrap">
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent rounded-[50px] -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'hme', 'bg-[#ff9b44]  text-[#ffffff]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent rounded-[50px] -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'profile', 'bg-[#ff9b44] ': tab === 'profile', 'text-[#ffffff]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block"><a href="javascript:;" class="block px-4 py-2 bg-transparent rounded-[50px] -mb-[1px] text-[#666666]" :class="{ 'active': tab === 'msg', 'bg-[#ff9b44] ': tab === 'msg', 'text-[#ffffff]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-6">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Solid justified</h4>
+<div x-data="{ tab: 'hme' }">
+<ul class="bg-[#fafafa] grid grid-cols-3 gap-x-1">
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent rounded-[50px] text-[#666666]" :class="{ 'active': tab === 'hme', 'bg-[#ff9b44] text-[#ffffff]': tab === 'hme' }" x-on:click.prevent="tab = 'hme'">Home</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent rounded-[50px] text-[#666666]" :class="{ 'active': tab === 'profile', 'bg-[#ff9b44]': tab === 'profile', 'text-[#ffffff]': tab === 'profile' }" x-on:click.prevent="tab = 'profile'">Profile</a></li>
+<li class="inline-block text-center"><a href="javascript:;" class="block text-center px-4 py-2 bg-transparent rounded-[50px] text-[#666666]" :class="{ 'active': tab === 'msg', 'bg-[#ff9b44]': tab === 'msg', 'text-[#ffffff]': tab === 'msg' }" x-on:click.prevent="tab = 'msg'">Messages</a></li>
+</ul>
+<div class="pt-4">
+<div x-show="tab === 'hme'">
+<p>Tab content 1</p>
+</div>
+<div x-show="tab === 'profile'">
+<p>Tab content 2</p>
+</div>
+<div x-show="tab === 'msg'">
+<p>Tab content 3</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section id="comp_typography">
+<h3 class="underline uppercase text-lg mb-5">Typography</h3>
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Headings</h4>
+<h1 class="text-4xl">h1. Bootstrap heading</h1>
+<h2 class="text-3xl">h2. Bootstrap heading</h2>
+<h3 class="text-2xl">h3. Bootstrap heading</h3>
+<h4 class="text-lg">h4. Bootstrap heading</h4>
+<h5 class="text-sm">h5. Bootstrap heading</h5>
+<h6 class="text-xs">h6. Bootstrap heading</h6>
+</div>
+</div>
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Blockquotes</h4>
+<blockquote class="mb-4">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+</p>
+</blockquote>
+<blockquote class="mb-4 text-xl">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+</p>
+</blockquote>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6">
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Text elements</h4>
+<p class="mb-4">You can use the mark tag to <mark class="bg-[#fcf8e3] p-[0.2em]">highlight</mark> text.</p>
+<p class="mb-4"><del>This line of text is meant to be treated as deleted text.</del>
+</p>
+<p class="mb-4"><s>This line of text is meant to be treated as no longer
+accurate.</s></p>
+<p class="mb-4"><ins>This line of text is meant to be treated as an addition to the
+document.</ins></p>
+<p class="mb-4"><u>This line of text will render as underlined</u></p>
+<p class="mb-4"><small>This line of text is meant to be treated as fine
+print.</small></p>
+<p class="mb-4"><strong>This line rendered as bold text.</strong></p>
+<p class="mb-4"><em>This line rendered as italicized text.</em></p>
+<p class="text-monospace">This is in monospace</p>
+</div>
+</div>
+</div>
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Coloured Link</h4>
+<p class="mb-4 text-primary">.text-primary</p>
+<p class="mb-4 text-secondary">.text-secondary</p>
+<p class="mb-4 text-success">.text-success</p>
+<p class="mb-4 text-danger">.text-danger</p>
+<p class="mb-4 text-warning">.text-warning</p>
+<p class="mb-4 text-info">.text-info</p>
+<p class="mb-4 text-light bg-dark">.text-light</p>
+<p class="mb-4 text-dark">.text-dark</p>
+<p class="mb-4 text-muted">.text-muted</p>
+<p class="mb-4 text-white bg-dark">.text-white</p>
+</div>
+</div>
+</div>
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Coloured Text</h4>
+<p class="mb-4"><a href="javascript:;" class="text-primary">Primary link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-secondary">Secondary link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-success">Success link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-danger">Danger link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-warning">Warning link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-info">Info link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-light bg-dark">Light link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-dark">Dark link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-muted">Muted link</a></p>
+<p class="mb-4"><a href="javascript:;" class="text-white bg-dark">White link</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="md:grid grid-cols-12 gap-x-6">
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Bullet Lists</h4>
+<ul class="list-disc pl-10 my-[15px]">
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit
+<ul class="list-disc pl-10">
+<li>Phasellus iaculis neque</li>
+<li>Purus sodales ultricies</li>
+<li>Vestibulum laoreet porttitor sem</li>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+</li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Bullet Lists</h4>
+<ol class="list-decimal pl-10 my-[15px]">
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit
+<ul class="list-disc pl-10">
+<li>Phasellus iaculis neque</li>
+<li>Purus sodales ultricies</li>
+<li>Vestibulum laoreet porttitor sem</li>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+</li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="col-span-4">
+<div class="shadow-header border-cardBorder card mb-[30px]">
+<div class="p-4 flex-grow flex-shrink basis-auto">
+<h4 class="text-xl mb-4">Bullet Lists</h4>
+<ul class="pl-10 my-[15px]">
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit
+<ul class="list-disc pl-10">
+<li>Phasellus iaculis neque</li>
+<li>Purus sodales ultricies</li>
+<li>Vestibulum laoreet porttitor sem</li>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+</li>
+<li>Faucibus porta lacus fringilla vel</li>
+<li>Aenean sit amet erat nunc</li>
+<li>Eget porttitor lorem</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+</div>
+
+<script src="../static/js/jquery-3.6.0.min.js"></script>
+<script src="../static/js/flowbite.js"></script>
+<script src="../static/js/alpine.min.js" defer></script>
+
+<script src="../static/js/app.js"></script>
+</body>
+</html>
