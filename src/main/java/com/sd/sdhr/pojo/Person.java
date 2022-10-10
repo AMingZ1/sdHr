@@ -1,9 +1,7 @@
 package com.sd.sdhr.pojo;
 
-import com.sun.istack.internal.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 import java.util.List;

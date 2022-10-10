@@ -35,4 +35,25 @@
 #springBoot的多环境配置:可以选择激活哪一个配置文件
 #spring:
 #  profiles:
-#    active: dev(使用哪个环境配置文件)
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 12345678
+    url: jdbc:mysql://localhost:3306/dsms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+  thymeleaf:
+    cache: false
+  #国际化配置
+  messages:
+    basename: i18n.login
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  #xml文件路径：如果是放在resource目录 classpath:/mapper/**.xml
+  #mapper-locations: classpath:mapper/*.xml
+  #实体类路径
+  #type-aliases-package: com.sd.sdhr.pojo
+server:
+  port: 8090
