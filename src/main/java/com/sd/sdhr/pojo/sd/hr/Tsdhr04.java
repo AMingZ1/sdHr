@@ -1,6 +1,8 @@
-package com.sd.sdhr.pojo;
+package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -8,55 +10,36 @@ import lombok.NoArgsConstructor;
 /**
  * @Description  
  * @Author  GQ
- * @Date 2022-09-28 
+ * @Date 2022-10-30 
  */
 
 @Data//瀹炵幇get+set+toString鍔熻兘
 @AllArgsConstructor//鏈夊弬鏋勯��
 @NoArgsConstructor//鏃犲弬鏋勯��
-public class Tsdhr03  implements Serializable {
+public class Tsdhr04  implements Serializable {
 
-	private static final long serialVersionUID =  3762639396800524755L;
+	private static final long serialVersionUID =  8599943563340064929L;
 
 	/**
-	 * 面试记录号
+	 * 人员编号
 	 */
-	private String itvNo;
+	@TableId
+	private String memberNo;
 
 	/**
-	 * 电联记录号
-	 */
-	private String planNo;
-
-	/**
-	 * 面试部门
-	 */
-	private String itvDept;
-
-	/**
-	 * 面试岗位
-	 */
-	private String itvJob;
-
-	/**
-	 * 面试时间
-	 */
-	private String itvDate;
-
-	/**
-	 * 面试官
-	 */
-	private String itver;
-
-	/**
-	 * 面试方式
-	 */
-	private String itvWays;
-
-	/**
-	 * 面试人员
+	 * 姓名
 	 */
 	private String memberName;
+
+	/**
+	 * 联系电话
+	 */
+	private String tel;
+
+	/**
+	 * 邮tsdhr04箱
+	 */
+	private String email;
 
 	/**
 	 * 学校
@@ -74,59 +57,9 @@ public class Tsdhr03  implements Serializable {
 	private String profession;
 
 	/**
-	 * 联系电话
-	 */
-	private String tel;
-
-	/**
-	 * 邮箱
-	 */
-	private String email;
-
-	/**
-	 * 成绩1
-	 */
-	private int score1;
-
-	/**
-	 * 成绩1
-	 */
-	private int score2;
-
-	/**
-	 * 成绩1
-	 */
-	private int score3;
-
-	/**
-	 * 成绩1
-	 */
-	private int score4;
-
-	/**
-	 * 成绩1
-	 */
-	private int score5;
-
-	/**
-	 * 成绩1
-	 */
-	private int score6;
-
-	/**
 	 * 总分
 	 */
 	private int sumScore;
-
-	/**
-	 * 面试结果
-	 */
-	private String itvStatus;
-
-	/**
-	 * 报道时间
-	 */
-	private String arrivalDate;
 
 	/**
 	 * 入库主观评价
@@ -134,14 +67,39 @@ public class Tsdhr03  implements Serializable {
 	private String evaluation;
 
 	/**
-	 * 邮件状态
+	 * 面试岗位
 	 */
-	private String mailStatus;
+	private String itvJob;
 
 	/**
-	 * 是否接受OFFER
+	 * 面试部门
 	 */
-	private String isAgree;
+	private String deptName;
+
+	/**
+	 * 渠道
+	 */
+	private String channel;
+
+	/**
+	 * 归档原因
+	 */
+	private String archiveReason;
+
+	/**
+	 * 归档前状态
+	 */
+	private String archiveStatusbfr;
+
+	/**
+	 * 归档时间
+	 */
+	private String archiveDate;
+
+	/**
+	 * 工作年限
+	 */
+	private String workYear;
 
 	/**
 	 * 备注

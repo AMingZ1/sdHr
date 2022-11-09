@@ -1,4 +1,4 @@
-package com.sd.sdhr.pojo;
+package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * @Description  
  * @Author  GQ
- * @Date 2022-09-28 
+ * @Date 2022-10-30 
  */
 
 @Data//瀹炵幇get+set+toString鍔熻兘
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor//鏃犲弬鏋勯��
 public class Tsdhr01  implements Serializable {
 
-	private static final long serialVersionUID =  8502421415919041922L;
+	private static final long serialVersionUID =  7458678835542504626L;
 
 	/**
 	 * 需求编号
@@ -79,6 +79,11 @@ public class Tsdhr01  implements Serializable {
 	 * 是否紧急
 	 */
 	private String isEme;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
 
 	/**
 	 * 创建时间

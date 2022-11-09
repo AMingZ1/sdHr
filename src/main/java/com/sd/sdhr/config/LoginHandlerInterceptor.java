@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登陆拦截器
  */
 public class LoginHandlerInterceptor implements HandlerInterceptor {
-    @Override
+    /*@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //登陆成功后应该有用户session
         Object loginUser=request.getSession().getAttribute("userId");
@@ -22,7 +22,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         }
         return true;
        // return HandlerInterceptor.super.preHandle(request, response, handler);
-    }
+    }*/
 
   /*  @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

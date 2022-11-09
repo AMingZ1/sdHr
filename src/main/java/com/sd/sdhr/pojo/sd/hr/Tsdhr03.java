@@ -1,6 +1,8 @@
-package com.sd.sdhr.pojo;
+package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -14,9 +16,15 @@ import lombok.NoArgsConstructor;
 @Data//瀹炵幇get+set+toString鍔熻兘
 @AllArgsConstructor//鏈夊弬鏋勯��
 @NoArgsConstructor//鏃犲弬鏋勯��
-public class Tsdhr02  implements Serializable {
+public class Tsdhr03  implements Serializable {
 
-	private static final long serialVersionUID =  762259840822684904L;
+	private static final long serialVersionUID =  3762639396800524755L;
+
+	/**
+	 * 面试记录号
+	 */
+	@TableId
+	private String itvNo;
 
 	/**
 	 * 电联记录号
@@ -24,44 +32,9 @@ public class Tsdhr02  implements Serializable {
 	private String planNo;
 
 	/**
-	 * 岗位需求编号
-	 */
-	private String reqNo;
-
-	/**
-	 * 面试人员姓名
-	 */
-	private String memberName;
-
-	/**
-	 * 联系电话
-	 */
-	private String tel;
-
-	/**
-	 * 联系状态
-	 */
-	private String contactStatus;
-
-	/**
-	 * 联系人
-	 */
-	private String contactMember;
-
-	/**
-	 * 联系时间
-	 */
-	private String contactDate;
-
-	/**
-	 * 面试时间
-	 */
-	private String itvDate;
-
-	/**
 	 * 面试部门
 	 */
-	private String deptName;
+	private String itvDept;
 
 	/**
 	 * 面试岗位
@@ -69,39 +42,109 @@ public class Tsdhr02  implements Serializable {
 	private String itvJob;
 
 	/**
-	 * 经验
+	 * 面试时间
 	 */
-	private String expLevel;
-
-	/**
-	 * 职业状态
-	 */
-	private String workStatus;
-
-	/**
-	 * 预计到岗时间
-	 */
-	private String arrivalDate;
-
-	/**
-	 * 预计薪资
-	 */
-	private String hopeSalary;
-
-	/**
-	 * 面试情况
-	 */
-	private String itvStatus;
-
-	/**
-	 * 初面记录
-	 */
-	private String itvRemark;
+	private String itvDate;
 
 	/**
 	 * 面试官
 	 */
 	private String itver;
+
+	/**
+	 * 面试方式
+	 */
+	private String itvWays;
+
+	/**
+	 * 面试人员
+	 */
+	private String memberName;
+
+	/**
+	 * 学校
+	 */
+	private String universityName;
+
+	/**
+	 * 学历
+	 */
+	private String educationBckr;
+
+	/**
+	 * 专业
+	 */
+	private String profession;
+
+	/**
+	 * 联系电话
+	 */
+	private String tel;
+
+	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
+	 * 成绩1
+	 */
+	private int score1;
+
+	/**
+	 * 成绩1
+	 */
+	private int score2;
+
+	/**
+	 * 成绩1
+	 */
+	private int score3;
+
+	/**
+	 * 成绩1
+	 */
+	private int score4;
+
+	/**
+	 * 成绩1
+	 */
+	private int score5;
+
+	/**
+	 * 成绩1
+	 */
+	private int score6;
+
+	/**
+	 * 总分
+	 */
+	private int sumScore;
+
+	/**
+	 * 面试结果
+	 */
+	private String itvStatus;
+
+	/**
+	 * 报道时间
+	 */
+	private String arrivalDate;
+
+	/**
+	 * 入库主观评价
+	 */
+	private String evaluation;
+
+	/**
+	 * 邮件状态
+	 */
+	private String mailStatus;
+
+	/**
+	 * 是否接受OFFER
+	 */
+	private String isAgree;
 
 	/**
 	 * 备注

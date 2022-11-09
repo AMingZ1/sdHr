@@ -56,4 +56,4 @@ mybatis-plus:
   #实体类路径
   #type-aliases-package: com.sd.sdhr.pojo
 server:
-  port: 8090
+  port: 8080
