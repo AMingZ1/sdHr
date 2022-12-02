@@ -42,7 +42,7 @@ public class Tsder05ServiceImpl implements Tsder05Service {
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsder05.getMemberName()),"MEMBER_NAME",tsder05.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsder05.getDeptName()),"DEPT_NAME",tsder05.getDeptName());
-            queryWrapper.like(!StringUtils.isEmpty(tsder05.getItvJob()),"ITV_JOB",tsder05.getItvJob());
+            queryWrapper.like(!StringUtils.isEmpty(tsder05.getJobs()),"JOBS",tsder05.getJobs());
 
             List<Tsder05> list=tsder05Mapper.selectList(queryWrapper);
             if (CollectionUtils.isEmpty(list)){
@@ -137,7 +137,7 @@ public class Tsder05ServiceImpl implements Tsder05Service {
             Tsder05 tsder05Up=new Tsder05();
             tsder05Up.setCompany(tsder05.getCompany());
             tsder05Up.setDeptName(tsder05.getDeptName());
-            tsder05Up.setItvJob(tsder05.getItvJob());
+            tsder05Up.setJobs(tsder05.getJobs());
             tsder05Up.setEmpDate(tsder05.getEmpDate());
             tsder05Up.setDepDate(tsder05.getDepDate());
             tsder05Up.setDepReason(tsder05.getDepReason());

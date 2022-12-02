@@ -1,7 +1,7 @@
 package com.sd.sdhr.mapper.sd.hr;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sd.sdhr.pojo.Tsdhr05;
+import com.sd.sdhr.pojo.sd.hr.Tsdhr05;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

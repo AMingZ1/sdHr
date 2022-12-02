@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class Tsdhr01Controller {
 
     @Autowired
@@ -28,13 +28,13 @@ public class Tsdhr01Controller {
         return tsdhr01Service.getAllTsdhr01Test(tsdhr01);
     }
 
-    @RequestMapping(value = "/Sdhr01Save")
+    @RequestMapping(value = "/Sdhr01/Save")
     public Object saveTsdhr01(Tsdhr01 tsdhr01){
 
         return tsdhr01Service.saveTsdhr01(tsdhr01);
     }
 
-    @RequestMapping(value = "/Sdhr01Delete")
+    @RequestMapping(value = "/Sdhr01/Delete")
     public Object deleteTsdhr01(Tsdhr01 tsdhr01){
 
         return tsdhr01Service.deleteTsdhr01ByMap(tsdhr01);

@@ -1,8 +1,6 @@
 package com.sd.sdhr.controller.sd.hr;
 
-import com.sd.sdhr.pojo.sd.hr.Tsdhr02;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
-import com.sd.sdhr.service.sd.hr.Tsdhr02Service;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +17,6 @@ public class Tsdhr04Controller {
 
     @RequestMapping(value = "/query")
     public Object queryTsdhr04List(Tsdhr04 tsdhr04){
-
         return tsdhr04Service.getAllTsdhr04(tsdhr04);
     }
 
@@ -37,5 +34,4 @@ public class Tsdhr04Controller {
     public Object deleteTsdhr04(Tsdhr04 tsdhr04){
         return tsdhr04Service.deleteTsdhr04ByMap(tsdhr04);
     }
-
 }

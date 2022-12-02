@@ -15,8 +15,9 @@ public class Tsdhr03Controller {
     @Autowired
     private Tsdhr03Service tsdhr03Service;
 
-    @RequestMapping(value = "query")
+    @RequestMapping(value = "/query")
     public Object queryTsdhr03List(Tsdhr03 tsdhr03){
+
         return tsdhr03Service.getAllTsdhr03(tsdhr03);
     }
 
@@ -34,4 +35,5 @@ public class Tsdhr03Controller {
     public Object deleteTsdhr03(Tsdhr03 tsdhr03){
         return tsdhr03Service.deleteTsdhr03ByMap(tsdhr03);
     }
+
 }

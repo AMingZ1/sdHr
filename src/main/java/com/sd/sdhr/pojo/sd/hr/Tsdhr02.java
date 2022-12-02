@@ -1,8 +1,6 @@
 package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -10,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * @Description  
  * @Author  GQ
- * @Date 2022-09-28 
+ * @Date 2022-12-01 
  */
 
 @Data//瀹炵幇get+set+toString鍔熻兘
@@ -18,12 +16,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor//鏃犲弬鏋勯��
 public class Tsdhr02  implements Serializable {
 
-	private static final long serialVersionUID =  762259840822684904L;
+	private static final long serialVersionUID =  6892246122990758792L;
 
 	/**
 	 * 电联记录号
 	 */
-	@TableId
 	private String planNo;
 
 	/**
@@ -40,6 +37,11 @@ public class Tsdhr02  implements Serializable {
 	 * 联系电话
 	 */
 	private String tel;
+
+	/**
+	 * 邮箱
+	 */
+	private String email;
 
 	/**
 	 * 联系状态

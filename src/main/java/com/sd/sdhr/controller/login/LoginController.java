@@ -35,4 +35,18 @@ public class LoginController {
         }
         return maps;
     }
+
+    @RequestMapping("/Login/getUser")
+    public Map<String, Object> login(String userId) {
+        //@RequestParam("userId")
+        Map<String,Object> maps = new HashMap<>();
+        if (userId==null){
+            maps.put("success","-1");
+            maps.put("message","查询信息失败!");
+            maps.put("token"," ");
+        }else {
+            maps=loginService.getUserMsg(userId);
+        }
+        return maps;
+    }
 }

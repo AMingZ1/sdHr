@@ -40,13 +40,22 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 12345678
-    url: jdbc:mysql://localhost:3306/dsms?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    password: Q!W@e3r4t5
+    url: jdbc:mysql://106.14.152.86:3306/dsms_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
   thymeleaf:
     cache: false
   #国际化配置
   messages:
     basename: i18n.login
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    port: 25
+    username: 1603077742@qq.com
+    password: tloznuenqurqjijb
+    protocol: smtp
+    default-encoding: utf-8
+    from: 1603077742@qq.com
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -57,3 +66,4 @@ mybatis-plus:
   #type-aliases-package: com.sd.sdhr.pojo
 server:
   port: 8080
+

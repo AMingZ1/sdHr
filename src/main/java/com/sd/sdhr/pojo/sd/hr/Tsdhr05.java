@@ -1,4 +1,4 @@
-package com.sd.sdhr.pojo;
+package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
 import lombok.Data;

@@ -31,4 +31,22 @@ public class LoginServiceImpl implements LoginService {
         }
         return map;
     }
+
+    @Override
+    public Map<String, Object> getUserMsg(String userId) {
+        Map<String,Object> map = new HashMap<>();
+        TDsUser tDsUser=tDsUserMapper.queryTDsUserByUserNo(userId);
+        if (tDsUser !=null ){
+            map.put("success","1");
+            map.put("message","查询成功");
+            map.put("userId",tDsUser.getUserNo());
+            map.put("userName",tDsUser.getUserName());
+            map.put("jobs",tDsUser.getJobs());
+        }else{
+            map.put("success","-1");
+            map.put("message","查询失败");
+            map.put("token"," ");
+        }
+        return map;
+    }
 }

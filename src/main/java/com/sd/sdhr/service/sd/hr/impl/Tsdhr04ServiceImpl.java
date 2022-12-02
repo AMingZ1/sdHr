@@ -37,12 +37,12 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             QueryWrapper<Tsdhr04> queryWrapper=new QueryWrapper<>();
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             //模糊查询条件
-            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getChannel()),"CHANNEL",tsdhr04.getChannel());
-            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME",tsdhr04.getMemberName());
-            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getDeptName()),"DEPT_NAME",tsdhr04.getDeptName());
-            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB",tsdhr04.getItvJob());
+            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
+            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME", tsdhr04.getMemberName());
+            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
+            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
 
-            List<Tsdhr04> list=tsdhr04Mapper.selectList(queryWrapper);
+            List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
             if (CollectionUtils.isEmpty(list)){
                 throw new Exception("返回结果为null");
             }
@@ -67,8 +67,8 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     public EiINfo saveTsdhr04(Tsdhr04 tsdhr04) {
         EiINfo eiINfo=new EiINfo();
         try {
-            if (!StringUtils.isEmpty(tsdhr04.getMemberNo())){
-                throw new Exception("员工编号不为空无法新增！面试记录号："+tsdhr04.getMemberNo());
+            if (!StringUtils.isEmpty(tsdhr04.getItvNo())){
+                throw new Exception("面试记录号不为空无法新增！面试记录号："+ tsdhr04.getItvNo());
             }
             //拿到当前年月日；
             Calendar calendar = Calendar.getInstance();
@@ -76,12 +76,14 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             String year = String.valueOf(calendar.get(Calendar.YEAR));
             // 获取当前月
             int month = calendar.get(Calendar.MONTH) + 1;
-            StringBuilder memberNo=new StringBuilder("DSSH");
+            StringBuilder itvNo=new StringBuilder();
+            String an=year.substring(year.length()-2);
+            itvNo=itvNo.append(an).append("C").append(month);
             //查询当前生成流水号信息
-            int backNum=tsdhr04Mapper.queryCountByMemberNoLike(memberNo.toString());
+            int backNum= tsdhr04Mapper.queryCountByItvNoLike(itvNo.toString());
             String serialNum= String.format("%04d", backNum+1);
-            memberNo.append(serialNum);
-            tsdhr04.setMemberNo(memberNo.toString());
+            itvNo.append(serialNum);
+            tsdhr04.setItvNo(itvNo.toString());
             // 注入信息
             String userName = (String) request.getSession().getAttribute("userName");
             String userId = (String) request.getSession().getAttribute("userId");
@@ -94,7 +96,7 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             tsdhr04.setRecModifyName(userName);
             tsdhr04.setRecModifyTime(curDateTime);
             tsdhr04.setDeleteFlag("0");
-            int backInsert =tsdhr04Mapper.insert(tsdhr04);
+            int backInsert = tsdhr04Mapper.insert(tsdhr04);
             eiINfo.setMessage(String.valueOf(backInsert));
             if (backInsert==1){
                 eiINfo.setMessage("新增成功！");
@@ -110,14 +112,15 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
 
     @Override
     public EiINfo deleteTsdhr04ByMap(Tsdhr04 tsdhr04) {
+
         EiINfo eiINfo=new EiINfo();
         try {
-            if (StringUtils.isEmpty(tsdhr04.getMemberNo())){
-                throw new Exception("人员编号为空无法删除！");
+            if (StringUtils.isEmpty(tsdhr04.getItvNo())){
+                throw new Exception("面试记录号为空无法删除！");
             }
             UpdateWrapper<Tsdhr04> wrapper=new UpdateWrapper<>();
-            wrapper.eq("MEMBER_NO",tsdhr04.getMemberNo());
-            Tsdhr04 tsdhr04Up=new Tsdhr04();
+            wrapper.eq("ITV_NO", tsdhr04.getItvNo());
+            Tsdhr04 tsdhr04Up =new Tsdhr04();
             String userName = (String) request.getSession().getAttribute("userName");
             String userId = (String) request.getSession().getAttribute("userId");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -141,24 +144,36 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     public EiINfo updateTsdhr04(Tsdhr04 tsdhr04) {
         EiINfo eiINfo=new EiINfo();
         try {
-            if (StringUtils.isEmpty(tsdhr04.getMemberNo())){
-                throw new Exception("人员编号为空无法修改！");
+            if (StringUtils.isEmpty(tsdhr04.getItvNo())){
+                throw new Exception("面试记录号为空无法修改！");
             }
             UpdateWrapper<Tsdhr04> wrapper=new UpdateWrapper<>();
-            wrapper.eq("MEMBER_NO",tsdhr04.getMemberNo());
-            Tsdhr04 tsdhr04Up=new Tsdhr04();
+            wrapper.eq("ITV_NO", tsdhr04.getItvNo());
+            Tsdhr04 tsdhr04Up =new Tsdhr04();
+            tsdhr04Up.setPlanNo(tsdhr04.getPlanNo());
+            tsdhr04Up.setItvDept(tsdhr04.getItvDept());
+            tsdhr04Up.setItvJob(tsdhr04.getItvJob());
+            tsdhr04Up.setItvDate(tsdhr04.getItvDate());
+            tsdhr04Up.setItver(tsdhr04.getItver());
+            tsdhr04Up.setItvWays(tsdhr04.getItvWays());
             tsdhr04Up.setMemberName(tsdhr04.getMemberName());
-            tsdhr04Up.setTel(tsdhr04.getTel());
-            tsdhr04Up.setEmail(tsdhr04.getEmail());
             tsdhr04Up.setUniversityName(tsdhr04.getUniversityName());
             tsdhr04Up.setEducationBckr(tsdhr04.getEducationBckr());
             tsdhr04Up.setProfession(tsdhr04.getProfession());
+            tsdhr04Up.setTel(tsdhr04.getTel());
+            tsdhr04Up.setEmail(tsdhr04.getEmail());
+            tsdhr04Up.setScore1(tsdhr04.getScore1());
+            tsdhr04Up.setScore2(tsdhr04.getScore2());
+            tsdhr04Up.setScore3(tsdhr04.getScore3());
+            tsdhr04Up.setScore4(tsdhr04.getScore4());
+            tsdhr04Up.setScore5(tsdhr04.getScore5());
+            tsdhr04Up.setScore6(tsdhr04.getScore6());
             tsdhr04Up.setSumScore(tsdhr04.getSumScore());
+            tsdhr04Up.setItvStatus(tsdhr04.getItvStatus());
+            tsdhr04Up.setArrivalDate(tsdhr04.getArrivalDate());
             tsdhr04Up.setEvaluation(tsdhr04.getEvaluation());
-            tsdhr04Up.setItvJob(tsdhr04.getItvJob());
-            tsdhr04Up.setDeptName(tsdhr04.getDeptName());
-            tsdhr04Up.setChannel(tsdhr04.getChannel());
-            tsdhr04Up.setWorkYear(tsdhr04.getWorkYear());
+            tsdhr04Up.setMailStatus(tsdhr04.getMailStatus());
+            tsdhr04Up.setIsAgree(tsdhr04.getIsAgree());
             tsdhr04Up.setRemark(tsdhr04.getRemark());
 
             //
