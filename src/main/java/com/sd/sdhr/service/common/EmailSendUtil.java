@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.mail.search.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
@@ -82,17 +83,95 @@ public class EmailSendUtil {
         Properties props = new Properties();
         props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.imap.socketFactory.fallback", "false");
-        props.setProperty("mail.store.protocol", "pop3");       // 使用imap协议
-        props.setProperty("mail.pop3.port", "995");           // 端口
-        props.setProperty("mail.pop3.host", "pop.qq.com");       // pop3服务器
-        props.setProperty("mail.pop3.auth", "true");
+        props.setProperty("mail.store.protocol", "imap");       // 使用imap协议
+        props.setProperty("mail.imap.port", "993");           // 端口
+        props.setProperty("mail.imap.host", "imap.qq.com");       // pop3服务器
+        props.setProperty("mail.imap.auth", "true");
 
         // 创建Session实例对象
         Session session = Session.getInstance(props);
         //URLName url = new URLName("pop3", "pop.qq.com", 995, null, fromUser, password);
-        Store store = session.getStore("pop3");
+        Store store = session.getStore("imap");
         store.connect(fromUser,password); //第三方登录所以这里的密码是授权密码而并非普通的登录密码
 //      //获得收件箱
+        Folder folder = store.getFolder("INBOX");
+        /* Folder.READ_ONLY：只读权限
+         * Folder.READ_WRITE：可读可写（可以修改邮件的状态）
+         */
+        folder.open(Folder.READ_WRITE); //打开收件箱
+        //false 表示未读
+        FlagTerm flagTerm = new FlagTerm(new Flags(Flags.Flag.SEEN),false);
+
+        //根据时间搜索
+        Calendar calendar = Calendar.getInstance();
+        // 搜索1天前到今天收到的的所有邮件，根据时间筛选邮件
+        calendar.add(Calendar.DAY_OF_MONTH, -7);
+        //SentDateTerm flagTerm = new SentDateTerm(ComparisonTerm.GE, new Date(calendar.getTimeInMillis()));
+
+        //搜索发件人为“智联招聘“，而且邮件正文包含“Java工程师“的所有邮件//
+        SearchTerm andTerm = new AndTerm( new FromStringTerm("招商"),new BodyTerm("先生"));
+        // 搜索邮件内容包含"招聘"的邮件
+        SearchTerm bodyTerm = new BodyTerm("同");
+
+        //获得收件箱的邮件列表
+        Message[] messages = folder.search(flagTerm);
+        // 打印不同状态的邮件数量
+        System.out.println("收件箱中共" + messages.length + "封邮件!");
+        System.out.println("收件箱中共" + folder.getUnreadMessageCount() + "封未读邮件!");
+        System.out.println("收件箱中共" + folder.getNewMessageCount() + "封新邮件!");
+        System.out.println("收件箱中共" + folder.getDeletedMessageCount() + "封已删除邮件!");
+
+        for (int i = 0; i < messages.length; i++) {
+            System.out.println("消息:"+messages[i].getSubject());
+            String from = MimeUtility.decodeText(messages[i].getFrom()[0].toString());//邮件主题
+            InternetAddress internetAddress = new InternetAddress(from);
+            System.out.println("发件人：" + internetAddress.getPersonal() + '(' + internetAddress.getAddress() + ')');
+            StringBuffer content = new StringBuffer(30);
+            getMailTextContent(messages[i],content);
+            System.out.println("邮件正文：" + (content.length() > 100 ? content.substring(0,100) + "..." : content));
+
+        }
+
+
+    }
+
+
+    public static void getMailTextContent(Part part, StringBuffer content) throws MessagingException, IOException {
+        //如果是文本类型的附件，通过getContent方法可以取到文本内容，但这不是我们需要的结果，所以在这里要做判断
+        boolean isContainTextAttach = part.getContentType().indexOf("name") > 0;
+        if (part.isMimeType("text/*") && !isContainTextAttach) {
+            content.append(part.getContent().toString());
+        } else if (part.isMimeType("message/rfc822")) {
+            getMailTextContent((Part)part.getContent(),content);
+        } else if (part.isMimeType("multipart/*")) {
+            Multipart multipart = (Multipart) part.getContent();
+            int partCount = multipart.getCount();
+            for (int i = 0; i < partCount; i++) {
+                BodyPart bodyPart = multipart.getBodyPart(i);
+                getMailTextContent(bodyPart,content);
+            }
+        }
+    }
+
+
+    /**
+     * 发送简单html文本的邮箱验证码
+     */
+    public void resceiveMailPop3(String to,String text) throws Exception{
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";//ssl加密
+        // 准备连接服务器的会话信息
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "pop3");       // 协议
+        props.setProperty("mail.pop3.port", "110");             // 端口
+        props.setProperty("mail.pop3.host", "pop3.163.com");    // pop3服务器
+
+
+        // 创建Session实例对象
+        Session session = Session.getInstance(props);
+        //URLName url = new URLName("pop3", "pop3.qq.com", 993, null, fromUser, "dltxczckvylvjijc");
+        Store store = session.getStore("pop3");
+        store.connect(fromUser,"awbcedkhhhjsggjj"); //第三方登录所以这里的密码是授权密码而并非普通的登录密码
+        //获得收件箱
         Folder folder = store.getFolder("INBOX");
         /* Folder.READ_ONLY：只读权限
          * Folder.READ_WRITE：可读可写（可以修改邮件的状态）
@@ -107,12 +186,13 @@ public class EmailSendUtil {
         calendar.add(Calendar.DAY_OF_MONTH, -7);
         SentDateTerm flagTerm = new SentDateTerm(ComparisonTerm.GE, new Date(calendar.getTimeInMillis()));
 
-        //搜索发件人为“智联招聘“，而且邮件正文包含“Java工程师“的所有邮件
-        SearchTerm andTerm = new AndTerm( new FromStringTerm(to), new BodyTerm("并接受录用"));
-
+        //搜索发件人为“智联招聘“，而且邮件正文包含“Java工程师“的所有邮件//
+        SearchTerm andTerm = new AndTerm( new FromStringTerm("招商"),new BodyTerm("先生"));
+        // 搜索邮件内容包含"招聘"的邮件
+        SearchTerm bodyTerm = new BodyTerm("武汉");
 
         //获得收件箱的邮件列表
-        Message[] messages = folder.search(andTerm);
+        Message[] messages = folder.search(bodyTerm);
         // 打印不同状态的邮件数量
         System.out.println("收件箱中共" + messages.length + "封邮件!");
         System.out.println("收件箱中共" + folder.getUnreadMessageCount() + "封未读邮件!");

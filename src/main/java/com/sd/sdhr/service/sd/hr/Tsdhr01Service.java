@@ -1,11 +1,10 @@
 package com.sd.sdhr.service.sd.hr;
 
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Tsdhr01Service {
 
@@ -25,7 +24,7 @@ public interface Tsdhr01Service {
     Tsdhr01 queryTsdhr01ByReqNo(String reqNo);
 
     //获得所有的岗位需求信息
-    EiINfo getAllTsdhr01Test(Tsdhr01 tsdhr01);
+    EiINfo getAllTsdhr01Test(Tsdhr01Request tsdhr01);
 
     EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01);
 

@@ -1,11 +1,12 @@
 package com.sd.sdhr.service.sd.er;
 
 import com.sd.sdhr.pojo.sd.er.Tsder04;
+import com.sd.sdhr.pojo.sd.er.common.Tsder04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 
 public interface Tsder04Service {
 
-    EiINfo getAllTsder04(Tsder04 tsder04);
+    EiINfo getAllTsder04(Tsder04Request tsder04);
 
     Tsder04 selectTsder04ById(Tsder04 tsder04);
 

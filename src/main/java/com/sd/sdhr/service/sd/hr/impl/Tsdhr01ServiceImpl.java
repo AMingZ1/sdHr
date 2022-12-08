@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr01Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,19 +96,19 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
     }
 
     @Override
-    public EiINfo getAllTsdhr01Test(Tsdhr01 tsdhr01) {
+    public EiINfo getAllTsdhr01Test(Tsdhr01Request tsdhr01) {
         EiINfo eiINfo=new EiINfo();
         try {
             //模糊查询条件
             QueryWrapper<Tsdhr01> queryWrapper=new QueryWrapper<>();
-            queryWrapper.ne("Delete_Flag","1");
+            queryWrapper.eq(tsdhr01.isQueryHis(),"Delete_Flag","1");//true 只查历史
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getYear()),"YEAR",tsdhr01.getYear());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getDeptName()),"DEPT_NAME",tsdhr01.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getItvJob()),"ITV_JOB",tsdhr01.getItvJob());
             //queryWrapper.like(!tsdhr01.getReqNo().isEmpty(),"REQ_NO",tsdhr01.getReqNo());
 
-            eiINfo.setPageNum(eiINfo.getPageNum()+1);
-            PageHelper.startPage(eiINfo);
+            //eiINfo.setPageNum(eiINfo.getPageNum()+1);
+            PageHelper.startPage(tsdhr01.getPageNum(),tsdhr01.getPageSize());
             List<Tsdhr01> list=tsdhr01Mapper.selectList(queryWrapper);
             if (!CollectionUtils.isEmpty(list)){
                 PageInfo pageInfo=new PageInfo(list);

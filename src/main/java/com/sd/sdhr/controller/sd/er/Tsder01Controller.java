@@ -1,6 +1,7 @@
 package com.sd.sdhr.controller.sd.er;
 
 import com.sd.sdhr.pojo.sd.er.Tsder01;
+import com.sd.sdhr.pojo.sd.er.common.Tsder01Request;
 import com.sd.sdhr.service.sd.er.Tsder01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +17,7 @@ public class Tsder01Controller {
     private Tsder01Service tsder01Service;
 
     @RequestMapping(value = "/Query")
-    public Object queryTsder01List(Tsder01 tsder01){
+    public Object queryTsder01List(Tsder01Request tsder01){
         return tsder01Service.getAllTsder01(tsder01);
     }
 

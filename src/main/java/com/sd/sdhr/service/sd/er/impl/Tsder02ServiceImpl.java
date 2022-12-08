@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder02Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder02;
+import com.sd.sdhr.pojo.sd.er.common.Tsder02Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder02Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class Tsder02ServiceImpl implements Tsder02Service {
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
-    public EiINfo getAllTsder02(Tsder02 tsder02) {
+    public EiINfo getAllTsder02(Tsder02Request tsder02) {
         EiINfo eiINfo=new EiINfo();
         try {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
@@ -41,6 +42,7 @@ public class Tsder02ServiceImpl implements Tsder02Service {
             queryWrapper.like(!StringUtils.isEmpty(tsder02.getDeptName()),"DEPT_NAME",tsder02.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsder02.getProjectName()),"PROJECT_NAME",tsder02.getProjectName());
 
+            PageHelper.startPage(tsder02.getPageNum(),tsder02.getPageSize());
             List<Tsder02> list=tsder02Mapper.selectList(queryWrapper);
             if (CollectionUtils.isEmpty(list)){
                 throw new Exception("返回结果为null");

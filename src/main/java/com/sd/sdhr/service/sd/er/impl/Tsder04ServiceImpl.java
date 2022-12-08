@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder04Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
+import com.sd.sdhr.pojo.sd.er.common.Tsder04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder04Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class Tsder04ServiceImpl implements Tsder04Service {
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
-    public EiINfo getAllTsder04(Tsder04 tsder04) {
+    public EiINfo getAllTsder04(Tsder04Request tsder04) {
         EiINfo eiINfo=new EiINfo();
         try {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);

@@ -8,6 +8,7 @@ import com.sd.sdhr.mapper.sd.er.Tsder05Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
 import com.sd.sdhr.pojo.sd.er.Tsder05;
+import com.sd.sdhr.pojo.sd.er.common.Tsder05Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder05Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class Tsder05ServiceImpl implements Tsder05Service {
 
 
     @Override
-    public EiINfo getAllTsder05(Tsder05 tsder05) {
+    public EiINfo getAllTsder05(Tsder05Request tsder05) {
         EiINfo eiINfo=new EiINfo();
         try {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
@@ -44,6 +45,7 @@ public class Tsder05ServiceImpl implements Tsder05Service {
             queryWrapper.like(!StringUtils.isEmpty(tsder05.getDeptName()),"DEPT_NAME",tsder05.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsder05.getJobs()),"JOBS",tsder05.getJobs());
 
+            PageHelper.startPage(tsder05.getPageNum(),tsder05.getPageSize());
             List<Tsder05> list=tsder05Mapper.selectList(queryWrapper);
             if (CollectionUtils.isEmpty(list)){
                 throw new Exception("返回结果为null");

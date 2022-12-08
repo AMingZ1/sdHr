@@ -2,6 +2,7 @@ package com.sd.sdhr.controller.sd.er;
 
 import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.er.Tsder05;
+import com.sd.sdhr.pojo.sd.er.common.Tsder05Request;
 import com.sd.sdhr.service.sd.er.Tsder01Service;
 import com.sd.sdhr.service.sd.er.Tsder05Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class Tsder05Controller {
     private Tsder05Service tsder05Service;
 
     @RequestMapping(value = "/query")
-    public Object queryTsder05List(Tsder05 tsder05){
+    public Object queryTsder05List(Tsder05Request tsder05){
         return tsder05Service.getAllTsder05(tsder05);
     }
 

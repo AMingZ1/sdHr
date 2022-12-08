@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr04Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
-    public EiINfo getAllTsdhr04(Tsdhr04 tsdhr04) {
+    public EiINfo getAllTsdhr04(Tsdhr04Request tsdhr04) {
         EiINfo eiINfo=new EiINfo();
         try {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
@@ -42,6 +43,7 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
 
+            PageHelper.startPage(tsdhr04.getPageNum(),tsdhr04.getPageSize());
             List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
             if (CollectionUtils.isEmpty(list)){
                 throw new Exception("返回结果为null");
