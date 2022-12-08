@@ -16,22 +16,22 @@ public class Tsder02Controller {
     @Autowired
     private Tsder02Service tsder02Service;
 
-    @RequestMapping(value = "/query")
+    @RequestMapping(value = "/querySder02")
     public Object queryTsder02List(Tsder02Request tsder02){
         return tsder02Service.getAllTsder02(tsder02);
     }
 
-    @RequestMapping(value = "/save")
+    @RequestMapping(value = "/saveSder02")
     public Object saveTsder02(Tsder02 tsder02){
         return tsder02Service.saveTsder02(tsder02);
     }
 
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/updateSder02")
     public Object updateTsder02(Tsder02 tsder02){
         return tsder02Service.updateTsder02(tsder02);
     }
 
-    @RequestMapping(value = "/delete")
+    @RequestMapping(value = "/deleteSder02")
     public Object deleteTsder02(Tsder02 tsder02){
         return tsder02Service.deleteTsder02ByMap(tsder02);
     }

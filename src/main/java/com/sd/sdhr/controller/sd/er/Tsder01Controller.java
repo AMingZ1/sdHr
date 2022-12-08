@@ -9,29 +9,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/Sder01")
+@RequestMapping(value = "/sder01")
 @CrossOrigin
 public class Tsder01Controller {
 
     @Autowired
     private Tsder01Service tsder01Service;
 
-    @RequestMapping(value = "/Query")
+    @RequestMapping(value = "/querySder01")
     public Object queryTsder01List(Tsder01Request tsder01){
         return tsder01Service.getAllTsder01(tsder01);
     }
 
-    @RequestMapping(value = "/Save")
+    @RequestMapping(value = "/saveSder01")
     public Object saveTsder01(Tsder01 tsder01){
         return tsder01Service.saveTsder01(tsder01);
     }
 
-    @RequestMapping(value = "/Update")
+    @RequestMapping(value = "/updateSder01")
     public Object updateTsder01(Tsder01 tsder01){
         return tsder01Service.updateTsder01(tsder01);
     }
 
-    @RequestMapping(value = "/Delete")
+    @RequestMapping(value = "/deleteSder01")
     public Object deleteTsder01(Tsder01 tsder01){
         return tsder01Service.deleteTsder01ByMap(tsder01);
     }
