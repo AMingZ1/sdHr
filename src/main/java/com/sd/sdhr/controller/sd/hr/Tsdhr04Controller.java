@@ -5,6 +5,7 @@ import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,18 +22,18 @@ public class Tsdhr04Controller {
         return tsdhr04Service.getAllTsdhr04(tsdhr04);
     }
 
-    @RequestMapping(value = "/save")
-    public Object saveTsdhr04(Tsdhr04 tsdhr04){
+    @RequestMapping(value = "/saveSdhr04")
+    public Object saveTsdhr04(@RequestBody Tsdhr04 tsdhr04){
         return tsdhr04Service.saveTsdhr04(tsdhr04);
     }
 
-    @RequestMapping(value = "/update")
-    public Object updateTsdhr04(Tsdhr04 tsdhr04){
+    @RequestMapping(value = "/updateSdhr04")
+    public Object updateTsdhr04(@RequestBody Tsdhr04 tsdhr04){
         return tsdhr04Service.updateTsdhr04(tsdhr04);
     }
 
-    @RequestMapping(value = "/delete")
-    public Object deleteTsdhr04(Tsdhr04 tsdhr04){
+    @RequestMapping(value = "/deleteSdhr04")
+    public Object deleteTsdhr04(@RequestBody Tsdhr04 tsdhr04){
         return tsdhr04Service.deleteTsdhr04ByMap(tsdhr04);
     }
 }

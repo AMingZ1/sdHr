@@ -5,6 +5,7 @@ import com.sd.sdhr.pojo.sd.er.common.Tsder01Request;
 import com.sd.sdhr.service.sd.er.Tsder01Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,17 +23,17 @@ public class Tsder01Controller {
     }
 
     @RequestMapping(value = "/saveSder01")
-    public Object saveTsder01(Tsder01 tsder01){
+    public Object saveTsder01(@RequestBody Tsder01 tsder01){
         return tsder01Service.saveTsder01(tsder01);
     }
 
     @RequestMapping(value = "/updateSder01")
-    public Object updateTsder01(Tsder01 tsder01){
+    public Object updateTsder01(@RequestBody Tsder01 tsder01){
         return tsder01Service.updateTsder01(tsder01);
     }
 
     @RequestMapping(value = "/deleteSder01")
-    public Object deleteTsder01(Tsder01 tsder01){
+    public Object deleteTsder01(@RequestBody Tsder01 tsder01){
         return tsder01Service.deleteTsder01ByMap(tsder01);
     }
 
