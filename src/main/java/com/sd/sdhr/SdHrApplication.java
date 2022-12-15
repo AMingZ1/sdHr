@@ -3,10 +3,11 @@ package com.sd.sdhr;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 //本身就是Spring的一个组件
 //程序主入口
-
 @SpringBootApplication
 /**SpringBootApplication。
  * 标注这个类是一个SpringBoot的应用：启动类下的所有资源被导入

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sd.sdhr.mapper.sd.st.Tsdst09DefinedMapper">
+
+    <!--根据信息查询周、月、转正访谈是否完成-->
+    <select id="getTsder03ForTalk" resultType="com.sd.sdhr.pojo.sd.er.Tsder03">
+        select * from tsder03 er03 where er03.MEMBER_TYPE = #{model.memberType}
+        and er03 .TALK_PLAN_NOW = #{model.talkPlanNow}
+        <if test="model.talkWeek!=null and model.talkWeek!=''">and er03.TALK_WEEK &lt;= #{model.talkWeek} </if>
+        <if test="model.talkMonth!=null and model.talkMonth!=''">and er03.TALK_MONTH &lt;= #{model.talkMonth} </if>
+        <if test="model.formalDare!=null and model.formalDare!=''">and er03.FORMAL_DARE &lt;= #{model.formalDare} </if>
+        and not EXISTS(select 1 from tsder04 er04 where er04.MEMBER_ID = er03.MEMBER_ID and er04.TALK_TYPE = #{model.remark} )
+        and not EXISTS (SELECT 1 FROM tsdst09 st09 where st09.BUSINESS_NO = er03.MEMBER_ID and st09.BUSINESS_TYPE = #{model.remark} )
+    </select>
+
+
+</mapper>

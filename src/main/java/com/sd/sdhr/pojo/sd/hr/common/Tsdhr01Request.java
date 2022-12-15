@@ -1,6 +1,5 @@
 package com.sd.sdhr.pojo.sd.hr.common;
 
-import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import lombok.AllArgsConstructor;
 import lombok.Data;

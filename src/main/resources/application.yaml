@@ -42,6 +42,7 @@ spring:
     username: root
     password: Q!W@e3r4t5
     url: jdbc:mysql://106.14.152.86:3306/dsms_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+#    password: 12345678
   thymeleaf:
     cache: false
   #国际化配置
@@ -61,9 +62,14 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
   #xml文件路径：如果是放在resource目录 classpath:/mapper/**.xml
-  #mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
   #实体类路径
   #type-aliases-package: com.sd.sdhr.pojo
 server:
-  port: 8080
-
+  port: 8081
+flowable:
+# 关闭定时任务job
+  async-executor-activate: false
+  database-schema-update: true
+  process-definition-location-prefix: classpath*:/processes/
+  process-definition-location-suffixes: "**.bpmn20.xml, **.bpmn"
