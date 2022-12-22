@@ -36,7 +36,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
             PageHelper.startPage(eiINfo);
             QueryWrapper<Tsdst06> queryWrapper=new QueryWrapper<>();
-            queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+            //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             queryWrapper.eq(!StringUtils.isEmpty(tsdst06.getTaskStatus()),"TASK_STATUS",tsdst06.getTaskStatus());
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskId()),"TASK_ID",tsdst06.getTaskId());
@@ -92,6 +92,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             String userId = (String) request.getSession().getAttribute("userId");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
+            tsdst06.setTaskStatus("01");
             tsdst06.setRecCreator(userId);
             tsdst06.setRecCreateName(userName);
             tsdst06.setRecCreateTime(curDateTime);
