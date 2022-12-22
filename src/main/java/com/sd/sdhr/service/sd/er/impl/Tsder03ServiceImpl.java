@@ -75,9 +75,11 @@ public class Tsder03ServiceImpl implements Tsder03Service {
         EiINfo eiINfo=new EiINfo();
         try {
             if (StringUtils.isEmpty(tsder03.getMemberId())){
-                throw new Exception("人员编号为空无法新增！面试记录号："+tsder03.getMemberId());
+                throw new Exception("【人员编号】为空无法新增！面试记录号："+tsder03.getMemberId());
             }
-
+            if (StringUtils.isEmpty(tsder03.getEmpDate())){
+                throw new Exception("【入职日期】为空无法新增！面试记录号："+tsder03.getMemberId());
+            }
             //查询当前人员编号是否已经生成访谈主信息
             QueryWrapper<Tsder03> queryWrapper=new QueryWrapper<>();
             queryWrapper.eq("MEMBER_ID",tsder03.getMemberId());
@@ -85,6 +87,20 @@ public class Tsder03ServiceImpl implements Tsder03Service {
             if (backNum!=0){
                 throw new Exception("人员编号已经维护有访谈主信息，人员编号："+tsder03.getMemberId());
             }
+            //根据入职日期确定后续周、月、转正日期
+            String empDa=tsder03.getEmpDate();
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
+            Date empDate =formatDate.parse(empDa);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(empDate);
+            calendar.add(Calendar.DATE,7);// 周访谈
+            tsder03.setTalkWeek(formatDate.format(calendar.getTime()));
+            calendar.add(Calendar.DATE,-7);
+            calendar.add(Calendar.MONTH,1);// 第一月月访谈
+            tsder03.setTalkMonth(formatDate.format(calendar.getTime()));
+            calendar.add(Calendar.MONTH,2);// 转正访谈
+            tsder03.setFormalDare(formatDate.format(calendar.getTime()));
+
             // 注入信息
             String userName = (String) request.getSession().getAttribute("userName");
             String userId = (String) request.getSession().getAttribute("userId");
@@ -152,7 +168,10 @@ public class Tsder03ServiceImpl implements Tsder03Service {
         EiINfo eiINfo=new EiINfo();
         try {
             if (StringUtils.isEmpty(tsder03.getMemberId())){
-                throw new Exception("人员编号为空无法修改！");
+                throw new Exception("【人员编号】为空无法修改！");
+            }
+            if (StringUtils.isEmpty(tsder03.getEmpDate())){
+                throw new Exception("【入职日期】为空无法修改！");
             }
             UpdateWrapper<Tsder03> wrapper=new UpdateWrapper<>();
             wrapper.eq("MEMBER_ID",tsder03.getMemberId());
@@ -162,7 +181,21 @@ public class Tsder03ServiceImpl implements Tsder03Service {
             tsder03Up.setDeptName(tsder03.getDeptName());
             tsder03Up.setJobs(tsder03.getJobs());
             tsder03Up.setEmpDate(tsder03.getEmpDate());
-            tsder03Up.setFormalDare(tsder03.getFormalDare());
+            //tsder03Up.setFormalDare(tsder03.getFormalDare());
+            //根据入职日期确定后续周、月、转正日期
+            String empDa=tsder03.getEmpDate();
+            SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
+            Date empDate =formatDate.parse(empDa);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(empDate);
+            calendar.add(Calendar.DATE,7);// 周访谈
+            tsder03Up.setTalkWeek(formatDate.format(calendar.getTime()));
+            calendar.add(Calendar.DATE,-7);
+            calendar.add(Calendar.MONTH,1);// 第一月月访谈
+            tsder03Up.setTalkMonth(formatDate.format(calendar.getTime()));
+            calendar.add(Calendar.MONTH,2);// 转正访谈
+            tsder03Up.setFormalDare(formatDate.format(calendar.getTime()));
+
             tsder03Up.setPmNameF(tsder03.getPmNameF());
             tsder03Up.setProjectNameF(tsder03.getProjectNameF());
             tsder03Up.setTalkNo(tsder03.getTalkNo());
@@ -177,6 +210,50 @@ public class Tsder03ServiceImpl implements Tsder03Service {
             tsder03Up.setRecModifyTime(curDateTime);
             tsder03Mapper.update(tsder03Up,wrapper);
 
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("修改成功！");
+
+        }catch (Exception e){
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("修改失败！"+e);
+        }
+        return eiINfo;
+    }
+
+    @Override
+    public EiINfo isOverdueJudge() {
+        EiINfo eiINfo=new EiINfo();
+        try {
+            SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+            String currentDate = formatterDate.format(new Date());
+            Tsder03 tsder03Up=new Tsder03();
+            UpdateWrapper<Tsder03> wrapperWeek=new UpdateWrapper<>();
+            wrapperWeek.lt("TALK_WEEK",currentDate);
+            wrapperWeek.eq("MEMBER_TYPE","0");
+            wrapperWeek.eq("TALK_PLAN_NOW","00");
+            wrapperWeek.ne("TALK_STATUS","00");
+            //wrapper.gt
+            tsder03Up.setTalkStatus("00");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String curDateTime = formatter.format(new Date());
+            tsder03Up.setRecModifyName("admin");
+            tsder03Up.setRecModifier("admmin");
+            tsder03Up.setRecModifyTime(curDateTime);
+            tsder03Mapper.update(tsder03Up,wrapperWeek);
+            // 月
+            UpdateWrapper<Tsder03> wrapperMonth=new UpdateWrapper<>();
+            wrapperMonth.lt("TALK_MONTH",currentDate);
+            wrapperMonth.eq("MEMBER_TYPE","0");
+            wrapperMonth.eq("TALK_PLAN_NOW","01");
+            wrapperMonth.ne("TALK_STATUS","00");
+            tsder03Mapper.update(tsder03Up,wrapperMonth);
+            // 转正
+            UpdateWrapper<Tsder03> wrapperFormal=new UpdateWrapper<>();
+            wrapperFormal.lt("FORMAL_DARE",currentDate);
+            wrapperFormal.eq("MEMBER_TYPE","0");
+            wrapperFormal.eq("TALK_PLAN_NOW","02");
+            wrapperFormal.ne("TALK_STATUS","00");
+            tsder03Mapper.update(tsder03Up,wrapperFormal);
             eiINfo.setSuccess("1");
             eiINfo.setMessage("修改成功！");
 

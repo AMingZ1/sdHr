@@ -1,11 +1,14 @@
 package com.sd.sdhr.service.sd.st.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09DefinedMapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09Mapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst11Mapper;
+import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
+import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst09;
 import com.sd.sdhr.pojo.sd.st.Tsdst11;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst09Request;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,6 +33,9 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
 
     @Autowired
     Tsdst11Mapper tsdst11Mapper;
+
+    @Autowired
+    HttpServletRequest request; //通过注解获取一个request
 
 
     @Override
@@ -104,6 +111,34 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
         this.saveTsdst09BySder03(listTalkFormal,"的转正访谈时间快到了，请尽快安排！","GRP1004","T03");
 
         return 0;
+    }
+
+    @Override
+    public EiINfo closeMsg(Tsdst09 Tsdst09) {
+        EiINfo eiINfo=new EiINfo();
+        try {
+
+            UpdateWrapper<Tsdst09> tsdst09Upwr=new UpdateWrapper<>();
+            tsdst09Upwr.eq("MESSAGE_ID",Tsdst09.getMessageId());
+            Tsdst09 tsdst09UP=new Tsdst09();
+            tsdst09UP.setMessageStatus("10");//关闭
+
+            String userName = (String) request.getSession().getAttribute("userName");
+            String userId = (String) request.getSession().getAttribute("userId");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String curDateTime = formatter.format(new Date());
+            tsdst09UP.setRecModifyName(userName);
+            tsdst09UP.setRecModifier(userId);
+            tsdst09UP.setRecModifyTime(curDateTime);
+            tsdst09Mapper.update(tsdst09UP,tsdst09Upwr);
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("信息关闭成功！");
+
+        }catch (Exception e){
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("信息关闭失败!"+e);
+        }
+        return eiINfo;
     }
 
     public void saveTsdst09BySder03(List<Tsder03> tsder03List,String msgBody,String roleCode,String businessType){

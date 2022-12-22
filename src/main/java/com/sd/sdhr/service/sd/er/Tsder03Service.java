@@ -15,4 +15,7 @@ public interface Tsder03Service {
     EiINfo deleteTsder03ByMap(Tsder03 tsder03);
 
     EiINfo updateTsder03(Tsder03 tsder03);
+
+    //定时任务 判断访谈是否逾期
+    EiINfo isOverdueJudge();
 }

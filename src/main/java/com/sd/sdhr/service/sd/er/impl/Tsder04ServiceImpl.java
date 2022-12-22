@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sd.sdhr.mapper.sd.er.Tsder03Mapper;
 import com.sd.sdhr.mapper.sd.er.Tsder04Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
@@ -26,6 +27,9 @@ public class Tsder04ServiceImpl implements Tsder04Service {
 
     @Autowired
     private Tsder04Mapper tsder04Mapper;
+
+    @Autowired
+    Tsder03Mapper tsder03Mapper;
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -74,6 +78,33 @@ public class Tsder04ServiceImpl implements Tsder04Service {
             if (StringUtils.isEmpty(tsder04.getTalkType())){
                 throw new Exception("访谈类型 为空无法新增！人员编号："+tsder04.getMemberId());
             }
+            //同步调整er03表的状态
+            Tsder03 tsder03= tsder03Mapper.selectById(tsder04.getMemberId());
+            String talkPlanNow=tsder03.getTalkPlanNow();
+            Tsder03 tsder03Up =new Tsder03();
+            tsder03Up.setMemberId(tsder03.getMemberId());
+            if ("T01".equals(tsder04.getTalkType())&&!"00".equals(talkPlanNow)){//周访谈
+                tsder03Up.setTalkPlanNow("01");
+                tsder03Up.setTalkStatus("10");
+            }else if ("T02".equals(tsder04.getTalkType())&& !"01".equals(talkPlanNow)){
+                tsder03Up.setTalkPlanNow("02");
+                tsder03Up.setTalkStatus("10");
+            }else if("T03".equals(tsder04.getTalkType())&& !"02".equals(talkPlanNow)){
+                tsder03Up.setTalkPlanNow("03");
+                tsder03Up.setMemberType("1");//人员类型转正
+                tsder03Up.setTalkStatus("10");
+            }else if("T04".equals(tsder04.getTalkType())&& !"03/04".contains(talkPlanNow)){
+                tsder03Up.setTalkPlanNow("04");
+                tsder03Up.setTalkStatus("20");
+
+            }else if("T05".equals(tsder04.getTalkType())&& !"03/04".contains(talkPlanNow)){
+                tsder03Up.setTalkStatus("20");
+                tsder03Up.setTalkPlanNow("04");
+
+            }else {
+                throw new Exception("新增访谈明细失败，请按照先周》月》转正的访谈顺序依次维护！人员编号："+tsder04.getMemberId());
+            }
+            tsder03Mapper.updateById(tsder03Up);
 
             //拿到当前年月日；
             Calendar calendar = Calendar.getInstance();
@@ -89,6 +120,7 @@ public class Tsder04ServiceImpl implements Tsder04Service {
             String serialNum= String.format("%04d", backNum+1);
             talkNo.append(serialNum);
             tsder04.setTalkNo(talkNo.toString());
+            tsder04.setTalkStatus("00".equals(tsder03.getTalkStatus())?"00":"20");//00 逾期
             // 注入信息
             String userName = (String) request.getSession().getAttribute("userName");
             String userId = (String) request.getSession().getAttribute("userId");

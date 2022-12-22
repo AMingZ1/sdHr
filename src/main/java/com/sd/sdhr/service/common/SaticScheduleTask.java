@@ -38,5 +38,13 @@ public class SaticScheduleTask {
         System.out.println();
     }*/
 
+    @Scheduled(cron = "30 30 1 * * ?")
+    //或直接指定时间间隔，例如：5秒
+    //@Scheduled(fixedRate=5000)
+    private void judgeTasksOverdue() {
+        //System.err.println("执行静态定时任务时间: " + LocalDateTime.now());
+        tsdst09Service.insertTsdst09ByTalk();
+    }
+
 
 }

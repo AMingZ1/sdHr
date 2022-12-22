@@ -44,6 +44,11 @@ public class Tsder04  implements Serializable {
 	private String talkDate;
 
 	/**
+	 * 访谈状态
+	 */
+	private String talkStatus;
+
+	/**
 	 * 访谈内容_1
 	 */
 	private String talkContent1;

@@ -1,4 +1,4 @@
-package com.sd.sdhr.pojo.sd.er;
+package com.sd.sdhr.pojo.sd.st;
 
 import java.io.Serializable;
 import lombok.Data;
@@ -8,15 +8,15 @@ import lombok.NoArgsConstructor;
 /**
  * @Description  
  * @Author  GQ
- * @Date 2022-12-01 
+ * @Date 2022-12-15 
  */
 
 @Data//瀹炵幇get+set+toString鍔熻兘
 @AllArgsConstructor//鏈夊弬鏋勯��
 @NoArgsConstructor//鏃犲弬鏋勯��
-public class Tsder03  implements Serializable {
+public class Tsdst11  implements Serializable {
 
-	private static final long serialVersionUID =  5573153092531588037L;
+	private static final long serialVersionUID =  5330991367498318980L;
 
 	/**
 	 * 人员编号
@@ -24,79 +24,14 @@ public class Tsder03  implements Serializable {
 	private String memberId;
 
 	/**
-	 * 人员名称
+	 * 人员姓名
 	 */
 	private String memberName;
 
 	/**
-	 * 人员类型
+	 * 角色代码
 	 */
-	private String memberType;
-
-	/**
-	 * 部门
-	 */
-	private String deptName;
-
-	/**
-	 * 岗位
-	 */
-	private String jobs;
-
-	/**
-	 * 入职日期
-	 */
-	private String empDate;
-
-	/**
-	 * 周访谈日期
-	 */
-	private String talkWeek;
-
-	/**
-	 * 月访谈日期
-	 */
-	private String talkMonth;
-
-	/**
-	 * 转正日期
-	 */
-	private String formalDare;
-
-	/**
-	 * 访谈状态
-	 */
-	private String talkStatus;
-
-	/**
-	 * 入职时项目经理
-	 */
-	private String pmNameF;
-
-	/**
-	 * 入职时项目组信息
-	 */
-	private String projectNameF;
-
-	/**
-	 * 访谈计划号
-	 */
-	private String talkNo;
-
-	/**
-	 * 头像地址
-	 */
-	private String phoAddress;
-
-	/**
-	 * 技能水平
-	 */
-	private String skiLevel;
-
-	/**
-	 * 当前访谈进度
-	 */
-	private String talkPlanNow;
+	private String roleCode;
 
 	/**
 	 * 备注
