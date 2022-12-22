@@ -13,5 +13,14 @@
         and not EXISTS (SELECT 1 FROM tsdst09 st09 where st09.BUSINESS_NO = er03.MEMBER_ID and st09.BUSINESS_TYPE = #{model.remark} )
     </select>
 
+    <update id="updateEr03TalkStart" parameterType="com.sd.sdhr.pojo.sd.er.Tsder04">
+        update tsder03 er03
+        <set>
+            er03.TALK_STATUS='00'
+        </set>
+        where where er03.MEMBER_TYPE ='1' and er03.TALK_PLAN_NOW in ('03','04')
+        and not EXISTS (SELECT 1 FROM tsder04 er04 where er04.MEMBER_ID=er03.MEMBER_ID and er04.TALK_NO=er03.TALK_NO and er04.TALK_TYPE= #{model.talkType} and er04.`YEAR`= #{model.year})
+    </update>
+
 
 </mapper>
