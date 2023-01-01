@@ -42,6 +42,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskId()),"TASK_ID",tsdst06.getTaskId());
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskName()),"TASK_NAME",tsdst06.getTaskName());
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskMember()),"TASK_MEMBER",tsdst06.getTaskMember());
+            queryWrapper.like(!StringUtils.isEmpty(tsdst06.getRecCreator()),"REC_CREATOR",tsdst06.getRecCreator());
 
             PageHelper.startPage(tsdst06.getPageNum(),tsdst06.getPageSize());
             List<Tsdst06> list=tsdst06Mapper.selectList(queryWrapper);
@@ -158,6 +159,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             tsdst06Up.setTaskMember(tsdst06.getTaskMember());
             tsdst06Up.setPlanEndDate(tsdst06.getPlanEndDate());
             tsdst06Up.setRemark(tsdst06.getRemark());
+            tsdst06Up.setTaskStatus(tsdst06.getTaskStatus());
 
             String userName = (String) request.getSession().getAttribute("userName");
             String userId = (String) request.getSession().getAttribute("userId");

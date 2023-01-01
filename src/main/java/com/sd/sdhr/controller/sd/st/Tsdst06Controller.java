@@ -1,7 +1,5 @@
 package com.sd.sdhr.controller.sd.st;
 
-import com.sd.sdhr.pojo.sd.hr.Tsdhr02;
-import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Request;
 import com.sd.sdhr.pojo.sd.st.Tsdst06;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst06Request;
 import com.sd.sdhr.service.sd.st.Tsdst06Service;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/sdst06")
+@RequestMapping(value = "/Sdst06")
 @CrossOrigin
 public class Tsdst06Controller {
 
