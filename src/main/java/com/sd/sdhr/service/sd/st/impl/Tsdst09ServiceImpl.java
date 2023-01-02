@@ -3,11 +3,14 @@ package com.sd.sdhr.service.sd.st.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
+import com.sd.sdhr.mapper.sd.er.Tsder06Mapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09DefinedMapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09Mapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst11Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
+import com.sd.sdhr.pojo.sd.er.Tsder04;
+import com.sd.sdhr.pojo.sd.er.Tsder06;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst09;
 import com.sd.sdhr.pojo.sd.st.Tsdst11;
@@ -33,6 +36,10 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
 
     @Autowired
     Tsdst11Mapper tsdst11Mapper;
+
+    @Autowired
+    private Tsder06Mapper tsder06Mapper;
+
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -139,6 +146,44 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
             eiINfo.setMessage("信息关闭失败!"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public Tsdst09 getFormalInterviewCount(String userId) throws Exception {
+        Tsdst09 tsdst09=new Tsdst09();
+
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        int yyyy=calendar.get(Calendar.YEAR);
+        String year = String.valueOf(yyyy);
+        Tsder06 tsder06=tsder06Mapper.selectById(year);
+        SimpleDateFormat formatterDate = new SimpleDateFormat("yyyyMMdd");
+        String currentDate = formatterDate.format(new Date());
+        String messageRemark="";
+        if (tsder06!=null){
+            Date date1=formatterDate.parse(tsder06.getNode1());
+            Date date2=formatterDate.parse(currentDate);
+            //date1.after(date2) Date1在Date2之后 当前时间超过上半年设定值就主抓上半年，没超过就下半年
+            String talkType ;
+            if (date2.after(date1)){
+                talkType="T04";
+                messageRemark="上半年年度访谈，还有：";
+            }else {
+                talkType="T05";
+                year=String.valueOf(yyyy-1);
+                messageRemark="下半年年度访谈，还有：";
+            }
+            //String talkType =date2.after(date1)?"T04":"T05";
+            //StringBuffer sqlS=new StringBuffer(" ");
+            Tsder04 tsder04=new Tsder04();
+            tsder04.setYear(year);
+            tsder04.setTalkType(talkType);
+            List<Tsder03> list=tsdst09DefinedMapper.queryFormalInterview(tsder04);
+            tsdst09.setYear(String.valueOf(yyyy));
+            tsdst09.setMessageRemark(messageRemark+list.size()+"人未开始访谈，请合理安排时间！");
+        }
+
+        return tsdst09;
     }
 
     public void saveTsdst09BySder03(List<Tsder03> tsder03List,String msgBody,String roleCode,String businessType){

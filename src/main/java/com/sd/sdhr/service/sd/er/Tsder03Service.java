@@ -18,4 +18,6 @@ public interface Tsder03Service {
 
     //定时任务 判断访谈是否逾期
     EiINfo isOverdueJudge();
+
+
 }

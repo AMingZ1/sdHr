@@ -153,6 +153,11 @@ public class Tsder04  implements Serializable {
 	 */
 	private String isFormal;
 
+    /**
+     * 年度
+     */
+    private String year;
+
 	/**
 	 * 备注
 	 */

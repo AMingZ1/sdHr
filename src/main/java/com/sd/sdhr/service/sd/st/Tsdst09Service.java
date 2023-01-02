@@ -16,4 +16,7 @@ public interface Tsdst09Service {
 
     //关闭消息提醒
     EiINfo closeMsg(Tsdst09 tsdst09);
+
+    // 获取正式访谈未执行人数
+    Tsdst09 getFormalInterviewCount(String userId) throws Exception;
 }

@@ -15,4 +15,7 @@ public interface Tsder04Service {
     EiINfo deleteTsder04ByMap(Tsder04 tsder04);
 
     EiINfo updateTsder04(Tsder04 tsder04);
+
+    //获取每月统计数据
+    EiINfo getEnMonthStatByTalk(Tsder04 tsder04);
 }

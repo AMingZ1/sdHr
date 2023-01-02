@@ -1,5 +1,6 @@
 package com.sd.sdhr.service.common;
 
+import com.sd.sdhr.service.sd.er.Tsder03Service;
 import com.sd.sdhr.service.sd.st.Tsdst09Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ public class SaticScheduleTask {
 
     @Autowired
     Tsdst09Service tsdst09Service;
+
+    @Autowired
+    Tsder03Service tsder03Service;
 
 
     //@Scheduled(cron = "0/5 * * * * ?")
@@ -43,7 +47,7 @@ public class SaticScheduleTask {
     //@Scheduled(fixedRate=5000)
     private void judgeTasksOverdue() {
         //System.err.println("执行静态定时任务时间: " + LocalDateTime.now());
-        tsdst09Service.insertTsdst09ByTalk();
+        tsder03Service.isOverdueJudge();
     }
 
 

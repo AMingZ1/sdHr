@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sd.sdhr.mapper.sd.er.Tsder04DefinedMapper">
+
+    <!--根据信息查询每月转正统计-->
+    <select id="getTsder04ForOffica" resultType="java.util.HashMap">
+        select
+        sum(CASE bb.months when 1 then counts else 0 end) as '1month' ,
+        sum(CASE bb.months when 2 then counts else 0 end) as '2month' ,
+        sum(CASE bb.months when 3 then counts else 0 end) as '3month',
+        sum(CASE bb.months when 4 then counts else 0 end) as '4month' ,
+        sum(CASE bb.months when 5 then counts else 0 end) as '5month' ,
+        sum(CASE bb.months when 6 then counts else 0 end) as '6month' ,
+        sum(CASE bb.months when 7 then counts else 0 end) as '7month' ,
+        sum(CASE bb.months when 8 then counts else 0 end) as '8month' ,
+        sum(CASE bb.months when 9 then counts else 0 end) as '9month' ,
+        sum(CASE bb.months when 10 then counts else 0 end) as '10month' ,
+        sum(CASE bb.months when 11 then counts else 0 end) as '11month' ,
+        sum(CASE bb.months when 12 then counts else 0 end) as '12month'
+        from (
+        select aa.months,COUNT(1) counts,aa.years   from (
+        select
+        er04.year years,
+        SUBSTR(er04.TALK_DATE ,5,2) months
+        from tsder04 er04 where er04.TALK_TYPE in('T01','T02','T03')
+        and er04.`YEAR` like '%'||#{year}||'%'
+        ) aa GROUP BY aa.months,years
+        ) bb GROUP BY bb.years
+
+    </select>
+
+
+
+
+</mapper>

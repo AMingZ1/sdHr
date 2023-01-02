@@ -37,4 +37,8 @@ public class Tsder04Controller {
         return tsder04Service.deleteTsder04ByMap(tsder04);
     }
 
+    @RequestMapping(value = "/getInfo")
+    public Object getEnMonthStatByTalk(){
+        return tsder04Service.getEnMonthStatByTalk(new Tsder04());
+    }
 }

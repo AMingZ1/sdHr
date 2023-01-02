@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder03Mapper;
+import com.sd.sdhr.mapper.sd.er.Tsder04DefinedMapper;
 import com.sd.sdhr.mapper.sd.er.Tsder04Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
@@ -18,9 +19,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class Tsder04ServiceImpl implements Tsder04Service {
@@ -30,6 +29,9 @@ public class Tsder04ServiceImpl implements Tsder04Service {
 
     @Autowired
     Tsder03Mapper tsder03Mapper;
+
+    @Autowired
+    Tsder04DefinedMapper tsder04DefinedMapper;
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -233,6 +235,43 @@ public class Tsder04ServiceImpl implements Tsder04Service {
         }catch (Exception e){
             eiINfo.setSuccess("-1");
             eiINfo.setMessage("修改失败！"+e);
+        }
+        return eiINfo;
+    }
+
+    @Override
+    public EiINfo getEnMonthStatByTalk(Tsder04 tsder04) {
+        EiINfo eiINfo=new EiINfo();
+        try {
+            //获取当前年份
+            Calendar calendar = Calendar.getInstance();
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            List<Map> maps=tsder04DefinedMapper.getTsder04ForOffica(year);
+            List<String> strList1= new ArrayList<>();
+            if (maps.size()>0) {
+                Map map=maps.get(0);
+                strList1.add(map.get("1month").toString());
+                strList1.add(map.get("2month").toString());
+                strList1.add(map.get("3month").toString());
+                strList1.add(map.get("4month").toString());
+                strList1.add(map.get("5month").toString());
+                strList1.add(map.get("6month").toString());
+                strList1.add(map.get("7month").toString());
+                strList1.add(map.get("8month").toString());
+                strList1.add(map.get("9month").toString());
+                strList1.add(map.get("10month").toString());
+                strList1.add(map.get("11month").toString());
+                strList1.add(map.get("12month").toString());
+                //strList1 = new ArrayList<>(map.get(0).values());
+            }else {
+                strList1= Arrays.asList(new String[]{"0","0","0","0","0","0","0","0","0","0","0","0"});
+            }
+            eiINfo.setMessage("查询成功!");
+            eiINfo.setData(strList1);
+            eiINfo.setSuccess("1");
+        }catch (Exception e){
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("查询失败！"+e);
         }
         return eiINfo;
     }

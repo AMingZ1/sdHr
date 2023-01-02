@@ -19,4 +19,6 @@ public interface Tsdst09DefinedMapper {
 
     int updateEr03TalkStart(@Param("model") Tsder04 model);
 
+    List<Tsder03> queryFormalInterview(@Param("model") Tsder04 model);
+
 }

@@ -6,9 +6,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder03Mapper;
 import com.sd.sdhr.mapper.sd.er.Tsder04Mapper;
+import com.sd.sdhr.mapper.sd.er.Tsder06Mapper;
+import com.sd.sdhr.mapper.sd.st.Tsdst09DefinedMapper;
 import com.sd.sdhr.pojo.sd.er.Tsder02;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
+import com.sd.sdhr.pojo.sd.er.Tsder06;
 import com.sd.sdhr.pojo.sd.er.common.Tsder03Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder03Service;
@@ -34,6 +37,12 @@ public class Tsder03ServiceImpl implements Tsder03Service {
 
     @Autowired
     private Tsder04Mapper tsder04Mapper;
+
+    @Autowired
+    private Tsder06Mapper tsder06Mapper;
+
+    @Autowired
+    Tsdst09DefinedMapper tsdst09DefinedMapper;
 
     @Override
     public EiINfo getAllTsder03(Tsder03Request tsder03) {
@@ -254,8 +263,39 @@ public class Tsder03ServiceImpl implements Tsder03Service {
             wrapperFormal.eq("TALK_PLAN_NOW","02");
             wrapperFormal.ne("TALK_STATUS","00");
             tsder03Mapper.update(tsder03Up,wrapperFormal);
+
+            // 年度
+            // 获取当前年
+            //拿到当前年月日；
+            Calendar calendar = Calendar.getInstance();
+            int yyyy=calendar.get(Calendar.YEAR);
+            String year = String.valueOf(yyyy);
+            Tsder06 tsder06=tsder06Mapper.selectById(year);
+            if (tsder06!=null){
+                Date date1=formatterDate.parse(tsder06.getNode1());
+                Date date2=formatterDate.parse(currentDate);
+                //date1.after(date2) Date1在Date2之后 当前时间超过上半年设定值就主抓上半年，没超过就下半年
+                String talkType ;
+                if (date2.after(date1)){
+                    talkType="T04";
+                }else {
+                    talkType="T05";
+                    year=String.valueOf(yyyy-1);
+                }
+                //String talkType =date2.after(date1)?"T04":"T05";
+                curDateTime.substring(0,4);
+                //StringBuffer sqlS=new StringBuffer(" ");
+                Tsder04 tsder04=new Tsder04();
+                tsder04.setYear(year);
+                tsder04.setTalkType(talkType);
+                tsdst09DefinedMapper.updateEr03TalkStart(tsder04);
+
+            }
+
             eiINfo.setSuccess("1");
             eiINfo.setMessage("修改成功！");
+
+
 
         }catch (Exception e){
             eiINfo.setSuccess("-1");

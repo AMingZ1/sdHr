@@ -1,6 +1,9 @@
 package com.sd.sdhr.pojo.sd.er;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,16 +24,19 @@ public class Tsder06  implements Serializable {
 	/**
 	 * 年度
 	 */
+	@TableId
 	private String year;
 
 	/**
 	 * 上半年访谈节点
 	 */
+	@TableField(value="NODE_1")
 	private String node1;
 
 	/**
 	 * 下半年访谈节点
 	 */
+	@TableField(value="NODE_2")
 	private String node2;
 
 	/**

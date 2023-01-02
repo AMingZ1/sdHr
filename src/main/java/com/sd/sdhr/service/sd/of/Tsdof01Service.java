@@ -13,4 +13,7 @@ public interface Tsdof01Service {
     EiINfo deleteTsdof01ByMap(Tsdof01 tsdof01);
 
     EiINfo updateTsdof01(Tsdof01 tsdof01);
+
+    //获取每月统计数据
+    EiINfo getEnMonthStat(Tsdof01 tsdof01);
 }
