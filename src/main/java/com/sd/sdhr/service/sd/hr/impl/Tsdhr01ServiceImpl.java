@@ -101,7 +101,7 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
         try {
             //模糊查询条件
             QueryWrapper<Tsdhr01> queryWrapper=new QueryWrapper<>();
-            queryWrapper.eq(tsdhr01.isQueryHis(),"Delete_Flag","1");//true 只查历史
+            queryWrapper.eq("Delete_Flag",tsdhr01.isQueryHis()?"1":"0");//true 只查历史
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getYear()),"YEAR",tsdhr01.getYear());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getDeptName()),"DEPT_NAME",tsdhr01.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getItvJob()),"ITV_JOB",tsdhr01.getItvJob());

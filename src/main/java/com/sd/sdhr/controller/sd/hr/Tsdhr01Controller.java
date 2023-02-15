@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/sdhr01")
+@RequestMapping(value = "/Sdhr01")
 //@CrossOrigin(origins = "*") 跨域
 public class Tsdhr01Controller {
 
