@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 //本身就是Spring的一个组件
 //程序主入口
@@ -23,7 +25,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
  *                                  org.springframework.boot:spring-boot-autoconfigure:2.7.2:META-INF/spring.factories：自动配置的核心文件
  *                                  Springboot所有的自动配置都在启动类中扫描并加载：但是不一定生效，只要导入了对应的start就有对应的启动器，自动装备才会生效。
  */
-public class SdHrApplication {
+public class SdHrApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         //将应用启动
@@ -37,5 +39,12 @@ public class SdHrApplication {
          */
         SpringApplication.run(SdHrApplication.class, args);
     }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(SdHrApplication.class);
+        // 打war包的修改
+    }
+
 
 }
