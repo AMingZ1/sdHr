@@ -7,6 +7,7 @@ import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,14 +56,35 @@ public class ExpenseController {
 
 
     /**
+     * 添加报销
+     *
+     * @param userId    用户Id
+     * @param descption 描述
+     */
+    @RequestMapping(value = "add2")
+    @ResponseBody
+    public String addExpense2(String userId, String descption) {
+        //启动流程
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SDOF0001", map);
+        return "提交成功.流程Id为：" + processInstance.getId()+",qweq:"+processInstance.getProcessInstanceId();
+    }
+
+
+    /**
      * 获取审批管理列表
+     *
+     * @param userId    用户Id
      */
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String userId) {
         List<Task> tasks = taskService.createTaskQuery().taskAssignee(userId).orderByTaskCreateTime().desc().list();
+        taskService.createTaskQuery().taskAssignee(userId).processInstanceId("").list();
         for (Task task : tasks) {
             System.out.println(task.toString());
+            System.out.println("/n 任务ID："+task.getId());
         }
         return tasks.toArray().toString();
     }
@@ -74,14 +96,15 @@ public class ExpenseController {
      */
     @RequestMapping(value = "apply")
     @ResponseBody
-    public String apply(String taskId) {
+    public String apply(String taskId,String userId) {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         if (task == null) {
             throw new RuntimeException("流程不存在");
         }
         //通过审核
         HashMap<String, Object> map = new HashMap<>();
-        map.put("outcome", "通过");
+        map.put("isFlag", "Y");
+        map.put("userId", userId);
         taskService.complete(taskId, map);
         return "processed ok!";
     }
@@ -92,9 +115,10 @@ public class ExpenseController {
      */
     @ResponseBody
     @RequestMapping(value = "reject")
-    public String reject(String taskId) {
+    public String reject(String taskId,String userId) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("outcome", "驳回");
+        map.put("isFlag", "N");
+        map.put("userId", userId);
         taskService.complete(taskId, map);
         return "reject";
     }

@@ -1,9 +1,7 @@
 package com.sd.sdhr.controller.sd.st;
 
 import com.sd.sdhr.pojo.sd.st.Tsdst03;
-import com.sd.sdhr.pojo.sd.st.Tsdst06;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst03Request;
-import com.sd.sdhr.pojo.sd.st.common.Tsdst06Request;
 import com.sd.sdhr.service.sd.st.Tsdst03Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -9,6 +9,10 @@ import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
+import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -28,6 +33,11 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
+
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public EiINfo getAllTsdhr04(Tsdhr04Request tsdhr04) {
@@ -174,8 +184,8 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             tsdhr04Up.setItvStatus(tsdhr04.getItvStatus());
             tsdhr04Up.setArrivalDate(tsdhr04.getArrivalDate());
             tsdhr04Up.setEvaluation(tsdhr04.getEvaluation());
-            tsdhr04Up.setMailStatus(tsdhr04.getMailStatus());
-            tsdhr04Up.setIsAgree(tsdhr04.getIsAgree());
+            tsdhr04Up.setHopeSalary(tsdhr04.getHopeSalary());
+            tsdhr04Up.setEvaluation(tsdhr04.getEvaluation());
             tsdhr04Up.setRemark(tsdhr04.getRemark());
 
             //
@@ -195,5 +205,41 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             eiINfo.setMessage("修改失败！"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public EiINfo initiateApproval(Tsdhr04 tsdhr04) {
+
+        try {
+            //发起审批
+            Tsdhr04 nerHr04 =tsdhr04Mapper.selectById(tsdhr04.getItvNo());
+            if(!"10".equals(nerHr04.getNowStatus())){
+                throw new Exception("只有当前状态为【面试通过】的才可以申请off发送！");
+            }
+            String userName = (String) request.getSession().getAttribute("userName");
+            String userId = (String) request.getSession().getAttribute("userId");
+            //启动流程
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("userId", userId);
+            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SDOF0001", map);
+            String ProcessInstanceId=processInstance.getId();
+            nerHr04.setProcessInstanceId(ProcessInstanceId);//保存流程实例号
+            String an=processInstance.getProcessInstanceId();
+            List<Task> tasks2=taskService.createTaskQuery().taskAssignee(userId).processInstanceId(ProcessInstanceId).list();
+            String taskId=tasks2.get(0).getId();// 拿到任务Id
+            //通过审核
+            HashMap<String, Object> map3 = new HashMap<>();
+            map3.put("isFlag", "Y");
+            map3.put("userId", userId);
+            taskService.complete(taskId, map3);
+
+
+        }catch (Exception e){
+
+        }
+
+
+
+        return null;
     }
 }

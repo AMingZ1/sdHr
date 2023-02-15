@@ -39,6 +39,7 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
             //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             queryWrapper.eq(!StringUtils.isEmpty(tsdst03Request.getCodeNo()),"CODE_NO",tsdst03Request.getCodeNo());
             queryWrapper.eq(!StringUtils.isEmpty(tsdst03Request.getCodeEname()),"CODE_ENAME",tsdst03Request.getCodeEname());
+            //queryWrapper.select("CODE_ENAME","CODE_CNAME");
             //模糊查询条件
 
             PageHelper.startPage(tsdst03Request.getPageNum(),tsdst03Request.getPageSize());

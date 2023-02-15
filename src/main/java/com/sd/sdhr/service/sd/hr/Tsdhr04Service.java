@@ -16,4 +16,7 @@ public interface Tsdhr04Service {
     EiINfo deleteTsdhr04ByMap(Tsdhr04 tsdhr04);
 
     EiINfo updateTsdhr04(Tsdhr04 tsdhr04);
+
+    // 发起审批
+    EiINfo initiateApproval(Tsdhr04 tsdhr04);
 }

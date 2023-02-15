@@ -1,8 +1,8 @@
 package com.sd.sdhr.pojo.sd.hr;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -10,20 +10,19 @@ import lombok.NoArgsConstructor;
 /**
  * @Description  
  * @Author  GQ
- * @Date 2022-09-28 
+ * @Date 2023-02-03 
  */
 
 @Data//瀹炵幇get+set+toString鍔熻兘
 @AllArgsConstructor//鏈夊弬鏋勯��
 @NoArgsConstructor//鏃犲弬鏋勯��
-public class Tsdhr04 implements Serializable {
+public class Tsdhr04  implements Serializable {
 
-	private static final long serialVersionUID =  3762639396800524755L;
+	private static final long serialVersionUID =  2267362124669289303L;
 
 	/**
 	 * 面试记录号
 	 */
-	@TableId
 	private String itvNo;
 
 	/**
@@ -127,9 +126,19 @@ public class Tsdhr04 implements Serializable {
 	private String itvStatus;
 
 	/**
+	 * 当前状态
+	 */
+	private String nowStatus;
+
+	/**
 	 * 报道时间
 	 */
 	private String arrivalDate;
+
+	/**
+	 * 预计薪资
+	 */
+	private BigDecimal hopeSalary;
 
 	/**
 	 * 入库主观评价
@@ -137,14 +146,9 @@ public class Tsdhr04 implements Serializable {
 	private String evaluation;
 
 	/**
-	 * 邮件状态
+	 * 流程实例
 	 */
-	private String mailStatus;
-
-	/**
-	 * 是否接受OFFER
-	 */
-	private String isAgree;
+	private String processInstanceId;
 
 	/**
 	 * 备注

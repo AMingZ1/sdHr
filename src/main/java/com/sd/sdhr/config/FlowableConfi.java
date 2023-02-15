@@ -2,7 +2,11 @@ package com.sd.sdhr.config;
 
 import org.flowable.spring.SpringProcessEngineConfiguration;
 import org.flowable.spring.boot.EngineConfigurationConfigurer;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 
+@Controller
+@Configuration
 public class FlowableConfi implements EngineConfigurationConfigurer<SpringProcessEngineConfiguration> {
 
     @Override
