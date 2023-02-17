@@ -8,7 +8,9 @@ import com.sd.sdhr.mapper.sd.st.Tsdst06Mapper;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst06;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst06Request;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.st.Tsdst06Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -89,8 +91,9 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             memberId.append(serialNum);
             tsdst06.setTaskId(memberId.toString());
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdst06.setTaskStatus("01");
@@ -125,8 +128,9 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             UpdateWrapper<Tsdst06> wrapper=new UpdateWrapper<>();
             wrapper.eq("TASK_ID",tsdst06.getTaskId());
             Tsdst06 tsdst06Up=new Tsdst06();
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdst06Up.setTaskStatus("00");//关闭

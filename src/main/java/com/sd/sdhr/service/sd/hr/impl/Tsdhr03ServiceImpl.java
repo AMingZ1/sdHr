@@ -8,7 +8,9 @@ import com.sd.sdhr.mapper.sd.hr.Tsdhr03Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr03;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr03Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr03Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -85,8 +87,9 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             memberNo.append(serialNum);
             tsdhr03.setMemberNo(memberNo.toString());
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr03.setRecCreator(userId);
@@ -120,8 +123,9 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
             wrapper.eq("MEMBER_NO", tsdhr03.getMemberNo());
             Tsdhr03 tsdhr03Up =new Tsdhr03();
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr03Up.setDeleteFlag("1");
@@ -164,8 +168,9 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             tsdhr03Up.setRemark(tsdhr03.getRemark());
 
             //
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr03Up.setRecModifyName(userName);

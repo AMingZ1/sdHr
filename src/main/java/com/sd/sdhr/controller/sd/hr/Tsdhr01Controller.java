@@ -6,6 +6,7 @@ import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/Sdhr01")
 //@CrossOrigin(origins = "*") 跨域
+@CrossOrigin
 public class Tsdhr01Controller {
 
     @Autowired

@@ -2,12 +2,15 @@ package com.sd.sdhr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 //如果你想diy一些定制化功能，只需要写好这个组件，然后交给SpringBoot，它会帮我们自动装配.
@@ -25,11 +28,26 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/index.html","/charts/*","/css/*","/js/*"
+        //创建自定义的拦截器对象
+        HandlerInterceptor interceptor=new LoginHandlerInterceptor();
+        //配置白名单：存放在一个List集合中
+        List<String> patterns=new ArrayList<>();
+        patterns.add("/processes/**");
+        patterns.add("/css/**");
+        patterns.add("/images/**");
+        patterns.add("/js/**");
+        patterns.add("/Login");
+
+
+        registry.addInterceptor(interceptor)
+                .addPathPatterns("/**").excludePathPatterns(patterns);
+                        /*
+                        ("/index.html","/charts/*","/css/*","/js/*"
                         ,"/images/*","/admin-dashboard.html","/admin-dashboard"
-                        ,"/index", "/processes/*");
+                        ,"/index", "/processes/*","Login");
+                        */
     }
+
     //ViewResolver 实现了视图解析器接口的类，可以看作视图解析器
     @Bean
     public ViewResolver myViewResolver(){

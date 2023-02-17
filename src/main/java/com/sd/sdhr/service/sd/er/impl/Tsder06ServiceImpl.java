@@ -9,7 +9,9 @@ import com.sd.sdhr.pojo.sd.er.Tsder05;
 import com.sd.sdhr.pojo.sd.er.Tsder06;
 import com.sd.sdhr.pojo.sd.er.common.Tsder06Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.er.Tsder06Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.StringUtils;
@@ -75,8 +77,9 @@ public class Tsder06ServiceImpl implements Tsder06Service {
                 throw new Exception("当前年度的时间节点已经维护，无法再新增，年度："+tsder06.getYear());
             }
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsder06.setRecCreator(userId);
@@ -133,8 +136,9 @@ public class Tsder06ServiceImpl implements Tsder06Service {
             tsder06Up.setNode2(tsder06.getNode2());
             tsder06Up.setRemark(tsder06.getRemark());
 
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsder06Up.setRecModifyName(userName);

@@ -2,6 +2,7 @@ package com.sd.sdhr.service.sd.login.impl;
 
 import com.sd.sdhr.mapper.login.TDsUserMapper;
 import com.sd.sdhr.pojo.login.TDsUser;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.login.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,10 @@ public class LoginServiceImpl implements LoginService {
         if (tDsUser!=null && passWord.equals(tDsUser.getUserPassword())){
             map.put("success","1");
             map.put("message","登录成功");
-            map.put("token",tDsUser.getUserPassword());
             map.put("userId",tDsUser.getUserNo());
             map.put("userName",tDsUser.getUserName());
+            String token=JwtUtil.generateToken(tDsUser.getUserName(),tDsUser.getUserNo());
+            map.put("token",token);
         }else{
             map.put("success","-1");
             map.put("message","登录失败");

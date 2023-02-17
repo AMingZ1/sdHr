@@ -15,7 +15,9 @@ import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst09;
 import com.sd.sdhr.pojo.sd.st.Tsdst11;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst09Request;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.st.Tsdst09Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
@@ -130,8 +132,9 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
             Tsdst09 tsdst09UP=new Tsdst09();
             tsdst09UP.setMessageStatus("10");//关闭
 
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdst09UP.setRecModifyName(userName);

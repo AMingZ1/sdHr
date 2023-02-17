@@ -10,7 +10,9 @@ import com.sd.sdhr.pojo.sd.er.Tsder04;
 import com.sd.sdhr.pojo.sd.er.Tsder05;
 import com.sd.sdhr.pojo.sd.er.common.Tsder05Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.er.Tsder05Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -83,8 +85,9 @@ public class Tsder05ServiceImpl implements Tsder05Service {
                 throw new Exception("人员编号已经维护有离职信息 无法再新增，人员编号："+tsder05.getMemberId());
             }
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsder05.setRecCreator(userId);
@@ -149,8 +152,9 @@ public class Tsder05ServiceImpl implements Tsder05Service {
             tsder05Up.setApproveRemark(tsder05.getApproveRemark());
             tsder05Up.setRemark(tsder05.getRemark());
 
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsder05Up.setRecModifyName(userName);

@@ -8,7 +8,9 @@ import com.sd.sdhr.mapper.sd.er.Tsder02Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder02;
 import com.sd.sdhr.pojo.sd.er.common.Tsder02Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.er.Tsder02Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -86,8 +88,9 @@ public class Tsder02ServiceImpl implements Tsder02Service {
             mpRelationNo.append(serialNum);
             tsder02.setMpRelationNo(mpRelationNo.toString());
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsder02.setRecCreator(userId);

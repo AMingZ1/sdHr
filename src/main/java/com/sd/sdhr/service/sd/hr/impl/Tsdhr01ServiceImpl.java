@@ -8,7 +8,9 @@ import com.sd.sdhr.mapper.sd.hr.Tsdhr01Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -181,8 +183,11 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
             tsdhr01Up.setRemark(tsdhr01.getRemark());
 
             //  注入基本信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
+            //String userName = (String) request.getSession().getAttribute("userName");
+            //String userId = (String) request.getSession().getAttribute("userId");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr01Up.setRecModifyName(userName);

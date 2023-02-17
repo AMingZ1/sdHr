@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class Tsder04ServiceImpl implements Tsder04Service {
+public class  Tsder04ServiceImpl implements Tsder04Service {
 
     @Autowired
     private Tsder04Mapper tsder04Mapper;

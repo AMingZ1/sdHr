@@ -8,7 +8,9 @@ import com.sd.sdhr.mapper.sd.hr.Tsdhr04Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
+import io.jsonwebtoken.Claims;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -97,8 +99,9 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             itvNo.append(serialNum);
             tsdhr04.setItvNo(itvNo.toString());
             // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr04.setRecCreator(userId);
@@ -133,8 +136,9 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             UpdateWrapper<Tsdhr04> wrapper=new UpdateWrapper<>();
             wrapper.eq("ITV_NO", tsdhr04.getItvNo());
             Tsdhr04 tsdhr04Up =new Tsdhr04();
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr04Up.setDeleteFlag("1");
@@ -189,8 +193,9 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             tsdhr04Up.setRemark(tsdhr04.getRemark());
 
             //
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdhr04Up.setRecModifyName(userName);
