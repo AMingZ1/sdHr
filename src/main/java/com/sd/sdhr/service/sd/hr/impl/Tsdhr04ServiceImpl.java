@@ -235,7 +235,7 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             //通过审核
             HashMap<String, Object> map3 = new HashMap<>();
             map3.put("isFlag", "Y");
-            map3.put("userId", userId);
+            map3.put("userId", userId);// 下级审批人
             taskService.complete(taskId, map3);
 
 

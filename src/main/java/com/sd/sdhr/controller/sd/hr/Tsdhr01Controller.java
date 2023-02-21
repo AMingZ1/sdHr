@@ -6,12 +6,11 @@ import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -71,6 +70,22 @@ public class Tsdhr01Controller {
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode(rawFileName, "UTF-8").replaceAll("'\'+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+    }
+
+
+    /**
+     * 从Excel导入会员列表
+     */
+    @RequestMapping(value = "/import1", method = RequestMethod.POST)
+    @ResponseBody
+    public void importMemberList(@RequestPart("file") MultipartFile file) throws IOException {
+        List<Tsdhr01> list = EasyExcel.read(file.getInputStream())
+                .head(Tsdhr01.class)
+                .sheet()
+                .doReadSync();
+        for (Tsdhr01 member : list) {
+            System.out.println(member);
+        }
     }
 
 

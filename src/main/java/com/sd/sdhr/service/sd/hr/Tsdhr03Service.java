@@ -7,6 +7,11 @@ import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 public interface Tsdhr03Service {
 
     //获得所有的人才库数据
+    /**
+     * @ClassName 获取人才库数据
+     * @Description TODO
+     * @Author Jiangnan Cui
+     */
     EiINfo getAllTsdhr03(Tsdhr03Request tsdhr03);
 
     Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03);

@@ -16,8 +16,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //登陆成功后应该有用户token
         if (!JwtUtil.checkToken(request)){//未登陆
-            /*request.setAttribute("msg","请先登陆！");
-            request.getRequestDispatcher("index.html").forward(request,response);*/
+            request.setAttribute("msg","非法请求，请先登陆！");
+            /*request.getRequestDispatcher("index.html").forward(request,response);*/
             return false;
         }
         response.setHeader("Access-Control-Allow-Origin",request.getHeader("Origin"));//支持跨域请求
