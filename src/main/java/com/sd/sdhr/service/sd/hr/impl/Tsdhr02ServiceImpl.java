@@ -18,6 +18,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +39,23 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
             PageHelper.startPage(eiINfo);
             QueryWrapper<Tsdhr02> queryWrapper=new QueryWrapper<>();
+            List<String> contactStatusList= new ArrayList<String>();
+            if (tsdhr02.getContactStatus()!=null ) {
+                String a[]= tsdhr02.getContactStatus().split(",");
+                for (int i = 0; i < a.length; i++) {
+                    contactStatusList.add(a[i]);
+                }
+            }
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getPlanNo()),"PLAN_NO",tsdhr02.getPlanNo());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getMemberName()),"MEMBER_NAME",tsdhr02.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getReqNo()),"REQ_NO",tsdhr02.getReqNo());
-
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getDeptName()),"DEPT_NAME",tsdhr02.getDeptName());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getItvJob()),"ITV_JOB",tsdhr02.getItvJob());
+            if (contactStatusList.size()>0){
+                queryWrapper.in(!StringUtils.isEmpty(tsdhr02.getContactStatus()),"CONTACT_STATUS",contactStatusList);
+            }
             PageHelper.startPage(tsdhr02.getPageNum(),tsdhr02.getPageSize());
             List<Tsdhr02> list=tsdhr02Mapper.selectList(queryWrapper);
             if (!CollectionUtils.isEmpty(list)){

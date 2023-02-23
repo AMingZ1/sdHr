@@ -34,7 +34,7 @@ public class Tsdhr02Controller {
     }
 
     @RequestMapping(value = "/deleteSdhr02")
-    public Object deleteTsdhr02(@RequestBody Tsdhr02 tsdhr02){
+    public Object deleteTsdhr02( Tsdhr02 tsdhr02){
         return tsdhr02Service.deleteTsdhr02ByMap(tsdhr02);
     }
 
