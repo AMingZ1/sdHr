@@ -102,12 +102,15 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             int backInsert = tsdhr03Mapper.insert(tsdhr03);
             eiINfo.setMessage(String.valueOf(backInsert));
             if (backInsert==1){
+                eiINfo.setSuccess("1");
                 eiINfo.setMessage("新增成功！");
             }else {
+                eiINfo.setSuccess("-1");
                 eiINfo.setMessage("新增失败！");
             }
 
         }catch (Exception e){
+            eiINfo.setSuccess("-1");
             eiINfo.setMessage("新增失败！"+e);
         }
         return eiINfo;
