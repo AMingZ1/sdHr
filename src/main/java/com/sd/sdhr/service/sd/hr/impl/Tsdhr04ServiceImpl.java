@@ -8,13 +8,23 @@ import com.sd.sdhr.mapper.sd.hr.Tsdhr04Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+import com.sd.sdhr.pojo.sd.of.Tsdof01;
+import com.sd.sdhr.pojo.sd.st.Tsdst11;
+import com.sd.sdhr.service.common.ApprovalProcessUtil;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
+import com.sd.sdhr.service.sd.of.Tsdof01Service;
+import com.sd.sdhr.service.sd.st.Tsdst11Service;
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.common.impl.identity.Authentication;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.flowable.task.service.HistoricTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -22,24 +32,21 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
+@Slf4j
 @Service
 public class Tsdhr04ServiceImpl implements Tsdhr04Service {
 
     @Autowired
     private Tsdhr04Mapper tsdhr04Mapper;
+    @Autowired
+    Tsdof01Service tsdof01Service;
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
 
-    @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private TaskService taskService;
+
 
     @Override
     public EiINfo getAllTsdhr04(Tsdhr04Request tsdhr04) {
@@ -114,12 +121,14 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             int backInsert = tsdhr04Mapper.insert(tsdhr04);
             eiINfo.setMessage(String.valueOf(backInsert));
             if (backInsert==1){
+                eiINfo.setSuccess("1");
                 eiINfo.setMessage("新增成功！");
             }else {
-                eiINfo.setMessage("新增失败！");
+                throw new Exception("insert返回出错！");
             }
 
         }catch (Exception e){
+            eiINfo.setSuccess("-1");
             eiINfo.setMessage("新增失败！"+e);
         }
         return eiINfo;
@@ -213,38 +222,55 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     }
 
     @Override
-    public EiINfo initiateApproval(Tsdhr04 tsdhr04) {
-
+    public EiINfo insertOffer(Tsdhr04 tsdhr04) {
+        log.info("新增offer信息："+tsdhr04.toString());
+        EiINfo eiINfo=new EiINfo();
         try {
             //发起审批
             Tsdhr04 nerHr04 =tsdhr04Mapper.selectById(tsdhr04.getItvNo());
             if(!"10".equals(nerHr04.getNowStatus())){
                 throw new Exception("只有当前状态为【面试通过】的才可以申请off发送！");
             }
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
-            //启动流程
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("userId", userId);
-            ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("SDOF0001", map);
-            String ProcessInstanceId=processInstance.getId();
-            nerHr04.setProcessInstanceId(ProcessInstanceId);//保存流程实例号
-            String an=processInstance.getProcessInstanceId();
-            List<Task> tasks2=taskService.createTaskQuery().taskAssignee(userId).processInstanceId(ProcessInstanceId).list();
-            String taskId=tasks2.get(0).getId();// 拿到任务Id
-            //通过审核
-            HashMap<String, Object> map3 = new HashMap<>();
-            map3.put("isFlag", "Y");
-            map3.put("userId", userId);// 下级审批人
-            taskService.complete(taskId, map3);
-
-
+            Tsdof01 tsdof01 = new Tsdof01();
+            tsdof01.setMemberName(nerHr04.getMemberName());
+            tsdof01.setDeptName(nerHr04.getItvDept());
+            tsdof01.setJobs(nerHr04.getItvJob());
+            tsdof01.setEmpDate(nerHr04.getArrivalDate());
+            tsdof01.setEmail(nerHr04.getEmail());
+            tsdof01.setTel(nerHr04.getTel());
+            tsdof01.setSalary(nerHr04.getHopeSalary());
+            this.updateTsdhr04NowStatus(tsdhr04.getItvNo(),"40");
+            EiINfo iINfo = tsdof01Service.saveTsdof01(tsdof01);
+            if ("-1".equals(iINfo.getSuccess())){
+                throw new Exception(iINfo.getMessage());
+            }
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增offer成功！");
         }catch (Exception e){
-
+            log.error("新增offer出错！："+e.getMessage());
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("新增offer失败！"+e);
         }
 
+        return eiINfo;
+    }
 
 
-        return null;
+
+    public void updateTsdhr04NowStatus(String itvNo,String NowStatus) {
+        UpdateWrapper<Tsdhr04> wrapper=new UpdateWrapper<>();
+        wrapper.eq("ITV_NO", itvNo);
+        Tsdhr04 tsdhr04Up =new Tsdhr04();
+        tsdhr04Up.setNowStatus(NowStatus);
+
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName = claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr04Up.setRecModifyName(userName);
+        tsdhr04Up.setRecModifier(userId);
+        tsdhr04Up.setRecModifyTime(curDateTime);
+        tsdhr04Mapper.update(tsdhr04Up,wrapper);
     }
 }

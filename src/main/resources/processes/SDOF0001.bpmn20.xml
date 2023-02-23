@@ -12,6 +12,11 @@
       <extensionElements>
         <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
       </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" flowable:collection="userIdList" flowable:elementVariable="userId">
+        <extensionElements></extensionElements>
+        <loopCardinality>2</loopCardinality>
+        <completionCondition>${nrOfCompletedInstances==1}</completionCondition>
+      </multiInstanceLoopCharacteristics>
     </userTask>
     <sequenceFlow id="sid-2A1AC4C2-773D-48D7-B88F-22F00D45F8CC" sourceRef="START" targetRef="GRP1004"></sequenceFlow>
     <endEvent id="END" name="结束"></endEvent>

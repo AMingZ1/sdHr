@@ -23,13 +23,11 @@ public class Tsdst03  implements Serializable {
 	/**
 	 * 代码编号
 	 */
-	@TableId
 	private String codeNo;
 
 	/**
 	 * 代码英文名
 	 */
-	@TableId
 	private String codeEname;
 
 	/**

@@ -73,3 +73,7 @@ flowable:
   database-schema-update: true
   process-definition-location-prefix: classpath*:/processes/
   process-definition-location-suffixes: "**.bpmn20.xml, **.bpmn"
+logging:
+  level:
+    org.flowable.engine.impl.persistence.entity.*: debug
+    org.flowable.task.service.impl.persistence.entity.*: debug

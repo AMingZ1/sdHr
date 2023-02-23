@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 /**
- * @Description  
+ * @Description  off信息表
  * @Author  GQ
  * @Date 2022-11-23 
  */
@@ -83,7 +83,7 @@ public class Tsdof01  implements Serializable {
 	/**
 	 * 试用期薪资
 	 */
-	private BigDecimal isDz;
+	private String isDz;
 
 	/**
 	 * 状态

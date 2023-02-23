@@ -3,6 +3,9 @@ package com.sd.sdhr.pojo.sd.hr;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,6 +26,7 @@ public class Tsdhr04  implements Serializable {
 	/**
 	 * 面试记录号
 	 */
+	@TableId
 	private String itvNo;
 
 	/**
@@ -88,31 +92,37 @@ public class Tsdhr04  implements Serializable {
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_1")
 	private int score1;
 
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_2")
 	private int score2;
 
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_3")
 	private int score3;
 
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_4")
 	private int score4;
 
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_5")
 	private int score5;
 
 	/**
 	 * 成绩1
 	 */
+	@TableField(value="score_6")
 	private int score6;
 
 	/**

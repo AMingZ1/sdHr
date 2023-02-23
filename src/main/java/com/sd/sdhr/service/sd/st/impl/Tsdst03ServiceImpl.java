@@ -62,8 +62,17 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
     }
 
     @Override
-    public Tsdst06 selectTsdst03ById(Tsdst03 tsdst03) {
-        return null;
+    public Tsdst03 selectTsdst03ById(String codeNo,String codeEname) throws Exception {
+
+        QueryWrapper<Tsdst03> queryWrapper=new QueryWrapper<>();
+        //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        queryWrapper.eq("CODE_NO",codeNo);
+        queryWrapper.eq("CODE_ENAME",codeEname);
+        List<Tsdst03> list=tsdst03Mapper.selectList(queryWrapper);
+        if (list.size()!=1){
+            throw new Exception("返回结果为 空");
+        }
+        return list.get(0);
     }
 
     @Override

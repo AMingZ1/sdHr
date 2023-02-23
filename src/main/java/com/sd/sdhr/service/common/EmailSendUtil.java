@@ -1,5 +1,6 @@
 package com.sd.sdhr.service.common;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -14,27 +15,38 @@ import javax.mail.internet.MimeUtility;
 import javax.mail.search.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 import java.util.Properties;
 
 @Service
 public class EmailSendUtil {
 
     @Autowired
-    JavaMailSender mailSender;
+    static JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
-    private String fromUser;
+    private static String fromUser;
 
     @Value("${spring.mail.password}")
-    private String password;
+    private static String password;
 
 
     /**
-     * 发送简单html文本的邮箱验证码
+     * 发送简单html文本的邮箱验证码.
+     * @return
      */
-    public void sendSimpleHtmlMail(String to,String text) throws MessagingException{
+    public static void sendSimpleHtmlMail(Map<String,String> map) throws MessagingException{
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
+        Date parse = new Date();
+        String nowDate=String.format("%tY年%tm月%td日", parse,parse,parse);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(parse);
+        calendar.add(Calendar.DATE,1);//明天
+        String tomorrow=String.format("%tm月%td日", parse,parse);
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
         helper.setFrom(fromUser);
@@ -45,7 +57,7 @@ public class EmailSendUtil {
                         "<P> %s 先生/女士：</P>" +
                         "<p>我们很高兴向您正式发出聘任通知书，这是属于你的全新舞台，望你不忘初心，勇往直前！</p>" +
                         "请认真阅读以下内容，并确认以下相关细节，并在完全认可下述信息的情况下于%s上午9:30到公司报到，" +
-                        "同时在确认邮件内容及员工手册内容后在11月5日12:00前回复是否接受录用。如不接受录用请告知；如接受录用请在邮件中体现：" +
+                        "同时在确认邮件内容及员工手册内容后在%s 12:00前回复是否接受录用。如不接受录用请告知；如接受录用请在邮件中体现：" +
                         "<z style='color:red'>本人XXX已详尽阅读且完全理解员工手册各项内容，并接受录用</z> 等字样。逾期，公司将保留终止聘用的权利。<br><br>" +
                         "1、职位:  %s <br>2、工作地点：宝信软件 %s及部门所辖项目所在地现场 <br>3、报到地址：%s <br>" +
                         "4、工作时间：周一至周五，早上8:30-17:00。其他法定节假日公司将完全按照国家规定执行。 <br>" +
@@ -62,9 +74,9 @@ public class EmailSendUtil {
                         "提示说明：个人须提供的资料不齐全或虚假者不予办理入职手续。</P> <br><b>以上offer信息阅读完毕，确认无异议，请添加人事 俞经理的微信号：18019131681 </b> <br>" +
                         "日期：%s <br><br><br><img src='https://mail-online.nosdn.127.net/wzpmmc/5d9f993b26cdcaf85df67b1336028d2c.png'/><br>syds_liu|沈阳东硕信息技术有限公司<br>" +
                         "手机：17612129730<br>座机：024-23994399<br>邮箱：syds_liu@163.com<br>网址：www.dongshuoit.com <br>沈阳基地地址：沈阳市浑南区沈阳国际软件园A05区402室<br>邮编：110000<br>上海基地地址：上海市盘古路388号祥腾国际大厦5号楼703室 <br>邮编：201900<br>",
-                "李先森","2022年12月01日","java高级工程师","自动化事业本部","上海市宝山区同济路1118号","80%","10000","8000","2022年11月4日");
+                map.get("userName"),map.get("arrivalDate"),tomorrow,map.get("job"),map.get("deptName"),map.get("jobAddress"),map.get("isDz"),map.get("salary"),map.get("probationPay"),nowDate);
         helper.setText(msgs, true);
-        helper.setTo(to);//对方邮箱
+        helper.setTo(map.get("email"));//对方邮箱
         //添加附件信息
         String filePath="D:\\test_Jar\\syds.pdf";//本机附件地址
         FileSystemResource resource = new FileSystemResource(new File(filePath));
