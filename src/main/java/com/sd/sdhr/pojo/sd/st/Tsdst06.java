@@ -1,6 +1,8 @@
 package com.sd.sdhr.pojo.sd.st;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,7 @@ public class Tsdst06  implements Serializable {
 	/**
 	 * 任务编号
 	 */
+	@TableId
 	private String taskId;
 
 	/**
