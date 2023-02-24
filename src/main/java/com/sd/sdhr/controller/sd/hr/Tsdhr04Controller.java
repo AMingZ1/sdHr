@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/sdhr04")
+@RequestMapping(value = "/Sdhr04")
 @CrossOrigin
 public class Tsdhr04Controller {
 
