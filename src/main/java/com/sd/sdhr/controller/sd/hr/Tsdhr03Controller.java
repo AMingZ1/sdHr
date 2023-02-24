@@ -35,7 +35,7 @@ public class Tsdhr03Controller {
         }catch (Exception e){
             log.error("新增人才库信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("新增人才库信息失败:"+e.getMessage());
         }
         return outINfo;
     }
@@ -49,7 +49,7 @@ public class Tsdhr03Controller {
         }catch (Exception e){
             log.error("修改人才库信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("修改人才库信息失败:"+e.getMessage());
         }
         return outINfo;
     }
@@ -63,7 +63,7 @@ public class Tsdhr03Controller {
         }catch (Exception e){
             log.error("删除人才库信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("删除人才库信息失败:"+e.getMessage());
         }
         return outINfo;
     }

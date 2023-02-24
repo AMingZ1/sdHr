@@ -42,7 +42,7 @@ public class Tsdhr01Controller {
         }catch (Exception e){
             log.error("新增岗位信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("新增操作失败！"+e.getMessage());
         }
         return outINfo;
     }
@@ -56,7 +56,7 @@ public class Tsdhr01Controller {
         }catch (Exception e){
             log.error("修改岗位信息错误："+e);
             eiINfo.setSuccess("-1");
-            eiINfo.setMessage(e.getMessage());
+            eiINfo.setMessage("操作失败！"+e.getMessage());
         }
         return eiINfo;
     }
@@ -70,7 +70,7 @@ public class Tsdhr01Controller {
         }catch (Exception e){
             log.error("删除岗位信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("操作失败！"+e.getMessage());
         }
         return outINfo;
     }

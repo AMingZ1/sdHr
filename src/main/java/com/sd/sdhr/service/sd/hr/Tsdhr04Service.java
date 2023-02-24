@@ -4,7 +4,6 @@ import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 
-import java.util.Map;
 
 public interface Tsdhr04Service {
 
@@ -13,17 +12,17 @@ public interface Tsdhr04Service {
 
     Tsdhr04 selectTsdhr04ById(Tsdhr04 tsdhr04);
 
-    EiINfo saveTsdhr04(Tsdhr04 tsdhr04);
+    EiINfo saveTsdhr04(Tsdhr04 tsdhr04)throws Exception;
 
-    EiINfo deleteTsdhr04ByMap(Tsdhr04 tsdhr04);
+    EiINfo deleteTsdhr04ByMap(Tsdhr04 tsdhr04)throws Exception;
 
-    EiINfo updateTsdhr04(Tsdhr04 tsdhr04);
+    EiINfo updateTsdhr04(Tsdhr04 tsdhr04)throws Exception;
 
     /**
      * 生成offer.
      * @param tsdhr04：面试测评对象
      * @return
      */
-    EiINfo insertOffer(Tsdhr04 tsdhr04);
+    EiINfo insertOffer(Tsdhr04 tsdhr04)throws Exception;
 
 }

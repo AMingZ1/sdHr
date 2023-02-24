@@ -35,7 +35,7 @@ public class Tsdhr02Controller {
         }catch (Exception e){
             log.error("新增电联信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("新增操作失败！"+e.getMessage());
         }
         return outINfo;
     }
@@ -49,7 +49,7 @@ public class Tsdhr02Controller {
         }catch (Exception e){
             log.error("修改电联信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("修改操作失败！"+e.getMessage());
         }
         return outINfo;
     }
@@ -63,7 +63,7 @@ public class Tsdhr02Controller {
         }catch (Exception e){
             log.error("删除电联信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("删除操作失败！"+e.getMessage());
         }
         return outINfo;
     }

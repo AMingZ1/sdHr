@@ -40,7 +40,7 @@ public class Tsdof01Controller {
         }catch (Exception e){
             log.error("发请审批失败："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("操作失败！"+e.getMessage());
         }
         return outINfo;
     }
@@ -60,7 +60,7 @@ public class Tsdof01Controller {
         }catch (Exception e){
             log.error("审批失败："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("操作失败！"+e.getMessage());
         }
         return outINfo;
     }
@@ -80,7 +80,7 @@ public class Tsdof01Controller {
         }catch (Exception e){
             log.error("审批失败："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage(e.getMessage());
+            outINfo.setMessage("操作失败！"+e.getMessage());
         }
         return outINfo;
     }
