@@ -10,11 +10,11 @@ public interface Tsder03Service {
 
     Tsder03 selectTsder03ById(Tsder03 tsder03);
 
-    EiINfo saveTsder03(Tsder03 tsder03);
+    EiINfo saveTsder03(Tsder03 tsder03)throws Exception;
 
-    EiINfo deleteTsder03ByMap(Tsder03 tsder03);
+    EiINfo deleteTsder03ByMap(Tsder03 tsder03)throws Exception;
 
-    EiINfo updateTsder03(Tsder03 tsder03);
+    EiINfo updateTsder03(Tsder03 tsder03)throws Exception;
 
     //定时任务 判断访谈是否逾期
     EiINfo isOverdueJudge();

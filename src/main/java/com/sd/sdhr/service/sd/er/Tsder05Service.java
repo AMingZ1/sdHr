@@ -11,9 +11,9 @@ public interface Tsder05Service {
 
     Tsder05 selectTsder05ById(Tsder05 tsder05);
 
-    EiINfo saveTsder05(Tsder05 tsder05);
+    EiINfo saveTsder05(Tsder05 tsder05)throws Exception;
 
-    EiINfo deleteTsder05ByMap(Tsder05 tsder05);
+    EiINfo deleteTsder05ByMap(Tsder05 tsder05)throws Exception;
 
-    EiINfo updateTsder05(Tsder05 tsder05);
+    EiINfo updateTsder05(Tsder05 tsder05)throws Exception;
 }

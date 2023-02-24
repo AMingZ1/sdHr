@@ -1,6 +1,9 @@
 package com.sd.sdhr.service.sd.of.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.constant.DsConstant;
 import com.sd.sdhr.mapper.sd.of.Tsdof01DefinedMapper;
 import com.sd.sdhr.mapper.sd.of.Tsdof01Mapper;
@@ -24,7 +27,6 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,8 +58,40 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
-    public EiINfo getAllTsdof01(Tsdof01 tsdof01) {
-        return null;
+    public EiINfo getAllTsdof01(Tsdof01Request tsdof01Re) {
+        EiINfo eiINfo=new EiINfo();
+        try {
+            eiINfo.setPageNum(eiINfo.getPageNum()+1);
+            PageHelper.startPage(eiINfo);
+            QueryWrapper<Tsdof01> queryWrapper=new QueryWrapper<>();
+            //模糊查询条件
+            queryWrapper.like(!StringUtils.isEmpty(tsdof01Re.getOfferNo()),"OFFER_NO", tsdof01Re.getOfferNo());
+            queryWrapper.like(!StringUtils.isEmpty(tsdof01Re.getMemberName()),"MEMBER_NAME", tsdof01Re.getMemberName());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getJobs()),"JOBS", tsdof01Re.getJobs());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getDeptName()),"DEPT_NAME", tsdof01Re.getDeptName());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getIsAgree()),"IS_AGREE", tsdof01Re.getIsAgree());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getIsFreGra()),"IS_FRE_GRA", tsdof01Re.getIsFreGra());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getComStatus()),"COM_STATUS", tsdof01Re.getComStatus());
+            //queryWrapper.between(!StringUtils.isEmpty(tsdof01Re.getEmpDate()),"EMP_DATE", tsdof01Re.getEmpDate().S,"")
+            if (!StringUtils.isEmpty(tsdof01Re.getEmpDate())){
+                String[] split = tsdof01Re.getEmpDate().split(",");
+                queryWrapper.between("EMP_DATE",split[0],split[1]);
+            }
+            PageHelper.startPage(tsdof01Re.getPageNum(),tsdof01Re.getPageSize());
+            List<Tsdof01> list= tsdof01Mapper.selectList(queryWrapper);
+            if (list==null){
+                throw new Exception("返回结果为null");
+            }
+            PageInfo pageInfo=new PageInfo(list);
+            eiINfo.setMessage("查询成功!");
+            eiINfo.setTotalNum(pageInfo.getTotal());
+            eiINfo.setData(list);
+            eiINfo.setSuccess("1");
+        }catch (Exception e){
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("查询失败!"+e);
+        }
+        return eiINfo;
     }
 
     @Override
@@ -120,14 +154,48 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
 
     @Override
     @Transactional
-    public EiINfo deleteTsdof01ByMap(Tsdof01 tsdof01) {
+    public EiINfo deleteTsdof01ByMap(Tsdof01 tsdof01)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        if (StringUtils.isEmpty(tsdof01.getOfferNo())){
+            throw new Exception("Offer编号为空无法删除！");
+        }
         return null;
     }
 
     @Override
     @Transactional
-    public EiINfo updateTsdof01(Tsdof01 tsdof01) {
-        return null;
+    public EiINfo updateTsdof01(Tsdof01 tsdof01)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        if (StringUtils.isEmpty(tsdof01.getOfferNo())){
+            throw new Exception("Offer编号为空无法修改！");
+        }
+        UpdateWrapper<Tsdof01> wrapper=new UpdateWrapper<>();
+        wrapper.eq("OFFFER_NO", tsdof01.getOfferNo());
+        Tsdof01 tsdof01Up =new Tsdof01();
+        tsdof01Up.setDeptName(tsdof01.getDeptName());
+        tsdof01Up.setJobs(tsdof01.getJobs());
+        tsdof01Up.setEmpDate(tsdof01.getEmpDate());
+        tsdof01Up.setIsFreGra(tsdof01.getIsFreGra());
+        tsdof01Up.setComStatus(tsdof01.getComStatus());
+        tsdof01Up.setEmail(tsdof01.getEmail());
+        tsdof01Up.setTel(tsdof01.getTel());
+        tsdof01Up.setJobAddress(tsdof01.getJobAddress());
+        tsdof01Up.setSalary(tsdof01.getSalary());
+        tsdof01Up.setIsDz(tsdof01.getIsDz());
+        //
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdof01Up.setRecModifyName(userName);
+        tsdof01Up.setRecModifier(userId);
+        tsdof01Up.setRecModifyTime(curDateTime);
+        tsdof01Mapper.update(tsdof01Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("修改成功！");
+
+        return eiINfo;
     }
 
     @Override

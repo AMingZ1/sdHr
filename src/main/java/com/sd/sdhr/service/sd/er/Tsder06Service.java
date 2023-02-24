@@ -10,9 +10,9 @@ public interface Tsder06Service {
 
     Tsder06 selectTsder06ById(Tsder06 tsder06);
 
-    EiINfo saveTsder06(Tsder06 tsder06);
+    EiINfo saveTsder06(Tsder06 tsder06)throws Exception;
 
-    EiINfo deleteTsder06ByMap(Tsder06 tsder06);
+    EiINfo deleteTsder06ByMap(Tsder06 tsder06)throws Exception;
 
-    EiINfo updateTsder06(Tsder06 tsder06);
+    EiINfo updateTsder06(Tsder06 tsder06)throws Exception;
 }
