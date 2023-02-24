@@ -62,10 +62,8 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
             if (!CollectionUtils.isEmpty(list)){
                 PageInfo pageInfo=new PageInfo(list);
-
                 eiINfo.setTotalNum(pageInfo.getTotal());
                 eiINfo.setData(list);
-
             }
             eiINfo.setMessage("查询成功!");
             eiINfo.setSuccess("1");
