@@ -7,7 +7,7 @@ import com.sd.sdhr.pojo.sd.of.common.Tsdof01Request;
 import java.util.Map;
 
 public interface Tsdof01Service {
-    EiINfo getAllTsdof01(Tsdof01 tsdof01);
+    EiINfo getAllTsdof01(Tsdof01Request tsdof01Re);
 
     Tsdof01 selectTsdof01ById(Tsdof01 tsdof01);
 

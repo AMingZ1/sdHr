@@ -10,9 +10,9 @@ public interface Tsder01Service {
 
     Tsder01 selectTsder01ById(Tsder01 tsder01);
 
-    EiINfo saveTsder01(Tsder01 tsder01);
+    EiINfo saveTsder01(Tsder01 tsder01)throws Exception;
 
-    EiINfo deleteTsder01ByMap(Tsder01 tsder01);
+    EiINfo deleteTsder01ByMap(Tsder01 tsder01)throws Exception;
 
-    EiINfo updateTsder01(Tsder01 tsder01);
+    EiINfo updateTsder01(Tsder01 tsder01)throws Exception;
 }

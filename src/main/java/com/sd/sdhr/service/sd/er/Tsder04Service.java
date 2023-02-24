@@ -10,11 +10,11 @@ public interface Tsder04Service {
 
     Tsder04 selectTsder04ById(Tsder04 tsder04);
 
-    EiINfo saveTsder04(Tsder04 tsder04);
+    EiINfo saveTsder04(Tsder04 tsder04)throws Exception;
 
-    EiINfo deleteTsder04ByMap(Tsder04 tsder04);
+    EiINfo deleteTsder04ByMap(Tsder04 tsder04)throws Exception;
 
-    EiINfo updateTsder04(Tsder04 tsder04);
+    EiINfo updateTsder04(Tsder04 tsder04)throws Exception;
 
     //获取每月统计数据
     EiINfo getEnMonthStatByTalk(Tsder04 tsder04);

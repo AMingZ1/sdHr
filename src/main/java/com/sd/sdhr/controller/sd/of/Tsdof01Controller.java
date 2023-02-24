@@ -30,6 +30,25 @@ public class Tsdof01Controller {
         return tsdof01Service.getEnMonthStat(new Tsdof01());
     }
 
+    @RequestMapping(value = "/querySdof01")
+    public Object queryTsdof01(Tsdof01Request tsdof01Re){
+        return tsdof01Service.getAllTsdof01(tsdof01Re);
+    }
+
+    @RequestMapping(value = "/updateSder06")
+    public Object updateTsof01(@RequestBody Tsdof01 tsdof01){
+        log.info("修改入参："+tsdof01);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo = tsdof01Service.initiateApproval(tsdof01);
+        }catch (Exception e){
+            log.error("发请审批失败："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("操作失败！"+e.getMessage());
+        }
+        return outINfo;
+    }
+
     //发起审批
     @RequestMapping(value = "/initiateApproval")
     public Object initiateApprovalOf01(@RequestBody Tsdof01 tsdof01){
