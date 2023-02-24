@@ -51,13 +51,12 @@ public class  Tsder04ServiceImpl implements Tsder04Service {
             queryWrapper.like(!StringUtils.isEmpty(tsder04.getTalkType()),"TALK_TYPE",tsder04.getTalkType());
 
             List<Tsder04> list=tsder04Mapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(list)){
-                throw new Exception("返回结果为null");
+            if (!CollectionUtils.isEmpty(list)){
+                PageInfo pageInfo=new PageInfo(list);
+                eiINfo.setTotalNum(pageInfo.getTotal());
+                eiINfo.setData(list);
             }
-            PageInfo pageInfo=new PageInfo(list);
             eiINfo.setMessage("查询成功!");
-            eiINfo.setTotalNum(pageInfo.getTotal());
-            eiINfo.setData(list);
             eiINfo.setSuccess("1");
         }catch (Exception e){
             eiINfo.setSuccess("-1");

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder06Mapper;
-import com.sd.sdhr.pojo.sd.er.Tsder05;
 import com.sd.sdhr.pojo.sd.er.Tsder06;
 import com.sd.sdhr.pojo.sd.er.common.Tsder06Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
@@ -13,6 +12,7 @@ import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.er.Tsder06Service;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.StringUtils;
 
@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class Tsder06ServiceImpl implements Tsder06Service {
 
     @Autowired
@@ -41,13 +42,12 @@ public class Tsder06ServiceImpl implements Tsder06Service {
 
             PageHelper.startPage(tsder06.getPageNum(),tsder06.getPageSize());
             List<Tsder06> list=tsder06Mapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(list)){
-                throw new Exception("返回结果为null");
+            if (!CollectionUtils.isEmpty(list)){
+                PageInfo pageInfo=new PageInfo(list);
+                eiINfo.setTotalNum(pageInfo.getTotal());
+                eiINfo.setData(list);
             }
-            PageInfo pageInfo=new PageInfo(list);
             eiINfo.setMessage("查询成功!");
-            eiINfo.setTotalNum(pageInfo.getTotal());
-            eiINfo.setData(list);
             eiINfo.setSuccess("1");
 
         }catch (Exception e){

@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder05Mapper;
-import com.sd.sdhr.pojo.sd.er.Tsder03;
-import com.sd.sdhr.pojo.sd.er.Tsder04;
 import com.sd.sdhr.pojo.sd.er.Tsder05;
 import com.sd.sdhr.pojo.sd.er.common.Tsder05Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
@@ -21,7 +19,6 @@ import org.thymeleaf.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -50,13 +47,12 @@ public class Tsder05ServiceImpl implements Tsder05Service {
 
             PageHelper.startPage(tsder05.getPageNum(),tsder05.getPageSize());
             List<Tsder05> list=tsder05Mapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(list)){
-                throw new Exception("返回结果为null");
+            if (!CollectionUtils.isEmpty(list)){
+                PageInfo pageInfo=new PageInfo(list);
+                eiINfo.setTotalNum(pageInfo.getTotal());
+                eiINfo.setData(list);
             }
-            PageInfo pageInfo=new PageInfo(list);
             eiINfo.setMessage("查询成功!");
-            eiINfo.setTotalNum(pageInfo.getTotal());
-            eiINfo.setData(list);
             eiINfo.setSuccess("1");
         }catch (Exception e){
             eiINfo.setSuccess("-1");

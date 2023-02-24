@@ -47,13 +47,12 @@ public class Tsder02ServiceImpl implements Tsder02Service {
 
             PageHelper.startPage(tsder02.getPageNum(),tsder02.getPageSize());
             List<Tsder02> list=tsder02Mapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(list)){
-                throw new Exception("返回结果为null");
+            if (!CollectionUtils.isEmpty(list)){
+                PageInfo pageInfo=new PageInfo(list);
+                eiINfo.setTotalNum(pageInfo.getTotal());
+                eiINfo.setData(list);
             }
-            PageInfo pageInfo=new PageInfo(list);
             eiINfo.setMessage("查询成功!");
-            eiINfo.setTotalNum(pageInfo.getTotal());
-            eiINfo.setData(list);
             eiINfo.setSuccess("1");
         }catch (Exception e){
             eiINfo.setSuccess("-1");
