@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,45 +44,43 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
     }
 
     @Override
-    public EiINfo saveTsdhr01(Tsdhr01 tsdhr01) {
+    @Transactional
+    public EiINfo saveTsdhr01(Tsdhr01 tsdhr01)throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            //tsdhr01Mapper.selectList(new Wrapper<>().like("",""))
-            //拿到当前年月日；
-            Calendar calendar = Calendar.getInstance();
-            // 获取当前年
-            String year = String.valueOf(calendar.get(Calendar.YEAR));
-            // 获取当前月
-            int month = calendar.get(Calendar.MONTH) + 1;
-            StringBuilder reqNo=new StringBuilder();
-            String an=year.substring(year.length()-2);
-            reqNo=reqNo.append(an).append("A").append(month);
-            //查询当前生成流水号信息
-            int num=tsdhr01Mapper.queryCountByReqNoLike(reqNo.toString());
-            String serialNum= String.format("%04d", num+1);
-            reqNo.append(serialNum);
-            tsdhr01.setReqNo(reqNo.toString());
-            // 注入信息
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr01.setRecCreator(userId);
-            tsdhr01.setRecCreatorName(userName);
-            tsdhr01.setRecCreateTime(curDateTime);
-            tsdhr01.setRecModifier(userId);
-            tsdhr01.setRecModifyName(userName);
-            tsdhr01.setRecModifyTime(curDateTime);
-            tsdhr01.setDeleteFlag("0");
-            int ss =tsdhr01Mapper.insert(tsdhr01);
-            eiINfo.setMessage(String.valueOf(ss));
-            if (ss==1){
-                eiINfo.setMessage("新增成功！");
-            }else {
-                eiINfo.setMessage("新增失败！");
-            }
-        }catch (Exception e){
-            eiINfo.setMessage("新增失败！"+e);
+        //tsdhr01Mapper.selectList(new Wrapper<>().like("",""))
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        // 获取当前月
+        int month = calendar.get(Calendar.MONTH) + 1;
+        StringBuilder reqNo=new StringBuilder();
+        String an=year.substring(year.length()-2);
+        reqNo=reqNo.append(an).append("A").append(month);
+        //查询当前生成流水号信息
+        int num=tsdhr01Mapper.queryCountByReqNoLike(reqNo.toString());
+        String serialNum= String.format("%04d", num+1);
+        reqNo.append(serialNum);
+        tsdhr01.setReqNo(reqNo.toString());
+        // 注入信息
+        String userName = (String) request.getSession().getAttribute("userName");
+        String userId = (String) request.getSession().getAttribute("userId");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr01.setRecCreator(userId);
+        tsdhr01.setRecCreatorName(userName);
+        tsdhr01.setRecCreateTime(curDateTime);
+        tsdhr01.setRecModifier(userId);
+        tsdhr01.setRecModifyName(userName);
+        tsdhr01.setRecModifyTime(curDateTime);
+        tsdhr01.setDeleteFlag("0");
+        int ss =tsdhr01Mapper.insert(tsdhr01);
+        eiINfo.setMessage(String.valueOf(ss));
+        if (ss==1){
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增成功！");
+        }else {
+            throw new Exception("新增失败！！");
         }
 
         return eiINfo;
@@ -131,76 +130,66 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
     }
 
     @Override
-    public EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01) {
+    @Transactional
+    public EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01) throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            if (StringUtils.isEmpty(tsdhr01.getReqNo())){
-                throw new Exception("需求编号号为空无法删除！");
-            }
-            UpdateWrapper<Tsdhr01> wrapper=new UpdateWrapper<>();
-            wrapper.eq("REQ_NO",tsdhr01.getReqNo());
-            Tsdhr01 tsdhr01Up=new Tsdhr01();
-            String userName = (String) request.getSession().getAttribute("userName");
-            String userId = (String) request.getSession().getAttribute("userId");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr01Up.setDeleteFlag("1");
-            tsdhr01Up.setDeleteName(userName);
-            tsdhr01Up.setDeleter(userId);
-            tsdhr01Up.setDeleteTime(curDateTime);
-            tsdhr01Mapper.update(tsdhr01Up,wrapper);
-            eiINfo.setSuccess("1");
-            eiINfo.setMessage("删除成功！");
-
-        }catch (Exception e){
-            eiINfo.setSuccess("-1");
-            eiINfo.setMessage("删除失败！"+e);
+        if (StringUtils.isEmpty(tsdhr01.getReqNo())){
+            throw new Exception("需求编号号为空无法删除！");
         }
+        UpdateWrapper<Tsdhr01> wrapper=new UpdateWrapper<>();
+        wrapper.eq("REQ_NO",tsdhr01.getReqNo());
+        Tsdhr01 tsdhr01Up=new Tsdhr01();
+        String userName = (String) request.getSession().getAttribute("userName");
+        String userId = (String) request.getSession().getAttribute("userId");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr01Up.setDeleteFlag("1");
+        tsdhr01Up.setDeleteName(userName);
+        tsdhr01Up.setDeleter(userId);
+        tsdhr01Up.setDeleteTime(curDateTime);
+        tsdhr01Mapper.update(tsdhr01Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
 
         return eiINfo;
     }
 
     @Override
-    public EiINfo updateTsdhr01(Tsdhr01 tsdhr01) {
+    @Transactional
+    public EiINfo updateTsdhr01(Tsdhr01 tsdhr01) throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            if (StringUtils.isEmpty(tsdhr01.getReqNo())){
-                throw new Exception("需求编号号为空无法修改！");
-            }
-            UpdateWrapper<Tsdhr01> wrapper=new UpdateWrapper<>();
-            wrapper.eq("REQ_NO",tsdhr01.getReqNo());
-            Tsdhr01 tsdhr01Up=new Tsdhr01();
-            tsdhr01Up.setYear(tsdhr01.getYear());
-            tsdhr01Up.setDeptName(tsdhr01.getDeptName());
-            tsdhr01Up.setItvJob(tsdhr01.getItvJob());
-            tsdhr01Up.setRequireNum(tsdhr01.getRequireNum());
-            tsdhr01Up.setRealNum(tsdhr01.getRealNum());
-            tsdhr01Up.setJobRequire(tsdhr01.getJobRequire());
-            tsdhr01Up.setRequireContact(tsdhr01.getRequireContact());
-            tsdhr01Up.setDutyPerson(tsdhr01.getDutyPerson());
-            tsdhr01Up.setPlanEndDate(tsdhr01.getPlanEndDate());
-            tsdhr01Up.setIsEme(tsdhr01.getIsEme());
-            tsdhr01Up.setRemark(tsdhr01.getRemark());
-
-            //  注入基本信息
-            Claims claims = JwtUtil.verifyJwt(request);
-            String userId = claims.get("userId").toString();
-            String userName =  claims.get("userName").toString();
-            //String userName = (String) request.getSession().getAttribute("userName");
-            //String userId = (String) request.getSession().getAttribute("userId");
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr01Up.setRecModifyName(userName);
-            tsdhr01Up.setRecModifier(userId);
-            tsdhr01Up.setRecModifyTime(curDateTime);
-            tsdhr01Mapper.update(tsdhr01Up,wrapper);
-            eiINfo.setSuccess("1");
-            eiINfo.setMessage("修改成功！");
-
-        }catch (Exception e){
-            eiINfo.setSuccess("-1");
-            eiINfo.setMessage("修改失败！"+e);
+        if (StringUtils.isEmpty(tsdhr01.getReqNo())){
+            throw new Exception("需求编号号为空无法修改！");
         }
+        UpdateWrapper<Tsdhr01> wrapper=new UpdateWrapper<>();
+        wrapper.eq("REQ_NO",tsdhr01.getReqNo());
+        Tsdhr01 tsdhr01Up=new Tsdhr01();
+        tsdhr01Up.setYear(tsdhr01.getYear());
+        tsdhr01Up.setDeptName(tsdhr01.getDeptName());
+        tsdhr01Up.setItvJob(tsdhr01.getItvJob());
+        tsdhr01Up.setRequireNum(tsdhr01.getRequireNum());
+        tsdhr01Up.setRealNum(tsdhr01.getRealNum());
+        tsdhr01Up.setJobRequire(tsdhr01.getJobRequire());
+        tsdhr01Up.setRequireContact(tsdhr01.getRequireContact());
+        tsdhr01Up.setDutyPerson(tsdhr01.getDutyPerson());
+        tsdhr01Up.setPlanEndDate(tsdhr01.getPlanEndDate());
+        tsdhr01Up.setIsEme(tsdhr01.getIsEme());
+        tsdhr01Up.setRemark(tsdhr01.getRemark());
+
+        //  注入基本信息
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        //String userName = (String) request.getSession().getAttribute("userName");
+        //String userId = (String) request.getSession().getAttribute("userId");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr01Up.setRecModifyName(userName);
+        tsdhr01Up.setRecModifier(userId);
+        tsdhr01Up.setRecModifyTime(curDateTime);
+        tsdhr01Mapper.update(tsdhr01Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("修改成功！");
 
         return eiINfo;
     }

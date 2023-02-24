@@ -4,7 +4,9 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
+import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
-
+@Slf4j
 @RestController
 @RequestMapping(value = "/Sdhr01")
 //@CrossOrigin(origins = "*") 跨域
@@ -33,20 +35,44 @@ public class Tsdhr01Controller {
 
     @RequestMapping(value = "/addSdhr01")
     public Object saveTsdhr01(@RequestBody Tsdhr01 tsdhr01){
-
-        return tsdhr01Service.saveTsdhr01(tsdhr01);
+        log.info("新增岗位信息："+tsdhr01);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr01Service.saveTsdhr01(tsdhr01);
+        }catch (Exception e){
+            log.error("新增岗位信息错误："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage(e.getMessage());
+        }
+        return outINfo;
     }
 
     @RequestMapping(value = "/updateSdhr01")
     public Object updateTsdhr01(@RequestBody Tsdhr01 tsdhr01){
-
-        return tsdhr01Service.updateTsdhr01(tsdhr01);
+        log.info("修改岗位信息："+tsdhr01);
+        EiINfo eiINfo = new EiINfo();
+        try {
+            eiINfo=tsdhr01Service.updateTsdhr01(tsdhr01);
+        }catch (Exception e){
+            log.error("修改岗位信息错误："+e);
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage(e.getMessage());
+        }
+        return eiINfo;
     }
 
     @RequestMapping(value = "/deleteSdhr01")
     public Object deleteTsdhr01(@RequestBody Tsdhr01 tsdhr01){
-
-        return tsdhr01Service.deleteTsdhr01ByMap(tsdhr01);
+        log.info("删除岗位信息："+tsdhr01);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr01Service.deleteTsdhr01ByMap(tsdhr01);
+        }catch (Exception e){
+            log.error("删除岗位信息错误："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage(e.getMessage());
+        }
+        return outINfo;
     }
 
     //导出
@@ -58,7 +84,7 @@ public class Tsdhr01Controller {
             this.setExcelRespProp(response, "会员列表");
             EasyExcel.write(response.getOutputStream()).head(Tsdhr01.class).excelType(ExcelTypeEnum.XLSX).sheet("列表").doWrite(tsdhr01s);
         }catch (Exception e){
-
+            log.error("导出岗位信息错误："+e);
         }
 
     }

@@ -3,6 +3,7 @@ package com.sd.sdhr.pojo.sd.of;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Tsdof01  implements Serializable {
 	/**
 	 * OFFER编号
 	 */
+	@TableId
 	private String offerNo;
 
 	/**

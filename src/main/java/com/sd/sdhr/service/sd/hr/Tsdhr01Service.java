@@ -15,7 +15,7 @@ public interface Tsdhr01Service {
     Tsdhr01 getTsdhr01ByReqNo(String reqNo);
 
     // 新增一个岗位需求信息
-    EiINfo saveTsdhr01(Tsdhr01 tsdhr01);
+    EiINfo saveTsdhr01(Tsdhr01 tsdhr01) throws Exception;
 
     // 修改一个岗位需求信息
     int updateTsdhr01ByReqNo(Tsdhr01 tsdhr01);
@@ -26,8 +26,8 @@ public interface Tsdhr01Service {
     //获得所有的岗位需求信息
     EiINfo getAllTsdhr01Test(Tsdhr01Request tsdhr01);
 
-    EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01);
+    EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01) throws Exception;
 
     // 修改一个岗位需求信息
-    EiINfo updateTsdhr01(Tsdhr01 tsdhr01);
+    EiINfo updateTsdhr01(Tsdhr01 tsdhr01)throws Exception;
 }

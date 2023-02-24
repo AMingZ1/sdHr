@@ -16,9 +16,9 @@ public interface Tsdhr03Service {
 
     Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03);
 
-    EiINfo saveTsdhr03(Tsdhr03 tsdhr03);
+    EiINfo saveTsdhr03(Tsdhr03 tsdhr03)throws Exception;
 
-    EiINfo deleteTsdhr03ByMap(Tsdhr03 tsdhr03);
+    EiINfo deleteTsdhr03ByMap(Tsdhr03 tsdhr03)throws Exception;
 
-    EiINfo updateTsdhr03(Tsdhr03 tsdhr03);
+    EiINfo updateTsdhr03(Tsdhr03 tsdhr03)throws Exception;
 }

@@ -12,9 +12,9 @@ public interface Tsdhr02Service {
 
     Tsdhr02 selectTsdhr02ById(Tsdhr02 tsdhr02);
 
-    EiINfo saveTsdhr02(Tsdhr02 tsdhr02);
+    EiINfo saveTsdhr02(Tsdhr02 tsdhr02)throws Exception;
 
-    EiINfo deleteTsdhr02ByMap(Tsdhr02 tsdhr02);
+    EiINfo deleteTsdhr02ByMap(Tsdhr02 tsdhr02)throws Exception;
 
-    EiINfo updateTsdhr02(Tsdhr02 tsdhr02);
+    EiINfo updateTsdhr02(Tsdhr02 tsdhr02)throws Exception;
 }

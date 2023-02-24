@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,125 +69,111 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
     }
 
     @Override
-    public EiINfo saveTsdhr03(Tsdhr03 tsdhr03) {
+    @Transactional
+    public EiINfo saveTsdhr03(Tsdhr03 tsdhr03)throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            if (!StringUtils.isEmpty(tsdhr03.getMemberNo())){
-                throw new Exception("员工编号不为空无法新增！面试记录号："+ tsdhr03.getMemberNo());
-            }
-            //拿到当前年月日；
-            Calendar calendar = Calendar.getInstance();
-            // 获取当前年
-            String year = String.valueOf(calendar.get(Calendar.YEAR));
-            // 获取当前月
-            int month = calendar.get(Calendar.MONTH) + 1;
-            StringBuilder memberNo=new StringBuilder("DSSH");
-            //查询当前生成流水号信息
-            int backNum= tsdhr03Mapper.queryCountByMemberNoLike(memberNo.toString());
-            String serialNum= String.format("%04d", backNum+1);
-            memberNo.append(serialNum);
-            tsdhr03.setMemberNo(memberNo.toString());
-            // 注入信息
-            Claims claims = JwtUtil.verifyJwt(request);
-            String userId = claims.get("userId").toString();
-            String userName =  claims.get("userName").toString();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr03.setRecCreator(userId);
-            tsdhr03.setRecCreateName(userName);
-            tsdhr03.setRecCreateTime(curDateTime);
-            tsdhr03.setRecModifier(userId);
-            tsdhr03.setRecModifyName(userName);
-            tsdhr03.setRecModifyTime(curDateTime);
-            tsdhr03.setDeleteFlag("0");
-            int backInsert = tsdhr03Mapper.insert(tsdhr03);
-            eiINfo.setMessage(String.valueOf(backInsert));
-            if (backInsert==1){
-                eiINfo.setSuccess("1");
-                eiINfo.setMessage("新增成功！");
-            }else {
-                eiINfo.setSuccess("-1");
-                eiINfo.setMessage("新增失败！");
-            }
-
-        }catch (Exception e){
-            eiINfo.setSuccess("-1");
-            eiINfo.setMessage("新增失败！"+e);
+        if (!StringUtils.isEmpty(tsdhr03.getMemberNo())){
+            throw new Exception("员工编号不为空无法新增！面试记录号："+ tsdhr03.getMemberNo());
+        }
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        // 获取当前月
+        int month = calendar.get(Calendar.MONTH) + 1;
+        StringBuilder memberNo=new StringBuilder("DSSH");
+        //查询当前生成流水号信息
+        int backNum= tsdhr03Mapper.queryCountByMemberNoLike(memberNo.toString());
+        String serialNum= String.format("%04d", backNum+1);
+        memberNo.append(serialNum);
+        tsdhr03.setMemberNo(memberNo.toString());
+        // 注入信息
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr03.setRecCreator(userId);
+        tsdhr03.setRecCreateName(userName);
+        tsdhr03.setRecCreateTime(curDateTime);
+        tsdhr03.setRecModifier(userId);
+        tsdhr03.setRecModifyName(userName);
+        tsdhr03.setRecModifyTime(curDateTime);
+        tsdhr03.setDeleteFlag("0");
+        int backInsert = tsdhr03Mapper.insert(tsdhr03);
+        eiINfo.setMessage(String.valueOf(backInsert));
+        if (backInsert==1){
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增成功！");
+        }else {
+            throw new Exception("Inser hr03失败！");
         }
         return eiINfo;
     }
 
     @Override
-    public EiINfo deleteTsdhr03ByMap(Tsdhr03 tsdhr03) {
+    @Transactional
+    public EiINfo deleteTsdhr03ByMap(Tsdhr03 tsdhr03)throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            if (StringUtils.isEmpty(tsdhr03.getMemberNo())){
-                throw new Exception("人员编号为空无法删除！");
-            }
-            UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
-            wrapper.eq("MEMBER_NO", tsdhr03.getMemberNo());
-            Tsdhr03 tsdhr03Up =new Tsdhr03();
-            Claims claims = JwtUtil.verifyJwt(request);
-            String userId = claims.get("userId").toString();
-            String userName =  claims.get("userName").toString();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr03Up.setDeleteFlag("1");
-            tsdhr03Up.setDeleteName(userName);
-            tsdhr03Up.setDeleter(userId);
-            tsdhr03Up.setDeleteTime(curDateTime);
-            tsdhr03Mapper.update(tsdhr03Up,wrapper);
-            eiINfo.setSuccess("1");
-            eiINfo.setMessage("删除成功！");
-
-        }catch (Exception e){
-            eiINfo.setSuccess("-1");
-            eiINfo.setMessage("删除失败！"+e);
+        if (StringUtils.isEmpty(tsdhr03.getMemberNo())){
+            throw new Exception("人员编号为空无法删除！");
         }
+        UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
+        wrapper.eq("MEMBER_NO", tsdhr03.getMemberNo());
+        Tsdhr03 tsdhr03Up =new Tsdhr03();
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr03Up.setDeleteFlag("1");
+        tsdhr03Up.setDeleteName(userName);
+        tsdhr03Up.setDeleter(userId);
+        tsdhr03Up.setDeleteTime(curDateTime);
+        tsdhr03Mapper.update(tsdhr03Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
+
         return eiINfo;
     }
 
     @Override
-    public EiINfo updateTsdhr03(Tsdhr03 tsdhr03) {
+    @Transactional
+    public EiINfo updateTsdhr03(Tsdhr03 tsdhr03)throws Exception {
         EiINfo eiINfo=new EiINfo();
-        try {
-            if (StringUtils.isEmpty(tsdhr03.getMemberNo())){
-                throw new Exception("人员编号为空无法修改！");
-            }
-            UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
-            wrapper.eq("MEMBER_NO", tsdhr03.getMemberNo());
-            Tsdhr03 tsdhr03Up =new Tsdhr03();
-            tsdhr03Up.setMemberName(tsdhr03.getMemberName());
-            tsdhr03Up.setTel(tsdhr03.getTel());
-            tsdhr03Up.setEmail(tsdhr03.getEmail());
-            tsdhr03Up.setUniversityName(tsdhr03.getUniversityName());
-            tsdhr03Up.setEducationBckr(tsdhr03.getEducationBckr());
-            tsdhr03Up.setProfession(tsdhr03.getProfession());
-            tsdhr03Up.setSumScore(tsdhr03.getSumScore());
-            tsdhr03Up.setEvaluation(tsdhr03.getEvaluation());
-            tsdhr03Up.setItvJob(tsdhr03.getItvJob());
-            tsdhr03Up.setDeptName(tsdhr03.getDeptName());
-            tsdhr03Up.setChannel(tsdhr03.getChannel());
-            tsdhr03Up.setWorkYear(tsdhr03.getWorkYear());
-            tsdhr03Up.setRemark(tsdhr03.getRemark());
-
-            //
-            Claims claims = JwtUtil.verifyJwt(request);
-            String userId = claims.get("userId").toString();
-            String userName =  claims.get("userName").toString();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-            String curDateTime = formatter.format(new Date());
-            tsdhr03Up.setRecModifyName(userName);
-            tsdhr03Up.setRecModifier(userId);
-            tsdhr03Up.setRecModifyTime(curDateTime);
-            tsdhr03Mapper.update(tsdhr03Up,wrapper);
-            eiINfo.setSuccess("1");
-            eiINfo.setMessage("修改成功！");
-
-        }catch (Exception e){
-            eiINfo.setSuccess("-1");
-            eiINfo.setMessage("修改失败！"+e);
+        if (StringUtils.isEmpty(tsdhr03.getMemberNo())){
+            throw new Exception("人员编号为空无法修改！");
         }
+        UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
+        wrapper.eq("MEMBER_NO", tsdhr03.getMemberNo());
+        Tsdhr03 tsdhr03Up =new Tsdhr03();
+        tsdhr03Up.setMemberName(tsdhr03.getMemberName());
+        tsdhr03Up.setTel(tsdhr03.getTel());
+        tsdhr03Up.setEmail(tsdhr03.getEmail());
+        tsdhr03Up.setUniversityName(tsdhr03.getUniversityName());
+        tsdhr03Up.setEducationBckr(tsdhr03.getEducationBckr());
+        tsdhr03Up.setProfession(tsdhr03.getProfession());
+        tsdhr03Up.setSumScore(tsdhr03.getSumScore());
+        tsdhr03Up.setEvaluation(tsdhr03.getEvaluation());
+        tsdhr03Up.setItvJob(tsdhr03.getItvJob());
+        tsdhr03Up.setDeptName(tsdhr03.getDeptName());
+        tsdhr03Up.setChannel(tsdhr03.getChannel());
+        tsdhr03Up.setWorkYear(tsdhr03.getWorkYear());
+        tsdhr03Up.setRemark(tsdhr03.getRemark());
+
+        //
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr03Up.setRecModifyName(userName);
+        tsdhr03Up.setRecModifier(userId);
+        tsdhr03Up.setRecModifyTime(curDateTime);
+        tsdhr03Mapper.update(tsdhr03Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("修改成功！");
+
         return eiINfo;
     }
 }
