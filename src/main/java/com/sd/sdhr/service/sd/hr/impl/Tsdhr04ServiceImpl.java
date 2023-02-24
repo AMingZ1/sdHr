@@ -46,21 +46,28 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             PageHelper.startPage(eiINfo);
             QueryWrapper<Tsdhr04> queryWrapper=new QueryWrapper<>();
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+            if (tsdhr04.getItvDate() != null) {
+                String b[]= tsdhr04.getItvDate().split(",");
+                queryWrapper.between(!StringUtils.isEmpty(tsdhr04.getItvDate()),"ITV_DATE",b[0],b[1]);
+            }
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME", tsdhr04.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getItvStatus()),"ITV_STATUS", tsdhr04.getItvStatus());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getNowStatus()),"NOW_STATUS", tsdhr04.getNowStatus());
 
             PageHelper.startPage(tsdhr04.getPageNum(),tsdhr04.getPageSize());
             List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
-            if (CollectionUtils.isEmpty(list)){
-                throw new Exception("返回结果为null");
+            if (!CollectionUtils.isEmpty(list)){
+                PageInfo pageInfo=new PageInfo(list);
+
+                eiINfo.setTotalNum(pageInfo.getTotal());
+                eiINfo.setData(list);
+
             }
-            PageInfo pageInfo=new PageInfo(list);
             eiINfo.setMessage("查询成功!");
-            eiINfo.setTotalNum(pageInfo.getTotal());
-            eiINfo.setData(list);
             eiINfo.setSuccess("1");
         }catch (Exception e){
             eiINfo.setSuccess("-1");

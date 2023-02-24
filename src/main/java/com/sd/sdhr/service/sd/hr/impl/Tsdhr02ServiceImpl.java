@@ -68,11 +68,11 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
             List<Tsdhr02> list=tsdhr02Mapper.selectList(queryWrapper);
             if (!CollectionUtils.isEmpty(list)){
                 PageInfo pageInfo=new PageInfo(list);
-                eiINfo.setMessage("查询成功!");
                 eiINfo.setTotalNum(pageInfo.getTotal());
                 eiINfo.setData(list);
-                eiINfo.setSuccess("1");
             }
+            eiINfo.setMessage("查询成功!");
+            eiINfo.setSuccess("1");
         }catch (Exception e){
             eiINfo.setSuccess("-1");
             eiINfo.setMessage("查询失败!"+e);
