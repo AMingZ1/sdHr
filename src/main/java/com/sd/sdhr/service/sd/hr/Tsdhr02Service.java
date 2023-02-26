@@ -17,4 +17,7 @@ public interface Tsdhr02Service {
     EiINfo deleteTsdhr02ByMap(Tsdhr02 tsdhr02)throws Exception;
 
     EiINfo updateTsdhr02(Tsdhr02 tsdhr02)throws Exception;
+
+    // 生成人才库数据
+    EiINfo insertHr04ByHr02(Tsdhr02 tsdhr02)throws Exception;
 }

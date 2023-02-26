@@ -6,11 +6,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr02Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr02;
+import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr02Service;
+import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import io.jsonwebtoken.Claims;
+import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +21,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +33,8 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
 
     @Autowired
     private Tsdhr02Mapper tsdhr02Mapper;
+    @Autowired
+    private Tsdhr04Service tsdhr04Service;
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -184,6 +190,9 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
         tsdhr02Up.setItvRemark(tsdhr02.getItvRemark());
         tsdhr02Up.setItver(tsdhr02.getItver());
         tsdhr02Up.setRemark(tsdhr02.getRemark());
+        if ("Y".equals(tsdhr02.getItvStatus())){
+            //instTsdhr04ByHr02(tsdhr02);
+        }
         //基础信息
         Claims claims = JwtUtil.verifyJwt(request);
         String userId = claims.get("userId").toString();
@@ -198,5 +207,26 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
         eiINfo.setMessage("删除成功！");
 
         return eiINfo;
+    }
+
+    @Override
+    public EiINfo insertHr04ByHr02(Tsdhr02 tsdhr02) throws Exception {
+        return null;
+    }
+
+    public void instTsdhr04ByHr02(Tsdhr02 tsdhr02)throws Exception{
+        Tsdhr04 tsdhr04 = new Tsdhr04();
+        tsdhr04.setItvDept(tsdhr02.getDeptName());
+        tsdhr04.setItvJob(tsdhr02.getItvJob());
+        tsdhr04.setItver(tsdhr02.getItver());
+        tsdhr04.setMemberName(tsdhr02.getMemberName());
+        tsdhr04.setTel(tsdhr02.getTel());
+        tsdhr04.setEmail(tsdhr02.getEmail());
+        tsdhr04.setHopeSalary(new BigDecimal(tsdhr02.getHopeSalary()));
+        tsdhr04.setArrivalDate(tsdhr02.getArrivalDate());
+        tsdhr04.setItvStatus("S");
+        tsdhr04.setNowStatus("00");
+        tsdhr04Service.saveTsdhr04(tsdhr04);
+
     }
 }
