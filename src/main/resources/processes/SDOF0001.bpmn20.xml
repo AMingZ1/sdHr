@@ -14,7 +14,6 @@
       </extensionElements>
       <multiInstanceLoopCharacteristics isSequential="false" flowable:collection="userIdList" flowable:elementVariable="userId">
         <extensionElements></extensionElements>
-        <loopCardinality>2</loopCardinality>
         <completionCondition>${nrOfCompletedInstances==1}</completionCondition>
       </multiInstanceLoopCharacteristics>
     </userTask>
