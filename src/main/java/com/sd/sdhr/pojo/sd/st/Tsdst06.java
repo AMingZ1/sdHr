@@ -52,6 +52,11 @@ public class Tsdst06  implements Serializable {
 	private String actEndDate;
 
 	/**
+	 * 是否延期
+	 */
+	private String isPostpone;
+
+	/**
 	 * 备注
 	 */
 	private String remark;

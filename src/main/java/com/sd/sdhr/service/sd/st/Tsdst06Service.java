@@ -15,4 +15,11 @@ public interface Tsdst06Service {
     EiINfo taskTsdst06Shutdown(Tsdst06 tsdst06);
 
     EiINfo updateTsdst06(Tsdst06 tsdst06);
+
+    /**
+     * 判断任务是否延期.
+     * @param
+     * @return
+     */
+    void taskIsPostpone();
 }

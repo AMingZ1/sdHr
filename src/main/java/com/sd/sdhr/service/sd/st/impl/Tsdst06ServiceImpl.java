@@ -17,10 +17,9 @@ import org.springframework.util.CollectionUtils;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class Tsdst06ServiceImpl implements Tsdst06Service {
@@ -40,6 +39,8 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             QueryWrapper<Tsdst06> queryWrapper=new QueryWrapper<>();
             //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             queryWrapper.eq(!StringUtils.isEmpty(tsdst06.getTaskStatus()),"TASK_STATUS",tsdst06.getTaskStatus());
+            queryWrapper.eq("true".equals(tsdst06.getIsPostpone()),"IS_POSTPONE",tsdst06.getIsPostpone());
+
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskId()),"TASK_ID",tsdst06.getTaskId());
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskName()),"TASK_NAME",tsdst06.getTaskName());
@@ -69,6 +70,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
     }
 
     @Override
+    @Transactional
     public EiINfo saveTsdst06(Tsdst06 tsdst06) {
         EiINfo eiINfo=new EiINfo();
         try {
@@ -97,6 +99,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdst06.setTaskStatus("01");
+            tsdst06.setIsPostpone("N");
             tsdst06.setRecCreator(userId);
             tsdst06.setRecCreateName(userName);
             tsdst06.setRecCreateTime(curDateTime);
@@ -119,6 +122,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
     }
 
     @Override
+    @Transactional
     public EiINfo taskTsdst06Shutdown(Tsdst06 tsdst06) {
         EiINfo eiINfo=new EiINfo();
         try {
@@ -134,7 +138,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
             String curDateTime = formatter.format(new Date());
             tsdst06Up.setTaskStatus("00");//关闭
-            tsdst06Up.setActEndDate(curDateTime);
+            tsdst06Up.setActEndDate(StringUtils.isEmpty(tsdst06.getIsPostpone())?curDateTime:tsdst06.getIsPostpone());
             tsdst06Up.setRecModifyName(userName);
             tsdst06Up.setRecModifier(userId);
             tsdst06Up.setRecModifyTime(curDateTime);
@@ -150,6 +154,7 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
     }
 
     @Override
+    @Transactional
     public EiINfo updateTsdst06(Tsdst06 tsdst06) {
         EiINfo eiINfo=new EiINfo();
         try {
@@ -181,5 +186,26 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             eiINfo.setMessage("修改失败！"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    @Transactional
+    public void taskIsPostpone() {
+        // 查询还没关闭的任务信息
+        UpdateWrapper<Tsdst06> wrapper=new UpdateWrapper<>();
+        wrapper.eq("TASK_STATUS","01");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        String nowDate = formatter.format(new Date());
+        wrapper.gt("PLAN_END_DATE",nowDate);// 预计结束时间大于当前时间
+
+        Tsdst06 tsdst06Up=new Tsdst06();
+        SimpleDateFormat formatterTime = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatterTime.format(new Date());
+        tsdst06Up.setRecModifyName("admin");
+        tsdst06Up.setRecModifier("admin");
+        tsdst06Up.setRecModifyTime(curDateTime);
+        tsdst06Up.setIsPostpone("Y");//延期
+        tsdst06Up.setRemark(nowDate+"系统自动更新延期标志");
+        tsdst06Mapper.update(tsdst06Up,wrapper);
     }
 }

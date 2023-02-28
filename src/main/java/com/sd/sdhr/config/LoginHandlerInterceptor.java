@@ -1,6 +1,7 @@
 package com.sd.sdhr.config;
 
 import com.sd.sdhr.service.common.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,12 +12,14 @@ import javax.servlet.http.HttpServletResponse;
  * by:GQ 2022-08-17
  * 登陆拦截器
  */
+@Slf4j
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //登陆成功后应该有用户token
         if (!JwtUtil.checkToken(request)){//未登陆
             request.setAttribute("msg","非法请求，请先登陆！");
+            log.error("非法请求，请先登陆！"+request);
             /*request.getRequestDispatcher("index.html").forward(request,response);*/
             return false;
         }
