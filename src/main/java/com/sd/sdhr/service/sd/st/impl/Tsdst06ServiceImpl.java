@@ -39,7 +39,15 @@ public class Tsdst06ServiceImpl implements Tsdst06Service {
             QueryWrapper<Tsdst06> queryWrapper=new QueryWrapper<>();
             //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             queryWrapper.eq(!StringUtils.isEmpty(tsdst06.getTaskStatus()),"TASK_STATUS",tsdst06.getTaskStatus());
-            queryWrapper.eq("true".equals(tsdst06.getIsPostpone()),"IS_POSTPONE",tsdst06.getIsPostpone());
+            if ("true".equals(tsdst06.getIsPostpone())){
+                queryWrapper.eq("true".equals(tsdst06.getIsPostpone()),"IS_POSTPONE","Y");
+            }
+            if (tsdst06.getPlanEndDate() != null) {
+                String b[]= tsdst06.getPlanEndDate().split(",");
+                if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                    queryWrapper.between(!StringUtils.isEmpty(tsdst06.getPlanEndDate()),"PLAN_END_DATE",b[0],b[1]);
+                }
+            }
 
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdst06.getTaskId()),"TASK_ID",tsdst06.getTaskId());

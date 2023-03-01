@@ -48,7 +48,9 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             if (tsdhr04.getItvDate() != null) {
                 String b[]= tsdhr04.getItvDate().split(",");
-                queryWrapper.between(!StringUtils.isEmpty(tsdhr04.getItvDate()),"ITV_DATE",b[0],b[1]);
+                if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                    queryWrapper.between(!StringUtils.isEmpty(tsdhr04.getItvDate()),"ITV_DATE",b[0],b[1]);
+                }
             }
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
