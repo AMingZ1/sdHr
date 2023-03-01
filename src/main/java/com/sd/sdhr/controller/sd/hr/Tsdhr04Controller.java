@@ -69,7 +69,7 @@ public class Tsdhr04Controller {
      * @return
      */
     @RequestMapping(value = "/deleteSdhr04")
-    public Object deleteTsdhr04(@RequestBody Tsdhr04 tsdhr04){
+    public Object deleteTsdhr04( Tsdhr04 tsdhr04){
         log.info("删除面试测评信息："+tsdhr04);
         EiINfo outINfo = new EiINfo();
         try {

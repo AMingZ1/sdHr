@@ -212,7 +212,9 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
         //发起审批
         Tsdhr04 nerHr04 =tsdhr04Mapper.selectById(tsdhr04.getItvNo());
         if(!"10".equals(nerHr04.getNowStatus())){
-            throw new Exception("只有当前状态为【面试通过】的才可以申请off发送！");
+            eiINfo.setSuccess("-1");
+            eiINfo.setMessage("只有当前状态为【面试通过】的才可以申请off发送！");
+            return eiINfo;
         }
         Tsdof01 tsdof01 = new Tsdof01();
         tsdof01.setMemberName(nerHr04.getMemberName());

@@ -45,6 +45,9 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getMemberName()),"MEMBER_NAME", tsdhr03.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getDeptName()),"DEPT_NAME", tsdhr03.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getItvJob()),"ITV_JOB", tsdhr03.getItvJob());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveReason()),"ARCHIVE_REASON", tsdhr03.getArchiveReason());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveStatusbfr()),"ARCHIVE_STATUSBFR", tsdhr03.getArchiveStatusbfr());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getEducationBckr()),"EDUCATION_BCKR", tsdhr03.getEducationBckr());
 
             PageHelper.startPage(tsdhr03.getPageNum(),tsdhr03.getPageSize());
             List<Tsdhr03> list= tsdhr03Mapper.selectList(queryWrapper);

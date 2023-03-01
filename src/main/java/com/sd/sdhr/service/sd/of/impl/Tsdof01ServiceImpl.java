@@ -64,6 +64,12 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
             eiINfo.setPageNum(eiINfo.getPageNum()+1);
             PageHelper.startPage(eiINfo);
             QueryWrapper<Tsdof01> queryWrapper=new QueryWrapper<>();
+            if (tsdof01Re.getEmpDate() != null) {
+                String b[]= tsdof01Re.getEmpDate().split(",");
+                if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                    queryWrapper.between(!StringUtils.isEmpty(tsdof01Re.getEmpDate()),"EMP_DATE",b[0],b[1]);
+                }
+            }
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdof01Re.getOfferNo()),"OFFER_NO", tsdof01Re.getOfferNo());
             queryWrapper.like(!StringUtils.isEmpty(tsdof01Re.getMemberName()),"MEMBER_NAME", tsdof01Re.getMemberName());
@@ -72,6 +78,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
             queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getIsAgree()),"IS_AGREE", tsdof01Re.getIsAgree());
             queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getIsFreGra()),"IS_FRE_GRA", tsdof01Re.getIsFreGra());
             queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getComStatus()),"COM_STATUS", tsdof01Re.getComStatus());
+            queryWrapper.eq(!StringUtils.isEmpty(tsdof01Re.getApproveStatus()),"APPROVE_STATUS", tsdof01Re.getApproveStatus());
             //queryWrapper.between(!StringUtils.isEmpty(tsdof01Re.getEmpDate()),"EMP_DATE", tsdof01Re.getEmpDate().S,"")
             if (!StringUtils.isEmpty(tsdof01Re.getEmpDate())){
                 String[] split = tsdof01Re.getEmpDate().split(",");
@@ -170,7 +177,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
             throw new Exception("Offer编号为空无法修改！");
         }
         UpdateWrapper<Tsdof01> wrapper=new UpdateWrapper<>();
-        wrapper.eq("OFFFER_NO", tsdof01.getOfferNo());
+        wrapper.eq("OFFER_NO", tsdof01.getOfferNo());
         Tsdof01 tsdof01Up =new Tsdof01();
         tsdof01Up.setDeptName(tsdof01.getDeptName());
         tsdof01Up.setJobs(tsdof01.getJobs());
@@ -182,6 +189,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         tsdof01Up.setJobAddress(tsdof01.getJobAddress());
         tsdof01Up.setSalary(tsdof01.getSalary());
         tsdof01Up.setIsDz(tsdof01.getIsDz());
+        tsdof01Up.setRemark(tsdof01.getRemark());
         //
         Claims claims = JwtUtil.verifyJwt(request);
         String userId = claims.get("userId").toString();
@@ -244,6 +252,15 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         Tsdof01 nerOf01 =tsdof01Mapper.selectById(tsdof01.getOfferNo());
         if(!"00/03".contains(nerOf01.getApproveStatus())){
             throw new Exception("只有当前状态为【待提交/已驳回】的才可以申请off发送！");
+        }
+        if ("".equals(nerOf01.getEmail().trim())){
+            throw new Exception("邮箱不能为空！");
+        } else if ("".equals(nerOf01.getJobAddress().trim())) {
+            throw new Exception("入职地址不能为空！");
+        } else if ("".equals(nerOf01.getIsDz().trim())) {
+            throw new Exception("试用期薪资不能为空！");
+        } else if ("".equals(nerOf01.getEmpDate().trim())) {
+            throw new Exception("入职时间不能为空！");
         }
         //Claims claims = JwtUtil.verifyJwt(request);
         String userId = "admin";//claims.get("userId").toString();

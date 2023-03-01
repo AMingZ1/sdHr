@@ -56,7 +56,9 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
             }
             if (tsdhr02.getItvDate() != null) {
                 String b[]= tsdhr02.getItvDate().split(",");
-                queryWrapper.between(!StringUtils.isEmpty(tsdhr02.getItvDate()),"ITV_DATE",b[0],b[1]);
+                if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                    queryWrapper.between(!StringUtils.isEmpty(tsdhr02.getItvDate()),"ITV_DATE",b[0],b[1]);
+                }
             }
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             //模糊查询条件
