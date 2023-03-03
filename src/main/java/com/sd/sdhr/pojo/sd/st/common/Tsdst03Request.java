@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class Tsdst03Request extends Tsdst03 {
 
-    private int  pageSize=10;
+    private int  pageSize=1000;
 
     private int pageNum=1;
 }
