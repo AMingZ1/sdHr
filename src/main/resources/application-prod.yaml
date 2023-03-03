@@ -1,0 +1,29 @@
+# 正式环境配置
+server:
+  port: 8081
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Q!W@e3r4t5
+    url: jdbc:mysql://106.14.152.86:3306/dsms_run?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=true&nullCatalogMeansCurrent=true
+  #    password: 12345678
+  thymeleaf:
+    cache: false
+  #国际化配置
+  messages:
+    basename: i18n.login
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    port: 25
+    username: 1603077742@qq.com
+    password: tloznuenqurqjijb
+    protocol: smtp
+    default-encoding: utf-8
+    from: 1603077742@qq.com
+
+#自定义文件访问路径
+myfile:
+  path: \test\\ImpFile

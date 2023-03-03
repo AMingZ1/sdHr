@@ -4,6 +4,7 @@ import com.sd.sdhr.pojo.sd.st.Tsdst12;
 import com.sd.sdhr.service.sd.st.Tsdst12Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,8 @@ public class FileController {
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("/yyyy/MM/dd/");
 
-    String path="D:\\A_linshi";//"\test\\ImpFile";
+    @Value("${myfile.path}")
+    private String path;//="D:\\A_linshi";//"\test\\ImpFile";
 
     @Autowired
     Tsdst12Service tsdst12Service;

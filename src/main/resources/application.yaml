@@ -1,62 +1,30 @@
-#优先级更高，可以注入到配置类中！语法结构：key:空格+value
-#写法如下，对空格的要求十分高
-#普通
-#name: gaoqiang
-
-#对象
-#student:
-#  name: gaoqiang
-#  age: 18
-
-#行内写法
-#student1: {name: gaoqiang,age: 18}
-
-#数组
-#pets:
-#  - cat
-#  - dog
-#  - pig
-
-#pets1: [cat,dog,pig]
-#
-#person:
-#  name: 高强
-#  age: 18
-#  isHappy: true
-#  birth: 2022/08/12
-#  maps: {k1: v1,K2: v2}
-#  lists:
-#    - code
-#    - music
-#    - girl
-#  dog:
-#    name: 旺财
-#    age: 1
 #springBoot的多环境配置:可以选择激活哪一个配置文件
 #spring:
 #  profiles:
 spring:
+  profiles:
+    active: dev
   #数据库配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: Q!W@e3r4t5
-    url: jdbc:mysql://106.14.152.86:3306/dsms_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: Q!W@e3r4t5
+#    url: jdbc:mysql://106.14.152.86:3306/dsms_test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=true&nullCatalogMeansCurrent=true
 #    password: 12345678
-  thymeleaf:
+#  thymeleaf:
     cache: false
   #国际化配置
-  messages:
-    basename: i18n.login
+#  messages:
+#    basename: i18n.login
   # 邮箱配置
-  mail:
-    host: smtp.qq.com
-    port: 25
-    username: 1603077742@qq.com
-    password: tloznuenqurqjijb
-    protocol: smtp
-    default-encoding: utf-8
-    from: 1603077742@qq.com
+#  mail:
+#    host: smtp.qq.com
+#    port: 25
+#    username: 1603077742@qq.com
+#    password: tloznuenqurqjijb
+#    protocol: smtp
+#    default-encoding: utf-8
+#    from: 1603077742@qq.com
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
