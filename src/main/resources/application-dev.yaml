@@ -16,13 +16,21 @@ spring:
     basename: i18n.login
   # 邮箱配置
   mail:
-    host: smtp.qq.com
-    port: 25
-    username: 1603077742@qq.com
-    password: tloznuenqurqjijb
-    protocol: smtp
+    host: smtp.163.com
+    port: 587
+    username: lkn301415@163.com
+    password: AJOCTQQRHPRNRRZA
+    # qq: tloznuenqurqjijb
+    protocol: smtps
     default-encoding: utf-8
-    from: 1603077742@qq.com
+    from: lkn301415@163.com
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
 
 #自定义文件访问路径
 myfile:
