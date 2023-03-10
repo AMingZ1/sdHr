@@ -55,6 +55,8 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
     @Autowired
     HistoryService historyService;
     @Autowired
+    EmailSendUtil emailSendUtil;
+    @Autowired
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
@@ -340,7 +342,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         emailMap.put("salary",salary.toString());//薪资
         emailMap.put("probationPay",probationPay.toString());//试用期薪资
         emailMap.put("isDz",isDz);//试用期薪资标准
-        EmailSendUtil.sendSimpleHtmlMail(emailMap);
+        emailSendUtil.sendSimpleHtmlMail(emailMap);
 
         eiINfo.setSuccess("1");
         eiINfo.setMessage("审批成功！");
@@ -401,4 +403,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         tsdof01Up.setRecModifyTime(curDateTime);
         tsdof01Mapper.update(tsdof01Up,wrapper);
     }
+
+
+
 }

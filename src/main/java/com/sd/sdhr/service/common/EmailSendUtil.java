@@ -25,20 +25,20 @@ import java.util.Properties;
 public class EmailSendUtil {
 
     @Autowired
-    static JavaMailSender mailSender;
+    JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
-    private static String fromUser;
+    private String fromUser;
 
     @Value("${spring.mail.password}")
-    private static String password;
+    private String password;
 
 
     /**
      * 发送简单html文本的邮箱验证码.
      * @return
      */
-    public static void sendSimpleHtmlMail(Map<String,String> map) throws MessagingException{
+    public void sendSimpleHtmlMail(Map<String,String> map) throws MessagingException{
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
         Date parse = new Date();
         String nowDate=String.format("%tY年%tm月%td日", parse,parse,parse);
@@ -93,18 +93,27 @@ public class EmailSendUtil {
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";//ssl加密
         // 准备连接服务器的会话信息
         Properties props = new Properties();
-        props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
+        /*props.setProperty("mail.imap.socketFactory.class", SSL_FACTORY);
         props.setProperty("mail.imap.socketFactory.fallback", "false");
         props.setProperty("mail.store.protocol", "imap");       // 使用imap协议
         props.setProperty("mail.imap.port", "993");           // 端口
         props.setProperty("mail.imap.host", "imap.qq.com");       // pop3服务器
-        props.setProperty("mail.imap.auth", "true");
+        props.setProperty("mail.imap.auth", "true");*/
+
+        props.setProperty("mail.store.protocol", "imap");
+        props.setProperty("mail.imap.port", "465");
+        props.setProperty("mail.imap.auth.plain.disable","true");
+
 
         // 创建Session实例对象
-        Session session = Session.getInstance(props);
+        Session session = Session.getInstance(props,null);
         //URLName url = new URLName("pop3", "pop.qq.com", 995, null, fromUser, password);
         Store store = session.getStore("imap");
-        store.connect(fromUser,password); //第三方登录所以这里的密码是授权密码而并非普通的登录密码
+        //store.connect(fromUser,password); //第三方登录所以这里的密码是授权密码而并非普通的登录密码
+
+        store.connect("iamp.163.com",465,fromUser,password);
+
+
 //      //获得收件箱
         Folder folder = store.getFolder("INBOX");
         /* Folder.READ_ONLY：只读权限
@@ -126,7 +135,7 @@ public class EmailSendUtil {
         SearchTerm bodyTerm = new BodyTerm("同");
 
         //获得收件箱的邮件列表
-        Message[] messages = folder.search(flagTerm);
+        Message[] messages = folder.search(bodyTerm);
         // 打印不同状态的邮件数量
         System.out.println("收件箱中共" + messages.length + "封邮件!");
         System.out.println("收件箱中共" + folder.getUnreadMessageCount() + "封未读邮件!");
