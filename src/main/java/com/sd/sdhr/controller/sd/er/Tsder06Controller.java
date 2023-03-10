@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = "/sder06")
+@RequestMapping(value = "/Sder06")
 @CrossOrigin
 public class Tsder06Controller {
 

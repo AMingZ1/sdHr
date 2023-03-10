@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/sder04")
+@RequestMapping(value = "/Sder04")
 @CrossOrigin
 public class Tsder04Controller {
 

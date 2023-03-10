@@ -44,6 +44,9 @@ public class Tsder01ServiceImpl implements Tsder01Service {
             queryWrapper.like(!StringUtils.isEmpty(tsder01.getMemberName()),"MEMBER_NAME",tsder01.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsder01.getDeptName()),"DEPT_NAME",tsder01.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsder01.getJobs()),"JOBS",tsder01.getJobs());
+            queryWrapper.eq(!StringUtils.isEmpty(tsder01.getIsFormal()),"IS_FORMAL",tsder01.getIsFormal());
+            queryWrapper.likeLeft(!StringUtils.isEmpty(tsder01.getBirthDate()),"BIRTH_DATE",tsder01.getBirthDate());
+
 
             PageHelper.startPage(tsder01.getPageNum(),tsder01.getPageSize());
             List<Tsder01> list=tsder01Mapper.selectList(queryWrapper);

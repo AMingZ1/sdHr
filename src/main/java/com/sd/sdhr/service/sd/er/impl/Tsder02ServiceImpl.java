@@ -41,6 +41,7 @@ public class Tsder02ServiceImpl implements Tsder02Service {
             QueryWrapper<Tsder02> queryWrapper=new QueryWrapper<>();
             queryWrapper.ne("Delete_Flag","1");//删除标记不为1
             //模糊查询条件
+            queryWrapper.eq(!StringUtils.isEmpty(tsder02.getMemberId()),"MEMBER_ID",tsder02.getMemberId());
             queryWrapper.like(!StringUtils.isEmpty(tsder02.getMemberName()),"MEMBER_NAME",tsder02.getMemberName());
             queryWrapper.like(!StringUtils.isEmpty(tsder02.getDeptName()),"DEPT_NAME",tsder02.getDeptName());
             queryWrapper.like(!StringUtils.isEmpty(tsder02.getProjectName()),"PROJECT_NAME",tsder02.getProjectName());
