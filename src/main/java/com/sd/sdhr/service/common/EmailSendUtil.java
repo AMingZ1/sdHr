@@ -33,6 +33,9 @@ public class EmailSendUtil {
     @Value("${spring.mail.password}")
     private String password;
 
+    @Value("${myfile.filePath}")
+    private String filePath;
+
 
     /**
      * 发送简单html文本的邮箱验证码.
@@ -78,7 +81,7 @@ public class EmailSendUtil {
         helper.setText(msgs, true);
         helper.setTo(map.get("email"));//对方邮箱
         //添加附件信息
-        String filePath="D:\\test_Jar\\syds.pdf";//本机附件地址
+        //String filePath="D:\\test_Jar\\syds.pdf";//本机附件地址
         FileSystemResource resource = new FileSystemResource(new File(filePath));
         helper.addAttachment("沈阳东硕-员工手册2022版.pdf",resource);
         mailSender.send(mimeMessage);

@@ -16,14 +16,15 @@ spring:
     basename: i18n.login
   # 邮箱配置
   mail:
-    host: smtp.qq.com
-    port: 25
-    username: 1603077742@qq.com
-    password: tloznuenqurqjijb
-    protocol: smtp
+    host: smtp.163.com
+    port: 587
+    username: syds_liu@163.com
+    password: IKSPFJMTOYEKKZUI
+    protocol: smtps
     default-encoding: utf-8
-    from: 1603077742@qq.com
+    from: syds_liu@163.com
 
 #自定义文件访问路径
 myfile:
   path: \test\\ImpFile
+  filePath: \test\\syds\\syds.pdf
