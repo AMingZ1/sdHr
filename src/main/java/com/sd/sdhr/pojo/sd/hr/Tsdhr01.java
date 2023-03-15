@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.sd.sdhr.constant.DeptColdConverter;
 import com.sd.sdhr.constant.JobsColdConverter;
 import com.sd.sdhr.constant.OtherColdConverter;
@@ -28,6 +29,7 @@ public class Tsdhr01  implements Serializable {
 	/**
 	 * 需求编号
 	 */
+	@TableId
 	@ExcelProperty(value="岗位需求编号",index = 0)
 	private String reqNo;
 

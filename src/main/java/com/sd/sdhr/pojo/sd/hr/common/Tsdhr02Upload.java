@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class Tsdhr02Upload {
 
     /**
-     * 年份
+     * 岗位需求编号
      */
     @ExcelProperty(value = "岗位需求编号")
     private String reqNo;
@@ -38,7 +38,7 @@ public class Tsdhr02Upload {
      * 邮箱
      */
     @ExcelProperty(value = "邮箱")
-    private BigDecimal email;
+    private String email;
 
     /**
      * 联系状态

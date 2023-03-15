@@ -17,7 +17,7 @@ public interface Tsdhr04Service {
 
     Tsdhr04 selectTsdhr04ById(Tsdhr04 tsdhr04);
 
-    EiINfo saveTsdhr04sByImp(List<Tsdhr04Upload> hr04Uploads);
+    EiINfo saveTsdhr04sByImp(List<Tsdhr04Upload> hr04Uploads)throws Exception;
 
     EiINfo saveTsdhr04(Tsdhr04 tsdhr04)throws Exception;
 

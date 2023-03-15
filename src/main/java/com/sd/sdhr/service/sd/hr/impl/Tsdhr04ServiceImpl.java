@@ -15,6 +15,7 @@ import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import com.sd.sdhr.service.sd.of.Tsdof01Service;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -104,8 +105,17 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     }
 
     @Override
-    public EiINfo saveTsdhr04sByImp(List<Tsdhr04Upload> hr04Uploads) {
-        return null;
+    public EiINfo saveTsdhr04sByImp(List<Tsdhr04Upload> hr04Uploads)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+
+        for (Tsdhr04Upload hr04Upload:hr04Uploads){
+            Tsdhr04 tsdhr04 = new Tsdhr04();
+            BeanUtils.copyProperties(hr04Upload,tsdhr04);
+            this.saveTsdhr04(tsdhr04);
+        }
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("导入信息成功！");
+        return eiINfo;
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface Tsdhr03Service {
 
     Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03);
 
-    EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads);
+    EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads)throws Exception;
 
     EiINfo saveTsdhr03(Tsdhr03 tsdhr03)throws Exception;
 

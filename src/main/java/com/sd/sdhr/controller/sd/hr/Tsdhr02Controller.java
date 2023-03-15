@@ -113,6 +113,9 @@ public class Tsdhr02Controller {
                 .head(Tsdhr01Upload.class)
                 .sheet()
                 .doReadSync();
+        if (list==null || list.size()<1){
+            throw new Exception("导入会错！没有获取到导入清单信息！");
+        }
         // 往后端塞值
         EiINfo eiINfo = tsdhr02Service.saveTsdhr02sByImp(list);
     }

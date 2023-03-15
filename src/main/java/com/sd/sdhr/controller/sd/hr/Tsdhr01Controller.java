@@ -126,6 +126,9 @@ public class Tsdhr01Controller {
                 .doReadSync();
         //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
         // 往后端塞值
+        if (list==null || list.size()<1){
+            throw new Exception("导入会错！没有获取到导入清单信息！");
+        }
         EiINfo eiINfo = tsdhr01Service.saveTsdhr01sByImp(list);
     }
 

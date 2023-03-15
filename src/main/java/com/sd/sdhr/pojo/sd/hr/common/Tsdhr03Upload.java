@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.sd.sdhr.constant.*;
+import lombok.Data;
 
 /**
  * @Title: Tsdhr03Upload
@@ -12,6 +13,7 @@ import com.sd.sdhr.constant.*;
  * @Date 2023/3/14 18:04
  * @description: ${description}
  */
+@Data
 public class Tsdhr03Upload {
 
     /**

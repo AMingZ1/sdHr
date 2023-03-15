@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sd.sdhr.mapper.sd.hr.Tsdhr01Mapper;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr02Mapper;
+import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr02;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Request;
@@ -34,6 +36,8 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
 
     @Autowired
     private Tsdhr02Mapper tsdhr02Mapper;
+    @Autowired
+    private Tsdhr01Mapper tsdhr01Mapper;
     @Autowired
     private Tsdhr04Service tsdhr04Service;
 
@@ -251,8 +255,31 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
     }
 
     @Override
-    public EiINfo saveTsdhr02sByImp(List<Tsdhr02Upload> hr02Uploads) {
-        return null;
+    @Transactional
+    public EiINfo saveTsdhr02sByImp(List<Tsdhr02Upload> hr02Uploads) throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        Tsdhr02 tsdhr02 = new Tsdhr02();
+        for (Tsdhr02Upload hr02Upload:hr02Uploads){
+            //获取岗位需求信息
+            Tsdhr01 tsdhr01 = tsdhr01Mapper.selectById(hr02Upload.getReqNo());
+            if (tsdhr01==null){
+                throw new Exception("岗位需求编号出错，没有找到对应岗位需求信息！岗位需求编号："+hr02Upload.getReqNo());
+            }
+            tsdhr02.setReqNo(hr02Upload.getReqNo());
+            tsdhr02.setDeptName(tsdhr01.getDeptName());
+            tsdhr02.setItvJob(tsdhr01.getItvJob());
+            tsdhr02.setMemberName(hr02Upload.getMemberName());
+            tsdhr02.setTel(hr02Upload.getTel());
+            tsdhr02.setEmail(hr02Upload.getEmail());
+            tsdhr02.setContactStatus(hr02Upload.getContactStatus());
+            tsdhr02.setContactMember(hr02Upload.getContactMember());
+            tsdhr02.setContactDate(hr02Upload.getContactDate());
+            tsdhr02.setRemark(hr02Upload.getRemark());
+            this.saveTsdhr02(tsdhr02);
+        }
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("导入信息成功！");
+        return eiINfo;
     }
 
     public void instTsdhr04ByHr02(Tsdhr02 tsdhr02)throws Exception{

@@ -88,8 +88,26 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
     }
 
     @Override
-    public EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads) {
-        return null;
+    public EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        Tsdhr03 tsdhr03 = new Tsdhr03();
+        for (Tsdhr03Upload hr03Upload:hr03Uploads){
+            tsdhr03.setMemberName(hr03Upload.getMemberName());
+            tsdhr03.setDeptName(hr03Upload.getDeptName());
+            tsdhr03.setItvJob(hr03Upload.getItvJob());
+            tsdhr03.setTel(hr03Upload.getTel());
+            tsdhr03.setEmail(hr03Upload.getEmail());
+            tsdhr03.setChannel(hr03Upload.getChannel());
+            tsdhr03.setArchiveReason(hr03Upload.getArchiveReason());
+            tsdhr03.setArchiveStatusbfr(hr03Upload.getArchiveStatusbfr());
+            tsdhr03.setWorkYear(hr03Upload.getWorkYear());
+            tsdhr03.setEducationBckr(hr03Upload.getEducationBckr());
+            tsdhr03.setRemark(hr03Upload.getRemark());
+            this.saveTsdhr03(tsdhr03);
+        }
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("导入信息成功！");
+        return eiINfo;
     }
 
     @Override

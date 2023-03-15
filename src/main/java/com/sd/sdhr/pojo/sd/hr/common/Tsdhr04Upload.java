@@ -8,6 +8,7 @@ import com.sd.sdhr.constant.ContastatusColdConverter;
 import com.sd.sdhr.constant.DeptColdConverter;
 import com.sd.sdhr.constant.ExplevelColdConverter;
 import com.sd.sdhr.constant.OtherColdConverter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
  * @Date 2023/3/14 18:11
  * @description: ${description}
  */
+@Data
 public class Tsdhr04Upload {
 
     /**

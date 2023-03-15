@@ -27,5 +27,5 @@ public interface Tsdhr02Service {
     // 生成人才库数据
     EiINfo insertHr04ByHr02(Tsdhr02 tsdhr02)throws Exception;
 
-    EiINfo saveTsdhr02sByImp(List<Tsdhr02Upload> hr02Uploads);
+    EiINfo saveTsdhr02sByImp(List<Tsdhr02Upload> hr02Uploads) throws Exception;
 }
