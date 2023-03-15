@@ -61,7 +61,7 @@ public class Tsder03  implements Serializable {
 	/**
 	 * 转正日期
 	 */
-	private String formalDare;
+	private String formalDate;
 
 	/**
 	 * 访谈状态

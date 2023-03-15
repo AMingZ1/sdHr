@@ -109,7 +109,7 @@ public class Tsder03ServiceImpl implements Tsder03Service {
         calendar.add(Calendar.MONTH,1);// 第一月月访谈
         tsder03.setTalkMonth(formatDate.format(calendar.getTime()));
         calendar.add(Calendar.MONTH,2);// 转正访谈
-        tsder03.setFormalDare(formatDate.format(calendar.getTime()));
+        tsder03.setFormalDate(formatDate.format(calendar.getTime()));
 
         // 注入信息
         Claims claims = JwtUtil.verifyJwt(request);
@@ -204,7 +204,7 @@ public class Tsder03ServiceImpl implements Tsder03Service {
         calendar.add(Calendar.MONTH,1);// 第一月月访谈
         tsder03Up.setTalkMonth(formatDate.format(calendar.getTime()));
         calendar.add(Calendar.MONTH,2);// 转正访谈
-        tsder03Up.setFormalDare(formatDate.format(calendar.getTime()));
+        tsder03Up.setFormalDate(formatDate.format(calendar.getTime()));
 
         tsder03Up.setPmNameF(tsder03.getPmNameF());
         tsder03Up.setProjectNameF(tsder03.getProjectNameF());
