@@ -2,7 +2,10 @@ package com.sd.sdhr.service.sd.hr;
 
 import com.sd.sdhr.pojo.sd.hr.Tsdhr03;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr03Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr03Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
+
+import java.util.List;
 
 public interface Tsdhr03Service {
 
@@ -14,7 +17,11 @@ public interface Tsdhr03Service {
      */
     EiINfo getAllTsdhr03(Tsdhr03Request tsdhr03);
 
+    List<Tsdhr03> queryTsdhr03s(Tsdhr03Request tsdhr03);
+
     Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03);
+
+    EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads);
 
     EiINfo saveTsdhr03(Tsdhr03 tsdhr03)throws Exception;
 

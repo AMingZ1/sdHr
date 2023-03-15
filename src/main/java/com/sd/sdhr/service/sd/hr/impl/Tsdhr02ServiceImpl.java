@@ -8,6 +8,7 @@ import com.sd.sdhr.mapper.sd.hr.Tsdhr02Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr02;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr02Service;
@@ -86,6 +87,39 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
             eiINfo.setMessage("查询失败!"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public List<Tsdhr02> queryTsdhr02s(Tsdhr02Request tsdhr02) {
+        QueryWrapper<Tsdhr02> queryWrapper=new QueryWrapper<>();
+        List<String> contactStatusList= new ArrayList<String>();
+        List<String> itvDateList= new ArrayList<String>();
+        if (tsdhr02.getContactStatus()!=null ) {
+            String a[]= tsdhr02.getContactStatus().split(",");
+            for (int i = 0; i < a.length; i++) {
+                contactStatusList.add(a[i]);
+            }
+        }
+        if (tsdhr02.getItvDate() != null) {
+            String b[]= tsdhr02.getItvDate().split(",");
+            if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                queryWrapper.between(!StringUtils.isEmpty(tsdhr02.getItvDate()),"ITV_DATE",b[0],b[1]);
+            }
+        }
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        //模糊查询条件
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getPlanNo()),"PLAN_NO",tsdhr02.getPlanNo());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getMemberName()),"MEMBER_NAME",tsdhr02.getMemberName());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr02.getReqNo()),"REQ_NO",tsdhr02.getReqNo());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getDeptName()),"DEPT_NAME",tsdhr02.getDeptName());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getItvJob()),"ITV_JOB",tsdhr02.getItvJob());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getWorkStatus()),"WORK_STATUS",tsdhr02.getWorkStatus());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr02.getItvStatus()),"ITV_STATUS",tsdhr02.getItvStatus());
+        if (contactStatusList.size()>0){
+            queryWrapper.in(!StringUtils.isEmpty(tsdhr02.getContactStatus()),"CONTACT_STATUS",contactStatusList);
+        }
+        List<Tsdhr02> list=tsdhr02Mapper.selectList(queryWrapper);
+        return list;
     }
 
     @Override
@@ -213,6 +247,11 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
 
     @Override
     public EiINfo insertHr04ByHr02(Tsdhr02 tsdhr02) throws Exception {
+        return null;
+    }
+
+    @Override
+    public EiINfo saveTsdhr02sByImp(List<Tsdhr02Upload> hr02Uploads) {
         return null;
     }
 

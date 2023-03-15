@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sd.sdhr.mapper.sd.hr.Tsdhr01DefinedMapper;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr01Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
@@ -22,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class Tsdhr01ServiceImpl implements Tsdhr01Service {
@@ -31,11 +34,20 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
     private Tsdhr01Mapper tsdhr01Mapper;
 
     @Autowired
+    private Tsdhr01DefinedMapper tsdhr01DefinedMapper;
+
+    @Autowired
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
     public List<Tsdhr01> getAllTsdhr01() {
+        List<Map<String, Object>> maps = tsdhr01Mapper.selectMaps(new QueryWrapper<>());
         return tsdhr01Mapper.selectList(null);
+    }
+
+    @Override
+    public List<Tsdhr01> queryExportAllTsdhr01(Tsdhr01Request tsdhr01Request) {
+        return tsdhr01DefinedMapper.queryExportByHr01(tsdhr01Request);
     }
 
     @Override
@@ -191,6 +203,62 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
         eiINfo.setSuccess("1");
         eiINfo.setMessage("修改成功！");
 
+        return eiINfo;
+    }
+
+    @Override
+    @Transactional
+    public EiINfo saveTsdhr01sByImp(List<Tsdhr01Upload> tsdhr01Up) throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        Tsdhr01 tsdhr01 = new Tsdhr01();
+        for(int i=0;i<tsdhr01Up.size();i++){
+            Tsdhr01Upload tsdhr01Upload = tsdhr01Up.get(i);
+            if (StringUtils.isEmpty(tsdhr01Upload.getYear())){
+                throw new Exception(i+1+"行,年份为空! 无法导入");
+            }
+            String deptNameOld = tsdhr01Upload.getDeptName();
+            if (StringUtils.isEmpty(deptNameOld)){
+                throw new Exception(i+1+"行,部门名称为空! 无法导入");
+            }
+            String itvJobOld = tsdhr01Upload.getItvJob();
+            if (StringUtils.isEmpty(tsdhr01Upload.getItvJob())){
+                throw new Exception(i+1+"行,岗位名称为空! 无法导入");
+            }
+            if (StringUtils.isEmpty(tsdhr01Upload.getRequireNum().toString())){
+                throw new Exception(i+1+"行,希求数量为空! 无法导入");
+            }
+            if (StringUtils.isEmpty(tsdhr01Upload.getJobRequire())){
+                throw new Exception(i+1+"行,岗位需求为空! 无法导入");
+            }
+            if (StringUtils.isEmpty(tsdhr01Upload.getRequireContact())){
+                throw new Exception(i+1+"行,需求联系人为空! 无法导入");
+            }
+            if (StringUtils.isEmpty(tsdhr01Upload.getDutyPerson())){
+                throw new Exception(i+1+"行,责任人为空! 无法导入");
+            }
+            if (StringUtils.isEmpty(tsdhr01Upload.getPlanEndDate())){
+                throw new Exception(i+1+"行,计划完成时间为空! 无法导入");
+            }
+            String itvWaysOld = tsdhr01Upload.getItvWays();
+            if (StringUtils.isEmpty(itvWaysOld)){
+                throw new Exception(i+1+"行,面试方式为空! 无法导入");
+            }
+            tsdhr01.setYear(tsdhr01Upload.getYear());
+            //tsdhr01.setDeptName(deptNameOld.substring(0,deptNameOld.lastIndexOf("-")));
+            tsdhr01.setDeptName(deptNameOld);
+            //tsdhr01.setItvJob(itvJobOld.substring(0,itvJobOld.lastIndexOf("-")));
+            tsdhr01.setItvJob(itvJobOld);
+            tsdhr01.setRequireNum(tsdhr01Upload.getRequireNum());
+            tsdhr01.setJobRequire(tsdhr01Upload.getJobRequire());
+            tsdhr01.setRequireContact(tsdhr01Upload.getRequireContact());
+            tsdhr01.setDutyPerson(tsdhr01Upload.getDutyPerson());
+            tsdhr01.setPlanEndDate(tsdhr01Upload.getPlanEndDate());
+            tsdhr01.setItvWays(itvWaysOld);
+            tsdhr01.setIsEme(tsdhr01Upload.getIsEme());
+            this.saveTsdhr01(tsdhr01);
+        }
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("导入信息成功！");
         return eiINfo;
     }
 }

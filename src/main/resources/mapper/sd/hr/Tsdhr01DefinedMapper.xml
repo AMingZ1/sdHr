@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sd.sdhr.mapper.sd.hr.Tsdhr01DefinedMapper">
+
+    <!--根据信息查询每月转正统计-->
+    <select id="queryExportByHr01" resultType="com.sd.sdhr.pojo.sd.hr.Tsdhr01" parameterType="com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request">
+        select
+        req_no,
+        year,
+        (SELECT st03.CODE_CNAME FROM tsdst03 st03 where st03.CODE_NO='sdHr_deptName' and st03.CODE_ENAME=hr01.DEPT_NAME) deptName,
+        (SELECT st03.CODE_CNAME FROM tsdst03 st03 where st03.CODE_NO='sdHr_jobName' and st03.CODE_ENAME=hr01.ITV_JOB) itvJob,
+        require_num,
+        real_num,
+        job_require,
+        require_contact,
+        duty_person,
+        plan_end_date,
+        (SELECT st03.CODE_CNAME FROM tsdst03 st03 where st03.CODE_NO='sdHr_itvWays' and st03.CODE_ENAME=hr01.ITV_WAYS) itvWays,
+        is_eme
+        from tsdhr01 hr01 where 1=1
+        <if test="queryHis!=null and queryHis!=''">and  hr01.Delete_Flag=#{queryHis}</if>
+        <if test="year!=null and year!=''">and  hr01.year like '%'||#{year}||'%' </if>
+        <if test="deptName!=null and deptName!=''">and  hr01.DEPT_NAME like '%'||#{deptName}||'%' </if>
+        <if test="itvJob!=null and itvJob!=''">and  hr01.ITV_JOB like '%'||#{itvJob}||'%' </if>
+        order by hr01.req_no
+    </select>
+
+</mapper>

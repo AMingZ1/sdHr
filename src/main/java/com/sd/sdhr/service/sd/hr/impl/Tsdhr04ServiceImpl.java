@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr04Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr04;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr04Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.of.Tsdof01;
 import com.sd.sdhr.service.common.JwtUtil;
@@ -77,7 +78,33 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
     }
 
     @Override
+    public List<Tsdhr04> queryTsdhr04s(Tsdhr04Request tsdhr04) {
+        QueryWrapper<Tsdhr04> queryWrapper=new QueryWrapper<>();
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        if (tsdhr04.getItvDate() != null) {
+            String b[]= tsdhr04.getItvDate().split(",");
+            if(!"undefined".equals(b[0])&&!"undefined".equals(b[1])){
+                queryWrapper.between(!StringUtils.isEmpty(tsdhr04.getItvDate()),"ITV_DATE",b[0],b[1]);
+            }
+        }
+        //模糊查询条件
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME", tsdhr04.getMemberName());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getItvStatus()),"ITV_STATUS", tsdhr04.getItvStatus());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getNowStatus()),"NOW_STATUS", tsdhr04.getNowStatus());
+        List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
+        return list;
+    }
+
+    @Override
     public Tsdhr04 selectTsdhr04ById(Tsdhr04 tsdhr04) {
+        return null;
+    }
+
+    @Override
+    public EiINfo saveTsdhr04sByImp(List<Tsdhr04Upload> hr04Uploads) {
         return null;
     }
 

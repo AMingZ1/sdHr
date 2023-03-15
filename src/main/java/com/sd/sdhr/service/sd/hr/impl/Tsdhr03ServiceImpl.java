@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.hr.Tsdhr03Mapper;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr03;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr03Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr03Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.hr.Tsdhr03Service;
@@ -66,7 +67,28 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
     }
 
     @Override
+    public List<Tsdhr03> queryTsdhr03s(Tsdhr03Request tsdhr03) {
+        QueryWrapper<Tsdhr03> queryWrapper=new QueryWrapper<>();
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        //模糊查询条件
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getChannel()),"CHANNEL", tsdhr03.getChannel());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getMemberName()),"MEMBER_NAME", tsdhr03.getMemberName());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getDeptName()),"DEPT_NAME", tsdhr03.getDeptName());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr03.getItvJob()),"ITV_JOB", tsdhr03.getItvJob());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveReason()),"ARCHIVE_REASON", tsdhr03.getArchiveReason());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveStatusbfr()),"ARCHIVE_STATUSBFR", tsdhr03.getArchiveStatusbfr());
+        queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getEducationBckr()),"EDUCATION_BCKR", tsdhr03.getEducationBckr());
+        List<Tsdhr03> list= tsdhr03Mapper.selectList(queryWrapper);
+        return list;
+    }
+
+    @Override
     public Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03) {
+        return null;
+    }
+
+    @Override
+    public EiINfo saveTsdhr03sByImp(List<Tsdhr03Upload> hr03Uploads) {
         return null;
     }
 

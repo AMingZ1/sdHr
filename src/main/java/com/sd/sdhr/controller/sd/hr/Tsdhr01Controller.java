@@ -3,10 +3,13 @@ package com.sd.sdhr.controller.sd.hr;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Export;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
+import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -77,12 +82,22 @@ public class Tsdhr01Controller {
 
     //导出
     @RequestMapping(value = "/export")
-    public void exportTsdhrXls(Tsdhr01 tsdhr01, HttpServletResponse response){
+    public void exportTsdhrXls(Tsdhr01Request tsdhr01, HttpServletResponse response){
 
         try {
-            List<Tsdhr01> tsdhr01s=tsdhr01Service.getAllTsdhr01();
-            this.setExcelRespProp(response, "会员列表");
-            EasyExcel.write(response.getOutputStream()).head(Tsdhr01.class).excelType(ExcelTypeEnum.XLSX).sheet("列表").doWrite(tsdhr01s);
+            //List<Tsdhr01> allTsdhr01 = tsdhr01Service.queryExportAllTsdhr01(tsdhr01);
+            List<Tsdhr01> allTsdhr01 = tsdhr01Service.getAllTsdhr01();
+            //将User映射为导出的实体类
+           /* List<Tsdhr01Export> tsdhr01ss=new ArrayList<>();
+            for (Tsdhr01 thr01:allTsdhr01){
+                Tsdhr01Export userExcel=new Tsdhr01Export();
+                BeanUtils.copyProperties(thr01,userExcel);
+                tsdhr01ss.add(userExcel);
+            }*/
+            this.setExcelRespProp(response, "岗位需求信息");
+
+            EasyExcel.write(response.getOutputStream(),Tsdhr01.class).sheet("sheet1").doWrite(allTsdhr01);
+
         }catch (Exception e){
             log.error("导出岗位信息错误："+e);
         }
@@ -102,16 +117,16 @@ public class Tsdhr01Controller {
     /**
      * 从Excel导入会员列表
      */
-    @RequestMapping(value = "/import1", method = RequestMethod.POST)
+    @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public void importMemberList(@RequestPart("file") MultipartFile file) throws IOException {
-        List<Tsdhr01> list = EasyExcel.read(file.getInputStream())
-                .head(Tsdhr01.class)
+    public void importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
+        List<Tsdhr01Upload> list = EasyExcel.read(file.getInputStream())
+                .head(Tsdhr01Upload.class)
                 .sheet()
                 .doReadSync();
-        for (Tsdhr01 member : list) {
-            System.out.println(member);
-        }
+        //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
+        // 往后端塞值
+        EiINfo eiINfo = tsdhr01Service.saveTsdhr01sByImp(list);
     }
 
 
