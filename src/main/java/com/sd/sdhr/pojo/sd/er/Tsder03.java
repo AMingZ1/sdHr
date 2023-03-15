@@ -69,6 +69,16 @@ public class Tsder03  implements Serializable {
 	private String talkStatus;
 
 	/**
+	 * 最近访谈时间
+	 */
+	private String recTalkTime;
+
+	/**
+	 * 最近提醒访谈时间
+	 */
+	private String remTalkTime;
+
+	/**
 	 * 入职时项目经理
 	 */
 	private String pmNameF;
