@@ -114,7 +114,7 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
         tsder03.setTalkPlanNow("02");
         tsder03.setTalkWeek("");
         tsder03.setTalkMonth("");
-        tsder03.setFormalDare(formalDare);
+        tsder03.setFormalDate(formalDare);
         tsder03.setRemark("T03");
         List<Tsder03> listTalkFormal=tsdst09DefinedMapper.getTsder03ForTalk(tsder03);
         this.saveTsdst09BySder03(listTalkFormal,"的转正访谈时间快到了，请尽快安排！","GRP1004","T03");
