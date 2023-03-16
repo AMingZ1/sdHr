@@ -12,28 +12,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Title: DeptColdConverter
+ * @Title: IsformalColdConverter
  * @Author dems
  * @Package com.sd.sdhr.constant
  * @Date 2023/3/10 17:40
  * @description: ${description}
  */
-public class ChannelColdConverter implements Converter<String> {
+public class IsformalColdConverter implements Converter<String> {
 
     private static Map<String,String> statusMap = new HashMap();
     static {
-        statusMap.put("01", "猎聘");
-        statusMap.put("02", "智联");
-        statusMap.put("03", "前程无忧");
-        statusMap.put("04", "BOSS直聘");
-        statusMap.put("05", "拉钩");
-        statusMap.put("06", "58同城");
-        statusMap.put("07", "赶集网");
-        statusMap.put("08", "内荐");
-        statusMap.put("99", "其他");
+        statusMap.put("0", "试用");
+        statusMap.put("1", "正式");
+        statusMap.put("2", "离职");
 
-        statusMap.put("1", "男");
-        statusMap.put("2", "女");
+        statusMap.put("01", "学士");
+        statusMap.put("02", "硕士");
+        statusMap.put("03", "博士");
+
     }
 
 

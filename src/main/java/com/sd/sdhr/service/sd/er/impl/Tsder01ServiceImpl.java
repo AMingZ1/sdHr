@@ -7,10 +7,12 @@ import com.github.pagehelper.PageInfo;
 import com.sd.sdhr.mapper.sd.er.Tsder01Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.er.common.Tsder01Request;
+import com.sd.sdhr.pojo.sd.er.common.Tsder01Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
 import com.sd.sdhr.service.sd.er.Tsder01Service;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -62,6 +64,21 @@ public class Tsder01ServiceImpl implements Tsder01Service {
             eiINfo.setMessage("查询失败!"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public List<Tsder01> queryTsder01s(Tsder01Request tsder01) {
+        QueryWrapper<Tsder01> queryWrapper=new QueryWrapper<>();
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        //模糊查询条件
+        queryWrapper.like(!StringUtils.isEmpty(tsder01.getMemberName()),"MEMBER_NAME",tsder01.getMemberName());
+        queryWrapper.like(!StringUtils.isEmpty(tsder01.getDeptName()),"DEPT_NAME",tsder01.getDeptName());
+        queryWrapper.like(!StringUtils.isEmpty(tsder01.getJobs()),"JOBS",tsder01.getJobs());
+        queryWrapper.eq(!StringUtils.isEmpty(tsder01.getIsFormal()),"IS_FORMAL",tsder01.getIsFormal());
+        queryWrapper.likeLeft(!StringUtils.isEmpty(tsder01.getBirthDate()),"BIRTH_DATE",tsder01.getBirthDate());
+
+        List<Tsder01> list=tsder01Mapper.selectList(queryWrapper);
+        return list;
     }
 
     @Override
@@ -205,6 +222,19 @@ public class Tsder01ServiceImpl implements Tsder01Service {
         eiINfo.setSuccess("1");
         eiINfo.setMessage("修改成功！");
 
+        return eiINfo;
+    }
+
+    @Override
+    public EiINfo saveTsder01sByImp(List<Tsder01Upload> er01UploadS) throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        for (Tsder01Upload er01Upload:er01UploadS){
+            Tsder01 tsder01 = new Tsder01();
+            BeanUtils.copyProperties(er01Upload,tsder01);
+            this.saveTsder01(tsder01);
+        }
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("导入信息成功！");
         return eiINfo;
     }
 }
