@@ -3,6 +3,7 @@ package com.sd.sdhr.service.sd.st.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
+import com.sd.sdhr.mapper.sd.er.Tsder03Mapper;
 import com.sd.sdhr.mapper.sd.er.Tsder06Mapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09DefinedMapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst09Mapper;
@@ -32,6 +33,9 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
 
     @Autowired
     Tsdst09Mapper tsdst09Mapper;
+
+    @Autowired
+    Tsder03Mapper tsder03Mapper;
 
     @Autowired
     Tsdst09DefinedMapper tsdst09DefinedMapper;
@@ -189,6 +193,20 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
         return tsdst09;
     }
 
+    @Override
+    public int updateTsder03RemTalkTime(Tsder03 tsder03) {
+        Tsder03 er031Up = new Tsder03();
+        UpdateWrapper<Tsder03> wrapper=new UpdateWrapper<>();
+        wrapper.eq("MEMBER_ID",tsder03.getMemberId());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        er031Up.setRemTalkTime(curDateTime);
+        er031Up.setRecModifier("admin");
+        er031Up.setRecModifyName("admin");
+        er031Up.setRecModifyTime(curDateTime);
+        return tsder03Mapper.update(er031Up,wrapper);
+    }
+
     public void saveTsdst09BySder03(List<Tsder03> tsder03List,String msgBody,String roleCode,String businessType){
         Tsdst09 dst09Save=new Tsdst09();
         StringBuffer messageRemark=new StringBuffer();//消息说明
@@ -211,7 +229,7 @@ public class Tsdst09ServiceImpl implements Tsdst09Service {
                 dst09Save.setMemberName(st11.getMemberName());
                 this.saveTsdst09(dst09Save);
             });
-
+            this.updateTsder03RemTalkTime(tsder03);
         }
 
 

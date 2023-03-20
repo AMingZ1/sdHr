@@ -1,5 +1,6 @@
 package com.sd.sdhr.service.sd.st;
 
+import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst09;
 import com.sd.sdhr.pojo.sd.st.common.Tsdst09Request;
@@ -19,4 +20,6 @@ public interface Tsdst09Service {
 
     // 获取正式访谈未执行人数
     Tsdst09 getFormalInterviewCount(String userId) throws Exception;
+
+    int updateTsder03RemTalkTime(Tsder03 tsder03);
 }
