@@ -55,7 +55,7 @@ public class Tsder01  implements Serializable {
 	/**
 	 * 是否已转正
 	 */
-	@ExcelProperty(value="员工状态",index = 5)//,converter = IsformalColdConverter.class)
+	@ExcelProperty(value="员工状态",index = 5,converter = IsformalColdConverter.class)
 	private String isFormal;
 
 	/**
@@ -73,7 +73,7 @@ public class Tsder01  implements Serializable {
 	/**
 	 * 性别
 	 */
-	@ExcelProperty(value="性别",index = 8)//,converter = ChannelColdConverter.class)
+	@ExcelProperty(value="性别",index = 8,converter = ChannelColdConverter.class)
 	private String sex;
 
 	/**
@@ -104,7 +104,7 @@ public class Tsder01  implements Serializable {
 	/**
 	 * 政治面貌
 	 */
-	@ExcelProperty(value="政治面貌",index = 13)//,converter = PoliticsColdConverter.class)
+	@ExcelProperty(value="政治面貌",index = 13,converter = PoliticsColdConverter.class)
 	private String politStatus;
 
 
@@ -148,19 +148,19 @@ public class Tsder01  implements Serializable {
 	/**
 	 * 血型
 	 */
-	@ExcelProperty(value="血型",index = 20)//,converter = PoliticsColdConverter.class)
+	@ExcelProperty(value="血型",index = 20,converter = PoliticsColdConverter.class)
 	private String bloodType;
 
 	/**
 	 * 婚姻状况
 	 */
-	@ExcelProperty(value="婚姻状况",index = 21)//,converter = PoliticsColdConverter.class)
+	@ExcelProperty(value="婚姻状况",index = 21,converter = PoliticsColdConverter.class)
 	private String marryStatus;
 
 	/**
 	 * 最高学历
 	 */
-	@ExcelProperty(value="最高学历",index = 22)//,converter = ExplevelColdConverter.class)
+	@ExcelProperty(value="最高学历",index = 22,converter = ExplevelColdConverter.class)
 	private String higEdu;
 
 	/**
@@ -184,7 +184,7 @@ public class Tsder01  implements Serializable {
 	/**
 	 * 最高学位
 	 */
-	@ExcelProperty(value="最高学位",index = 26)//,converter = IsformalColdConverter.class)
+	@ExcelProperty(value="最高学位",index = 26,converter = IsformalColdConverter.class)
 	private String higDegree;
 
 	/**
