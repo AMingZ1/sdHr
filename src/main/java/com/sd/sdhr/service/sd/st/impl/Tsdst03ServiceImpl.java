@@ -18,9 +18,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class Tsdst03ServiceImpl implements Tsdst03Service {
@@ -30,6 +28,7 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
+    private Object forEach;
 
     @Override
     public EiINfo getAllTsdst03(Tsdst03Request tsdst03Request) {
@@ -120,5 +119,23 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
             eiINfo.setMessage("新增失败！"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public Map<String, String> selectTsdst03ToMap(String codeNo, String codeEname) throws Exception {
+        QueryWrapper<Tsdst03> queryWrapper=new QueryWrapper<>();
+        //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        queryWrapper.eq("CODE_NO",codeNo);
+        queryWrapper.eq(!StringUtils.isEmpty(codeEname),"CODE_ENAME",codeEname);
+        Map<String,String> hashMap = new HashMap();
+        List<Tsdst03> st03s = tsdst03Mapper.selectList(queryWrapper);
+        if (st03s.size()<1){
+            throw new Exception("返回结果为 空");
+        }
+        for (Tsdst03 st03:st03s){
+            hashMap.put(st03.getCodeEname(),st03.getCodeCname());
+        }
+
+        return hashMap;
     }
 }

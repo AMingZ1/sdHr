@@ -7,6 +7,8 @@ import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.alibaba.excel.util.StringUtils;
+import com.sd.sdhr.constant.utils.SpringApplicationUtils;
+import com.sd.sdhr.service.sd.st.Tsdst03Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,8 +22,10 @@ import java.util.Map;
  */
 public class JobsColdConverter implements Converter<String> {
 
-    private static Map<String,String> statusMap = new HashMap();
-    static {
+    private static Map<String,String> statusMap;
+
+    private Tsdst03Service tsdst03Service;
+    /*static {
         statusMap.put("JOB_001", "JAVA开发工程师-初级");
         statusMap.put("JOB_002", "JAVA开发工程师-中级");
         statusMap.put("JOB_003", "JAVA开发工程师-高级");
@@ -36,8 +40,14 @@ public class JobsColdConverter implements Converter<String> {
         statusMap.put("JOB_012", "自动化工程师-高级");
         statusMap.put("JOB_013", "项目经理");
 
-    }
+    }*/
 
+    public JobsColdConverter() throws Exception{
+        tsdst03Service= SpringApplicationUtils.getBean(Tsdst03Service.class);
+        if (statusMap==null||statusMap.isEmpty()){
+            statusMap=tsdst03Service.selectTsdst03ToMap("sdHr_jobName","");
+        }
+    }
 
 
     @Override

@@ -3,14 +3,13 @@ package com.sd.sdhr.constant;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.GlobalConfiguration;
-import com.alibaba.excel.metadata.data.CellData;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.alibaba.excel.util.StringUtils;
-import org.flowable.engine.common.impl.util.CollectionUtil;
+import com.sd.sdhr.constant.utils.SpringApplicationUtils;
+import com.sd.sdhr.service.sd.st.Tsdst03Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -22,8 +21,12 @@ import java.util.Map;
  */
 public class DeptColdConverter implements Converter<String> {
 
-    private static Map<String,String> statusMap = new HashMap();
-    static {
+    private static Map<String,String> statusMap;
+
+    private Tsdst03Service tsdst03Service;
+
+
+    /*static {
         statusMap.put("DEPT_001", "能环事业部");
         statusMap.put("DEPT_002", "石化事业部");
         statusMap.put("DEPT_003", "MES事业部");
@@ -33,9 +36,14 @@ public class DeptColdConverter implements Converter<String> {
         statusMap.put("DEPT_007", "大数据服务事业部");
         statusMap.put("DEPT_008", "中铝智能铜创科技");
         statusMap.put("DEPT_009", "其烨科技");
+    }*/
+
+    public DeptColdConverter() throws Exception{
+        tsdst03Service= SpringApplicationUtils.getBean(Tsdst03Service.class);
+        if (statusMap==null||statusMap.isEmpty()){
+            statusMap=tsdst03Service.selectTsdst03ToMap("sdHr_deptName","");
+        }
     }
-
-
 
     @Override
     public Class supportJavaTypeKey() {
@@ -55,7 +63,6 @@ public class DeptColdConverter implements Converter<String> {
     public String convertToJavaData(ReadCellData cellData, ExcelContentProperty excelContentProperty, GlobalConfiguration globalConfiguration) throws Exception {
 
         String enableStatusName = cellData.getStringValue();
-
         for (String enableStatus : statusMap.keySet()) {
 
             if(StringUtils.equals(enableStatusName,statusMap.get(enableStatus))){
