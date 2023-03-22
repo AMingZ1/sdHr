@@ -5,9 +5,13 @@ import com.sd.sdhr.pojo.sd.er.common.Tsder02Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import liquibase.pro.packaged.E;
 
+import java.util.List;
+
 public interface Tsder02Service {
 
     EiINfo getAllTsder02(Tsder02Request tsder02);
+
+    List<Tsder02> queryTsder02s(Tsder02Request tsder02);
 
     Tsder02 selectTsder02ById(Tsder02 tsder02);
 

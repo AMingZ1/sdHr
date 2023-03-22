@@ -1,6 +1,9 @@
 package com.sd.sdhr.controller.sd.er;
 
+import com.alibaba.excel.EasyExcel;
+import com.sd.sdhr.pojo.sd.er.Tsder01;
 import com.sd.sdhr.pojo.sd.er.Tsder02;
+import com.sd.sdhr.pojo.sd.er.common.Tsder01Request;
 import com.sd.sdhr.pojo.sd.er.common.Tsder02Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder02Service;
@@ -10,6 +13,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -65,6 +73,30 @@ public class Tsder02Controller {
             outINfo.setMessage("删除人员项目失败！"+e.getMessage());
         }
         return outINfo;
+    }
+
+    //导出
+    @RequestMapping(value = "/export")
+    public void exportTsdhrXls(Tsder02Request tsder02, HttpServletResponse response){
+
+        try {
+            List<Tsder02> allTsder02 = tsder02Service.queryTsder02s(tsder02);
+            this.setExcelRespProp(response, "员工项目信息");
+
+            EasyExcel.write(response.getOutputStream(), Tsder02.class).sheet("sheet1").doWrite(allTsder02);
+
+        }catch (Exception e){
+            log.error("导出岗位信息错误："+e);
+        }
+
+    }
+
+    //设置excel下载响应头属性
+    private void setExcelRespProp(HttpServletResponse response, String rawFileName) throws UnsupportedEncodingException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode(rawFileName, "UTF-8").replaceAll("'\'+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
     }
 
 }
