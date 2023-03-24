@@ -7,6 +7,8 @@ import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.alibaba.excel.util.StringUtils;
+import com.sd.sdhr.constant.utils.SpringApplicationUtils;
+import com.sd.sdhr.service.sd.st.Tsdst03Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,23 +18,30 @@ import java.util.Map;
  * @Author dems
  * @Package com.sd.sdhr.constant
  * @Date 2023/3/10 17:40
- * @description: ${人员类型}
+ * @description: ${访谈状态}
  */
-public class IsformalColdConverter implements Converter<String> {
+public class TalkstatusColdConverter implements Converter<String> {
 
-    private static Map<String,String> statusMap = new HashMap();
-    static {
-        statusMap.put("0", "试用");
-        statusMap.put("1", "正式");
-        statusMap.put("2", "离职");
+    private static Map<String,String> statusMap;
+
+    private Tsdst03Service tsdst03Service;
+
+    /*static {
+        statusMap.put("00", "已逾期");
+        statusMap.put("10", "未完成");
+        statusMap.put("20", "已完成");
 
         statusMap.put("01", "学士");
         statusMap.put("02", "硕士");
         statusMap.put("03", "博士");
+    }*/
 
+    public TalkstatusColdConverter() throws Exception{
+        tsdst03Service= SpringApplicationUtils.getBean(Tsdst03Service.class);
+        if (statusMap==null||statusMap.isEmpty()){
+            statusMap=tsdst03Service.selectTsdst03ToMap("sdEr_talkStatus","");
+        }
     }
-
-
 
     @Override
     public Class supportJavaTypeKey() {

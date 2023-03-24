@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.sd.sdhr.constant.DeptColdConverter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -43,7 +44,7 @@ public class Tsder02  implements Serializable {
 	/**
 	 * 部门
 	 */
-	@ExcelProperty(value="部门",index = 2)
+	@ExcelProperty(value="部门",index = 2,converter = DeptColdConverter.class)
 	private String deptName;
 
 	/**

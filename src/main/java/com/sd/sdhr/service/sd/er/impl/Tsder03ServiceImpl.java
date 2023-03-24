@@ -76,6 +76,20 @@ public class Tsder03ServiceImpl implements Tsder03Service {
     }
 
     @Override
+    public List<Tsder03> queryTsder03s(Tsder03Request tsder03) {
+        QueryWrapper<Tsder03> queryWrapper=new QueryWrapper<>();
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        //模糊查询条件
+        queryWrapper.like(!StringUtils.isEmpty(tsder03.getMemberName()),"MEMBER_NAME",tsder03.getMemberName());
+        queryWrapper.like(!StringUtils.isEmpty(tsder03.getDeptName()),"DEPT_NAME",tsder03.getDeptName());
+        queryWrapper.like(!StringUtils.isEmpty(tsder03.getJobs()),"JOBS",tsder03.getJobs());
+
+        PageHelper.startPage(tsder03.getPageNum(),tsder03.getPageSize());
+        List<Tsder03> list=tsder03Mapper.selectList(queryWrapper);
+        return list;
+    }
+
+    @Override
     public Tsder03 selectTsder03ById(Tsder03 tsder03) {
         return null;
     }

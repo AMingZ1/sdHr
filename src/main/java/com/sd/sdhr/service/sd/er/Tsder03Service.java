@@ -4,9 +4,13 @@ import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.common.Tsder03Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 
+import java.util.List;
+
 public interface Tsder03Service {
 
     EiINfo getAllTsder03(Tsder03Request tsder03);
+
+    List<Tsder03> queryTsder03s(Tsder03Request tsder03);
 
     Tsder03 selectTsder03ById(Tsder03 tsder03);
 

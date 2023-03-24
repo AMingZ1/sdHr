@@ -9,9 +9,11 @@ import com.sd.sdhr.mapper.sd.er.Tsder04DefinedMapper;
 import com.sd.sdhr.mapper.sd.er.Tsder04Mapper;
 import com.sd.sdhr.pojo.sd.er.Tsder03;
 import com.sd.sdhr.pojo.sd.er.Tsder04;
+import com.sd.sdhr.pojo.sd.er.common.Tsder03Request;
 import com.sd.sdhr.pojo.sd.er.common.Tsder04Request;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.sd.er.Tsder04Service;
+import net.sf.cglib.beans.BeanMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -63,6 +65,38 @@ public class  Tsder04ServiceImpl implements Tsder04Service {
             eiINfo.setMessage("查询失败!"+e);
         }
         return eiINfo;
+    }
+
+    @Override
+    public List<Tsder04> queryTsder04s(Tsder03Request tsder03,Tsder04Request tsder04) {
+        QueryWrapper<Tsder04> queryWrapper=new QueryWrapper<>();
+        queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        //模糊查询条件
+        if ("T04".equals(tsder04.getTalkType())){
+            List<String>  newsTypes=new ArrayList();
+            newsTypes.add("T04");
+            newsTypes.add("T05");
+            queryWrapper.in("TALK_TYPE",newsTypes);
+        }else {
+            queryWrapper.eq(!StringUtils.isEmpty(tsder04.getTalkType()),"TALK_TYPE",tsder04.getTalkType());
+        }
+        queryWrapper.like(!StringUtils.isEmpty(tsder04.getMemberId()),"MEMBER_ID",tsder04.getMemberId());
+        queryWrapper.like(!StringUtils.isEmpty(tsder04.getTalkNo()),"TALK_NO",tsder04.getTalkNo());
+
+
+        StringBuilder stringBuilder = new StringBuilder("and er03.Delete_Flag!=1 ");
+        if (!StringUtils.isEmpty(tsder03.getMemberName())){
+            stringBuilder.append("and er03.MEMBER_NAME like '%"+tsder03.getMemberName()+"%' ");
+        }
+        if (!StringUtils.isEmpty(tsder03.getDeptName())){
+            stringBuilder.append("and er03.DEPT_NAME like '%"+tsder03.getDeptName()+"%' ");
+        }
+        if (!StringUtils.isEmpty(tsder03.getJobs())){
+            stringBuilder.append("and er03.JOBS like '%"+tsder03.getJobs()+"%' ");
+        }
+        queryWrapper.exists("select 1 from tsder03 er03 where er03.MEMBER_ID=tsder04.MEMBER_ID "+stringBuilder.toString());
+        List<Tsder04> list=tsder04Mapper.selectList(queryWrapper);
+        return list;
     }
 
     @Override
