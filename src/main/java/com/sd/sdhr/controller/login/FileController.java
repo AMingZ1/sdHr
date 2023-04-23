@@ -73,6 +73,7 @@ public class FileController {
             resultMap.put("success", "true");
             resultMap.put("url", strUrl);
             resultMap.put("fileName", originName);
+            resultMap.put("newFileName", strNewFileName);
 
         } catch (Exception e) {
             e.printStackTrace();
