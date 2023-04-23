@@ -309,6 +309,9 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         if(!"01".equals(nerOf01.getApproveStatus())){
             throw new Exception("审批状态不对！只有当前状态为【审批中】的才可以进行审批操作！");
         }
+        if (StringUtils.isEmpty(tsdof01Request.getComment())){
+            tsdof01Request.setComment("同意");
+        }
         //Claims claims = JwtUtil.verifyJwt(request);
         String userId ="admin";// claims.get("userId").toString();
         String userName ="admin";//  claims.get("userName").toString();
@@ -317,6 +320,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         HashMap<String, Object> parm = new HashMap<>();
         parm.put("isFlag", "Y");
         parm.put("userId", userId);
+        taskService.addComment(taskId,procInsId,"审批意见test");
         taskService.complete(taskId, parm);
         //调整hr04表状态（业务处理）
         this.updateTsdof01Status(offerNo,"02","");
@@ -360,6 +364,9 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         if(!"01".equals(nerOf01.getApproveStatus())){
             throw new Exception("审批状态不对！只有当前状态为【审批中】的才可以进行审批操作！");
         }
+        if (StringUtils.isEmpty(tsdof01Request.getComment())){
+            throw new Exception("审批驳回必须要有审批意见！");
+        }
         //Claims claims = JwtUtil.verifyJwt(request);
         String userId ="admin";// claims.get("userId").toString();
         String userName ="admin";//  claims.get("userName").toString();
@@ -373,6 +380,7 @@ public class Tsdof01ServiceImpl implements Tsdof01Service {
         HashMap<String, Object> parm = new HashMap<>();
         parm.put("isFlag", "N");//驳回
         parm.put("userId", startUserId);
+        taskService.addComment(taskId,procInsId,tsdof01Request.getComment());
         taskService.complete(taskId, parm);
         //调整hr04表状态（业务处理）
         this.updateTsdof01Status(offerNo,"03","");

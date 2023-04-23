@@ -33,14 +33,14 @@ public interface Tsdof01Service {
 
     /**
      * 审批通过.
-     * @param map：审批意见等信息
+     * @param tsdof01Request：审批意见等信息
      * @return
      */
     EiINfo applyApprov(Tsdof01Request tsdof01Request)throws Exception;
 
     /**
-     * 审批通过.
-     * @param map：审批意见等信息
+     * 审批驳回.
+     * @param tsdof01Request：审批意见等信息
      * @return
      */
     EiINfo applyReject(Tsdof01Request tsdof01Request)throws Exception;

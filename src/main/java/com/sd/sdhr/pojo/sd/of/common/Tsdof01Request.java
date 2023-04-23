@@ -14,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Tsdof01Request extends Tsdof01 {
+    private String  comment="";
     private int  pageSize=10;
 
     private int pageNum=1;
