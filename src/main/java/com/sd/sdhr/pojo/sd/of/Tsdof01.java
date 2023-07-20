@@ -3,7 +3,9 @@ package com.sd.sdhr.pojo.sd.of;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.sd.sdhr.constant.SecondLevelDeptColdConverter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -36,6 +38,11 @@ public class Tsdof01  implements Serializable {
 	 * 部门
 	 */
 	private String deptName;
+
+	/**
+	 * 二级事业部
+	 */
+	private String secondLevelDept;
 
 	/**
 	 * 岗位

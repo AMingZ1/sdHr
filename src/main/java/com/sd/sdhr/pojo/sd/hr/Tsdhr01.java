@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.sd.sdhr.constant.DeptColdConverter;
 import com.sd.sdhr.constant.JobsColdConverter;
 import com.sd.sdhr.constant.OtherColdConverter;
+import com.sd.sdhr.constant.SecondLevelDeptColdConverter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -46,57 +47,63 @@ public class Tsdhr01  implements Serializable {
 	private String deptName;
 
 	/**
+	 * 二级事业部
+	 */
+	@ExcelProperty(value = "二级事业部",index = 3,converter = SecondLevelDeptColdConverter.class)
+	private String secondLevelDept;
+
+	/**
 	 * 岗位名称
 	 */
-	@ExcelProperty(value = "岗位名称",index = 3,converter = JobsColdConverter.class)
+	@ExcelProperty(value = "岗位名称",index = 4,converter = JobsColdConverter.class)
 	private String itvJob;
 
 	/**
 	 * 需求数量
 	 */
-	@ExcelProperty(value ="需求数量",index = 4)
+	@ExcelProperty(value ="需求数量",index = 5)
 	private BigDecimal requireNum;
 
 	/**
 	 * 实际完成数量
 	 */
-	@ExcelProperty(value = "需求编号",index = 5)
+	@ExcelProperty(value = "需求编号",index = 6)
 	private BigDecimal realNum;
 
 	/**
 	 * 岗位要求
 	 */
-	@ExcelProperty(value = "岗位要求",index = 6)
+	@ExcelProperty(value = "岗位要求",index = 7)
 	private String jobRequire;
 
 	/**
 	 * 需求联系人
 	 */
-	@ExcelProperty(value = "需求联系人",index = 7)
+	@ExcelProperty(value = "需求联系人",index = 8)
 	private String requireContact;
 
 	/**
 	 * 责任人
 	 */
-	@ExcelProperty(value = "责任人",index = 8)
+	@ExcelProperty(value = "责任人",index = 9)
 	private String dutyPerson;
 
 	/**
 	 * 预计完成实际
 	 */
-	@ExcelProperty(value = "预计完成实际",index = 9)
+	@ExcelProperty(value = "预计完成实际",index = 10)
 	private String planEndDate;
 
 	/**
 	 * 面试方式
 	 */
-	@ExcelProperty(value = "面试方式",index = 10,converter = OtherColdConverter.class)
+	@ExcelProperty(value = "面试方式",index = 11,converter = OtherColdConverter.class)
 	private String itvWays;
 
 	/**
 	 * 是否紧急
 	 */
-	@ExcelProperty(value = "是否紧急",index = 11)
+	@ExcelProperty(value = "是否紧急",index = 12)
 	private String isEme;
 
 	/**

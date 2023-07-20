@@ -6,6 +6,7 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.sd.sdhr.constant.DeptColdConverter;
+import com.sd.sdhr.constant.SecondLevelDeptColdConverter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -48,27 +49,33 @@ public class Tsder02  implements Serializable {
 	private String deptName;
 
 	/**
+	 * 二级事业部
+	 */
+	@ExcelProperty(value = "二级事业部",index = 3,converter = SecondLevelDeptColdConverter.class)
+	private String secondLevelDept;
+
+	/**
 	 * 项目名称
 	 */
-	@ExcelProperty(value="项目名称",index = 3)
+	@ExcelProperty(value="项目名称",index = 4)
 	private String projectName;
 
 	/**
 	 * 项目地点
 	 */
-	@ExcelProperty(value="项目地点",index = 4)
+	@ExcelProperty(value="项目地点",index = 5)
 	private String proAddress;
 
 	/**
 	 * 项目阶段
 	 */
-	@ExcelProperty(value="项目阶段",index = 5)
+	@ExcelProperty(value="项目阶段",index = 6)
 	private String projectPhase;
 
 	/**
 	 * 负责模块
 	 */
-	@ExcelProperty(value="负责模块",index = 6)
+	@ExcelProperty(value="负责模块",index = 7)
 	private String resMod;
 
 	/**
@@ -79,25 +86,25 @@ public class Tsder02  implements Serializable {
 	/**
 	 * 项目经理
 	 */
-	@ExcelProperty(value="项目经理",index = 7)
+	@ExcelProperty(value="项目经理",index = 8)
 	private String pmName;
 
 	/**
 	 * 项目经理电话
 	 */
-	@ExcelProperty(value="项目经理电话",index = 8)
+	@ExcelProperty(value="项目经理电话",index = 9)
 	private String pmTel;
 
 	/**
 	 * 项目经理邮箱
 	 */
-	@ExcelProperty(value="项目经理邮箱",index = 9)
+	@ExcelProperty(value="项目经理邮箱",index = 10)
 	private String pmEmail;
 
 	/**
 	 * 备注
 	 */
-	@ExcelProperty(value="备注",index = 10)
+	@ExcelProperty(value="备注",index = 11)
 	private String remark;
 
 	/**

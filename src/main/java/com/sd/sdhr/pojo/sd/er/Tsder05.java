@@ -1,6 +1,9 @@
 package com.sd.sdhr.pojo.sd.er;
 
 import java.io.Serializable;
+
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.sd.sdhr.constant.SecondLevelDeptColdConverter;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -37,6 +40,11 @@ public class Tsder05  implements Serializable {
 	 * 部门
 	 */
 	private String deptName;
+
+	/**
+	 * 二级事业部
+	 */
+	private String secondLevelDept;
 
 	/**
 	 * 岗位

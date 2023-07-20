@@ -91,39 +91,45 @@ public class Tsdhr03 implements Serializable {
 	private String deptName;
 
 	/**
+	 * 二级事业部
+	 */
+	@ExcelProperty(value = "二级事业部",index = 11,converter = SecondLevelDeptColdConverter.class)
+	private String secondLevelDept;
+
+	/**
 	 * 渠道
 	 */
-	@ExcelProperty(value="渠道",index = 11,converter = ChannelColdConverter.class)
+	@ExcelProperty(value="渠道",index = 12,converter = ChannelColdConverter.class)
 	private String channel;
 
 	/**
 	 * 归档原因
 	 */
-	@ExcelProperty(value="归档原因",index = 12,converter = AcvstatusColdConverter.class)
+	@ExcelProperty(value="归档原因",index = 13,converter = AcvstatusColdConverter.class)
 	private String archiveReason;
 
 	/**
 	 * 归档前状态
 	 */
-	@ExcelProperty(value="归档前状态",index = 13,converter = AcvstatusColdConverter.class)
+	@ExcelProperty(value="归档前状态",index = 14,converter = AcvstatusColdConverter.class)
 	private String archiveStatusbfr;
 
 	/**
 	 * 归档时间
 	 */
-	@ExcelProperty(value="归档时间",index = 14)
+	@ExcelProperty(value="归档时间",index = 15)
 	private String archiveDate;
 
 	/**
 	 * 工作年限
 	 */
-	@ExcelProperty(value="工作年限",index = 15)
+	@ExcelProperty(value="工作年限",index = 16)
 	private String workYear;
 
 	/**
 	 * 备注
 	 */
-	@ExcelProperty(value="备注",index = 16)
+	@ExcelProperty(value="备注",index = 17)
 	private String remark;
 
 	/**
