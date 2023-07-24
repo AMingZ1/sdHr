@@ -1,5 +1,6 @@
 package com.sd.sdhr.controller.login;
 
+import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst12;
 import com.sd.sdhr.service.sd.st.Tsdst12Service;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,13 @@ public class FileController {
 
     @Autowired
     Tsdst12Service tsdst12Service;
+
+    @RequestMapping(value = "/getAllFiles")
+    private Object getAllMsgNotificationByUser(Tsdst12 tsdst12){
+        log.info("查询附件清单信息："+tsdst12);
+
+        return tsdst12Service.getAllTsdst12(tsdst12);
+    }
 
     @PostMapping("/upload")
     public Map<String, Object> fileUpload(MultipartFile file, HttpServletRequest req,@RequestParam String businessNo,@RequestParam String businessKeyword) {
