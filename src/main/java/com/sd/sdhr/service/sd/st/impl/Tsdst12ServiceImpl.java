@@ -79,7 +79,7 @@ public class Tsdst12ServiceImpl implements Tsdst12Service {
     @Override
     public void delectTsdst12ByFileId(String fileId) {
         Map map = new HashMap();
-        map.put("fileId",fileId);
+        map.put("FILE_ID",fileId);
         int i = tsdst12Mapper.deleteByMap(map);
     }
 }
