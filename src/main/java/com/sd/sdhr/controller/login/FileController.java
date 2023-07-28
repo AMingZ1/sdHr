@@ -152,4 +152,36 @@ public class FileController {
         }
 
     }
+
+
+    @RequestMapping("/removeFile")
+    public void remove(@RequestBody Map<String, String> params){
+        //@RequestParam("file") String downUrl
+        log.info("文件名为：{}",params.get("fileName"));
+        String businessKeyword=params.get("businessKeyword");
+        String businessNo=params.get("businessNo");
+        Tsdst12 tsdst12=new Tsdst12();
+        tsdst12.setFileId(params.get("fileId"));
+        tsdst12.setBusinessNo(businessNo);
+        tsdst12.setBusinessKeyword(businessKeyword);
+        List<Tsdst12> list=tsdst12Service.getAllTsdst12(tsdst12);
+        if (list.size()==0){
+            // 查无附件信息
+        }
+        Tsdst12 tsdst12New =list.get(0);
+        String downUrl=tsdst12New.getFilePath()+"\\"+tsdst12New.getFileId()+tsdst12New.getFileSuffix();
+        OutputStream outputStream = null;
+        InputStream inputStream = null;
+        BufferedInputStream bufferedInputStream = null;
+        byte[] bytes = new byte[1024];
+        File file = new File(downUrl);
+        if(file.exists()){
+            // 上传的文件被保存了
+            file.delete();
+            // 打印日志
+            log.info("{}删除成功",params.get("fileName"));
+        }
+        // 待完成 —— 文件类型校验工作
+    }
+
 }
