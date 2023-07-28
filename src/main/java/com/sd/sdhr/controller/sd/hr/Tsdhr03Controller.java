@@ -107,7 +107,7 @@ public class Tsdhr03Controller {
     @ResponseBody
     public void importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
         List<Tsdhr03Upload> list = EasyExcel.read(file.getInputStream())
-                .head(Tsdhr01Upload.class)
+                .head(Tsdhr03Upload.class)
                 .sheet()
                 .doReadSync();
         if (list==null || list.size()<1){
