@@ -18,4 +18,6 @@ public interface Tsdst12Service {
 
     //新增附件关系信息
     String saveTsdst12(String businessNo,String businessKeyword,String filePath,String fileName,String fileSuffix);
+
+    void delectTsdst12ByFileId(String fileId);
 }

@@ -95,15 +95,13 @@ public class FileController {
 
 
     @RequestMapping("/downloadFile")
-    public void downloadFiles(@RequestBody Map<String, String> params, HttpServletRequest request, HttpServletResponse response) {
+    public void downloadFiles(@RequestParam("fileId") String fileId, HttpServletRequest request, HttpServletResponse response) {
         //@RequestParam("file") String downUrl
-        log.info("文件名为：{}",params.get("fileName"));
-        String businessKeyword=params.get("businessKeyword");
-        String businessNo=params.get("businessNo");
+        log.info("文件ID为：{}",fileId);
+        /*String businessKeyword=params.get("businessKeyword");
+        String businessNo=params.get("businessNo");*/
         Tsdst12 tsdst12=new Tsdst12();
-        tsdst12.setFileId(params.get("fileId"));
-        tsdst12.setBusinessNo(businessNo);
-        tsdst12.setBusinessKeyword(businessKeyword);
+        tsdst12.setFileId(fileId);
         List<Tsdst12> list=tsdst12Service.getAllTsdst12(tsdst12);
         if (list.size()==0){
             // 查无附件信息
@@ -155,15 +153,12 @@ public class FileController {
 
 
     @RequestMapping("/removeFile")
-    public void remove(@RequestBody Map<String, String> params){
+    public void remove(@RequestParam("fileId") String fileId){
         //@RequestParam("file") String downUrl
-        log.info("文件名为：{}",params.get("fileName"));
-        String businessKeyword=params.get("businessKeyword");
-        String businessNo=params.get("businessNo");
+        log.info("文件ID为：{}",fileId);
+
         Tsdst12 tsdst12=new Tsdst12();
-        tsdst12.setFileId(params.get("fileId"));
-        tsdst12.setBusinessNo(businessNo);
-        tsdst12.setBusinessKeyword(businessKeyword);
+        tsdst12.setFileId(fileId);
         List<Tsdst12> list=tsdst12Service.getAllTsdst12(tsdst12);
         if (list.size()==0){
             // 查无附件信息
@@ -178,8 +173,9 @@ public class FileController {
         if(file.exists()){
             // 上传的文件被保存了
             file.delete();
+            tsdst12Service.delectTsdst12ByFileId(fileId);
             // 打印日志
-            log.info("{}删除成功",params.get("fileName"));
+            log.info("{}删除成功",tsdst12New.getFileName());
         }
         // 待完成 —— 文件类型校验工作
     }

@@ -12,10 +12,7 @@ import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Title: Tsdst12ServiceImpl
@@ -77,5 +74,12 @@ public class Tsdst12ServiceImpl implements Tsdst12Service {
         tsdst12Mapper.insert(tsdst12);
 
         return fileId;
+    }
+
+    @Override
+    public void delectTsdst12ByFileId(String fileId) {
+        Map map = new HashMap();
+        map.put("fileId",fileId);
+        int i = tsdst12Mapper.deleteByMap(map);
     }
 }

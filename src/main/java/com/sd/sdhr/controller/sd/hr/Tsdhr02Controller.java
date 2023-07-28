@@ -108,16 +108,24 @@ public class Tsdhr02Controller {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public void importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
-        List<Tsdhr02Upload> list = EasyExcel.read(file.getInputStream())
-                .head(Tsdhr02Upload.class)
-                .sheet()
-                .doReadSync();
-        if (list==null || list.size()<1){
-            throw new Exception("导入会错！没有获取到导入清单信息！");
+    public Object importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
+        EiINfo outINfo = new EiINfo();
+        try {
+
+            List<Tsdhr02Upload> list = EasyExcel.read(file.getInputStream())
+                    .head(Tsdhr02Upload.class)
+                    .sheet()
+                    .doReadSync();
+            if (list==null || list.size()<1){
+                throw new Exception("导入会错！没有获取到导入清单信息！");
+            }
+            // 往后端塞值
+            outINfo = tsdhr02Service.saveTsdhr02sByImp(list);
+        }catch (Exception e){
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("导入失败！"+e.getMessage());
         }
-        // 往后端塞值
-        EiINfo eiINfo = tsdhr02Service.saveTsdhr02sByImp(list);
+        return outINfo;
     }
 
 
