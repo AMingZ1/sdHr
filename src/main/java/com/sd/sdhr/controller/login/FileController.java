@@ -62,7 +62,7 @@ public class FileController {
         resultMap.put("resultMap",businessNo);
         resultMap.put("resultMap",businessKeyword);
 
-        String filePath=path+"\\"+businessKeyword;
+        String filePath=path+File.separator+businessKeyword;
         String strFormat = simpleDateFormat.format(new Date());
         String realPath = req.getServletContext().getRealPath("/") + strFormat;
         //String uploadDir = req.getSession().getServletContext().getRealPath("/") + "/upload/" + strFormat;
