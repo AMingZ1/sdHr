@@ -107,7 +107,7 @@ public class FileController {
             // 查无附件信息
         }
         Tsdst12 tsdst12New =list.get(0);
-        String downUrl=tsdst12New.getFilePath()+"\\"+tsdst12New.getFileId()+tsdst12New.getFileSuffix();
+        String downUrl=tsdst12New.getFilePath()+File.separator+tsdst12New.getFileId()+tsdst12New.getFileSuffix();
         OutputStream outputStream = null;
         InputStream inputStream = null;
         BufferedInputStream bufferedInputStream = null;
@@ -164,7 +164,7 @@ public class FileController {
             // 查无附件信息
         }
         Tsdst12 tsdst12New =list.get(0);
-        String downUrl=tsdst12New.getFilePath()+"\\"+tsdst12New.getFileId()+tsdst12New.getFileSuffix();
+        String downUrl=tsdst12New.getFilePath()+File.separator+tsdst12New.getFileId()+tsdst12New.getFileSuffix();
         OutputStream outputStream = null;
         InputStream inputStream = null;
         BufferedInputStream bufferedInputStream = null;
