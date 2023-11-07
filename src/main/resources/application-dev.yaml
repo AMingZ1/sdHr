@@ -34,5 +34,7 @@ spring:
 
 #自定义文件访问路径
 myfile:
-  path: D:\\A_linshi
-  filePath: D:\\test_Jar\\syds.pdf
+  #path: D:\\A_linshi
+  #filePath: D:\\test_Jar\\syds.pdf
+  path: \test\\ImpFile
+  filePath: \test\\syds\\syds.pdf
