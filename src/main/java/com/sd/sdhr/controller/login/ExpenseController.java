@@ -8,6 +8,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
+import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "expense")
+@RequestMapping(value = "/expense")
 public class ExpenseController {
 
     @Autowired
@@ -87,6 +88,22 @@ public class ExpenseController {
             System.out.println("/n 任务ID："+task.getId());
         }
         return tasks.toArray().toString();
+    }
+
+    /**
+     * 获取历史任务信息
+     *
+     * @param processInstanceId    用户Id
+     */
+    @RequestMapping(value = "/historicTasks")
+    @ResponseBody
+    public Object createHistoricTask(String processInstanceId) {
+        HistoryService historyService = processEngine.getHistoryService();
+        List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .orderByHistoricTaskInstanceStartTime().asc()
+                .list();
+        return list;
     }
 
     /**
