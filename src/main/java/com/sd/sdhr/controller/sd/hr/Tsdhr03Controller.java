@@ -212,11 +212,10 @@ public class Tsdhr03Controller {
         resultMap.put("resultMap",businessNo);
         resultMap.put("resultMap",businessKeyword);
 
-        String filePath=path+"\\"+businessKeyword;
+
+        String filePath=path+File.separator+businessKeyword;
         String strFormat = simpleDateFormat.format(new Date());
         String realPath = req.getServletContext().getRealPath("/") + strFormat;
-        //String uploadDir = req.getSession().getServletContext().getRealPath("/") + "/upload/" + strFormat;
-
         File folder = new File(filePath);
         if (!folder.exists()) {
             //如果文件目录不存在就重新创建
