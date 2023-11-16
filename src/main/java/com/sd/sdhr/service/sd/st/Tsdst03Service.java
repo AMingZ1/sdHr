@@ -15,4 +15,8 @@ public interface Tsdst03Service {
     EiINfo saveTsdst03(Tsdst03 tsdst03);
 
     Map<String,String> selectTsdst03ToMap(String codeNo, String codeEname) throws Exception;
+
+
+
+    Tsdst03 selectTsdst032(String codeNo, String codeEname, String codeCname) ;
 }

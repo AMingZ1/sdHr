@@ -218,4 +218,49 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
 
         return eiINfo;
     }
+
+
+    @Override
+    @Transactional
+    public String saveTsdhr032(Tsdhr03 tsdhr03)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        if (!StringUtils.isEmpty(tsdhr03.getMemberNo())){
+            throw new Exception("员工编号不为空无法新增！面试记录号："+ tsdhr03.getMemberNo());
+        }
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        // 获取当前月
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        //查询当前生成流水号信息
+        StringBuilder memberNo=new StringBuilder("DSSH");
+        int backNum= tsdhr03Mapper.queryCountByMemberNoLike(memberNo.toString());
+        String serialNum= String.format("%04d", backNum+1);
+        memberNo.append(serialNum);
+        tsdhr03.setMemberNo(memberNo.toString());
+        // 注入信息
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr03.setRecCreator(userId);
+        tsdhr03.setRecCreateName(userName);
+        tsdhr03.setRecCreateTime(curDateTime);
+        tsdhr03.setRecModifier(userId);
+        tsdhr03.setRecModifyName(userName);
+        tsdhr03.setRecModifyTime(curDateTime);
+        tsdhr03.setDeleteFlag("0");
+        int backInsert = tsdhr03Mapper.insert(tsdhr03);
+        eiINfo.setMessage(String.valueOf(backInsert));
+        if (backInsert==1){
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增成功！");
+        }else {
+            throw new Exception("Inser hr03失败！");
+        }
+        return memberNo.toString();
+    }
 }

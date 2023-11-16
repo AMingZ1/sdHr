@@ -138,4 +138,21 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
 
         return hashMap;
     }
+
+
+
+    @Override
+    public Tsdst03 selectTsdst032(String codeNo, String codeEname, String codeCname) {
+        QueryWrapper<Tsdst03> queryWrapper=new QueryWrapper<>();
+        //queryWrapper.ne("Delete_Flag","1");//删除标记不为1
+        queryWrapper.eq("CODE_NO",codeNo);
+        queryWrapper.eq(!StringUtils.isEmpty(codeEname),"CODE_ENAME",codeEname);
+        queryWrapper.eq(!StringUtils.isEmpty(codeCname),"CODE_CNAME",codeCname);
+        Map<String,String> hashMap = new HashMap();
+        List<Tsdst03> list = tsdst03Mapper.selectList(queryWrapper);
+        if (list.size()<1){
+            return null;
+        }
+        return list.get(0);
+    }
 }
