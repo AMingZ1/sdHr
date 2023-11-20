@@ -19,4 +19,6 @@ public interface Tsdst03Service {
 
 
     Tsdst03 selectTsdst032(String codeNo, String codeEname, String codeCname) ;
+
+    Tsdst03 saveTsdst032(Tsdst03 tsdst03);
 }

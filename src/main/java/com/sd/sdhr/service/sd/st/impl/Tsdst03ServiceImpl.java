@@ -3,6 +3,7 @@ package com.sd.sdhr.service.sd.st.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sd.sdhr.mapper.sd.st.Tsdst03DefinedMapper;
 import com.sd.sdhr.mapper.sd.st.Tsdst03Mapper;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.pojo.sd.st.Tsdst03;
@@ -25,6 +26,10 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
 
     @Autowired
     Tsdst03Mapper tsdst03Mapper;
+
+    @Autowired
+    Tsdst03DefinedMapper tsdst03DefinedMapper;
+
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -154,5 +159,96 @@ public class Tsdst03ServiceImpl implements Tsdst03Service {
             return null;
         }
         return list.get(0);
+    }
+
+
+
+    @Override
+    /**
+     * 根据【代码编号】查询出
+     */
+    public Tsdst03 saveTsdst032(Tsdst03 tsdst03) {
+        EiINfo eiINfo=new EiINfo();
+        try {
+            if (StringUtils.isEmpty(tsdst03.getCodeNo())){
+                throw new Exception("【代码编号】为空无法新增！");
+            }
+            if (StringUtils.isEmpty(tsdst03.getCodeCname())){
+                throw new Exception("【代码中文名】为空无法新增！");
+            }
+
+            List<Map> list =tsdst03DefinedMapper.selectTsdst03ByMaxVerNo(tsdst03);
+            //得到下一个小代码编号
+            String codeEname = getverNo(list.get(0).get("codeEname").toString());
+
+            tsdst03.setCodeEname(codeEname);
+
+            //拿到当前年月日；
+            Calendar calendar = Calendar.getInstance();
+            // 获取当前年
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            // 获取当前月
+            int month = calendar.get(Calendar.MONTH) + 1;
+            StringBuilder memberId=new StringBuilder();
+            StringBuilder mpRelationNo=new StringBuilder();
+            String an=year.substring(year.length()-2);
+
+            // 注入信息
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String curDateTime = formatter.format(new Date());
+            tsdst03.setRecCreator(userId);
+            tsdst03.setRecCreateName(userName);
+            tsdst03.setRecCreateTime(curDateTime);
+            tsdst03.setRecModifier(userId);
+            tsdst03.setRecModifyName(userName);
+            tsdst03.setRecModifyTime(curDateTime);
+            tsdst03.setDeleteFlag("0");
+            tsdst03.setCodeDesc("后台新增:"+tsdst03.getCodeCname());
+            int backInsert =tsdst03Mapper.insert(tsdst03);
+            eiINfo.setMessage(String.valueOf(backInsert));
+            if (backInsert==1){
+                eiINfo.setMessage("新增成功！");
+            }else {
+                eiINfo.setMessage("新增失败！");
+            }
+
+        }catch (Exception e){
+            eiINfo.setMessage("新增失败！"+e);
+        }
+        return tsdst03;
+    }
+
+
+    /**
+     * 得到后一个代码编号.
+     *
+     */
+    public String getverNo(String verNo){
+
+        int m = verNo.length();
+
+        int j = Integer.parseInt(verNo, 10);
+
+        j=j+1;
+
+        verNo = String.valueOf(j);
+
+        int n = verNo.length();
+
+        StringBuffer sb = new StringBuffer();
+
+        for(int i = 0;i<m-n;i++){
+
+            sb.append("0");
+
+        }
+        sb.append(verNo);
+
+        verNo = sb.toString();
+
+        return verNo;
     }
 }

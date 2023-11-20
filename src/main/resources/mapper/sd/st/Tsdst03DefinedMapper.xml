@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sd.sdhr.mapper.sd.st.Tsdst03DefinedMapper">
+
+    <!--查询最大的编号是多少-->
+    <select id="selectTsdst03ByMaxVerNo" resultType="java.util.HashMap">
+        select max(CODE_ENAME) AS codeEname from tsdst03 st03 where st03.CODE_NO = #{model.codeNo}
+    </select>
+
+
+
+</mapper>

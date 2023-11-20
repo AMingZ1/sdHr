@@ -155,40 +155,41 @@ public class Tsdhr03Controller {
         Tsdhr03 tsdhr03 = new Tsdhr03();
         try {
             String []   array= originName.split("_");
-            String memberName=array[0];//文件名称
-            String deptName=array[1];//文件名称
-            String itvJob=array[2].substring(0,array[2].lastIndexOf("."));//文件名称
-
-           /* String memberName=originName.substring(0,originName.indexOf("_"));//文件名称
-            String deptName=originName.substring(originName.indexOf("_")+1,
-
-                    originName.indexOf("_") );//文件名称
-            String itvJob=originName.substring(originName.lastIndexOf("_"),originName.lastIndexOf("."));//文件名称*/
+            String memberName=array[0];//人员姓名
+            String deptName=array[1];//部门
+            String itvJob=array[2];//岗位
+            String workYear=array[3].substring(0,array[3].lastIndexOf("."));//工作年限
 
             //生成tsdhr03表信息
             tsdhr03.setMemberName(memberName);//姓名
             //面试部门
             Tsdst03 dept = tsdst03Service.selectTsdst032("sdHr_deptName","",deptName);
             if(dept == null){
-                outINfo.setSuccess("-1");
-                outINfo.setMessage("导入人员附件失败，不存在:"+deptName+"这个部门，请输入正确的部门名称");
-                return outINfo;
+                Tsdst03 temp= new Tsdst03();
+                temp.setCodeCname(deptName);
+                temp.setCodeNo("sdHr_deptName");
+                dept = tsdst03Service.saveTsdst032(temp);
             }
             tsdhr03.setDeptName(dept.getCodeEname());
             //面试岗位
             Tsdst03 job = tsdst03Service.selectTsdst032("sdHr_jobName","",itvJob);
             if(job == null){
-                outINfo.setSuccess("-1");
-                outINfo.setMessage("导入人员附件失败，不存在:"+itvJob+"这个面试岗位，请输入正确的面试岗位名称");
-                return outINfo;
+                Tsdst03 temp= new Tsdst03();
+                temp.setCodeCname(itvJob);
+                temp.setCodeNo("sdHr_jobName");
+                job = tsdst03Service.saveTsdst032(temp);
             }
             tsdhr03.setItvJob(job.getCodeEname());
             tsdhr03.setArchiveReason("10");
             tsdhr03.setArchiveStatusbfr("08");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String curDateTime = formatter.format(new Date());
+            tsdhr03.setArchiveDate(curDateTime);
+            tsdhr03.setWorkYear(workYear);
         }catch (Exception e){
             log.error("新增人才库信息错误："+e);
             outINfo.setSuccess("-1");
-            outINfo.setMessage("新增人才库信息失败:文件格式错误：姓名-面试部门-面试岗位");
+            outINfo.setMessage("新增人才库信息失败:文件格式错误：姓名_面试部门_面试岗位_工作年限");
             return outINfo;
         }
 
@@ -243,4 +244,7 @@ public class Tsdhr03Controller {
         outINfo.setSuccess("1");
         return outINfo;
     }
+
+
+
 }
