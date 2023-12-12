@@ -90,43 +90,42 @@ public class Tsder01ServiceImpl implements Tsder01Service {
     @Transactional
     public EiINfo saveTsder01(Tsder01 tsder01)throws Exception {
         EiINfo eiINfo=new EiINfo();
-        if (! StringUtils.isEmpty(tsder01.getMemberId())){
-            throw new Exception("员工编号不为空无法新增！面试记录号："+tsder01.getMemberId());
-        }
-        //拿到当前年月日；
-        Calendar calendar = Calendar.getInstance();
-        // 获取当前年
-        String year = String.valueOf(calendar.get(Calendar.YEAR));
-        // 获取当前月
-        int month = calendar.get(Calendar.MONTH) + 1;
-        StringBuilder memberId=new StringBuilder("DSSH");
-        //查询当前生成流水号信息
-        int backNum=tsder01Mapper.queryCountByMemberIdLike(memberId.toString());
-        String serialNum= String.format("%04d", backNum+1);
-        memberId.append(serialNum);
-        tsder01.setMemberId(memberId.toString());
-        // 注入信息
-        Claims claims = JwtUtil.verifyJwt(request);
-        String userId = claims.get("userId").toString();
-        String userName =  claims.get("userName").toString();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String curDateTime = formatter.format(new Date());
-        tsder01.setRecCreator(userId);
-        tsder01.setRecCreateName(userName);
-        tsder01.setRecCreateTime(curDateTime);
-        tsder01.setRecModifier(userId);
-        tsder01.setRecModifyName(userName);
-        tsder01.setRecModifyTime(curDateTime);
-        tsder01.setDeleteFlag("0");
-        int backInsert =tsder01Mapper.insert(tsder01);
-        eiINfo.setMessage(String.valueOf(backInsert));
-        if (backInsert==1){
+        try {
+            if (! StringUtils.isEmpty(tsder01.getMemberId())){
+                throw new Exception("员工编号不为空无法新增！面试记录号："+tsder01.getMemberId());
+            }
+
+            //拿到当前年月日；
+            Calendar calendar = Calendar.getInstance();
+            // 获取当前年
+            String year = String.valueOf(calendar.get(Calendar.YEAR));
+            // 获取当前月
+            int month = calendar.get(Calendar.MONTH) + 1;
+            StringBuilder memberId=new StringBuilder("DSSH");
+            //查询当前生成流水号信息
+            int backNum=tsder01Mapper.queryCountByMemberIdLike(memberId.toString());
+            String serialNum= String.format("%05d", backNum+1);
+            memberId.append(serialNum);
+            tsder01.setMemberId(memberId.toString());
+            // 注入信息
+            Claims claims = JwtUtil.verifyJwt(request);
+            String userId = claims.get("userId").toString();
+            String userName =  claims.get("userName").toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String curDateTime = formatter.format(new Date());
+            tsder01.setRecCreator(userId);
+            tsder01.setRecCreateName(userName);
+            tsder01.setRecCreateTime(curDateTime);
+            tsder01.setRecModifier(userId);
+            tsder01.setRecModifyName(userName);
+            tsder01.setRecModifyTime(curDateTime);
+            tsder01.setDeleteFlag("0");
+            tsder01Mapper.insert(tsder01);
             eiINfo.setSuccess("1");
             eiINfo.setMessage("新增成功！");
-        }else {
-            throw new Exception("新增失败！");
+        } catch (Exception e) {
+            throw new Exception("新增失败！:"+e.getMessage());
         }
-
         return eiINfo;
     }
 
@@ -226,15 +225,22 @@ public class Tsder01ServiceImpl implements Tsder01Service {
     }
 
     @Override
+    @Transactional
     public EiINfo saveTsder01sByImp(List<Tsder01Upload> er01UploadS) throws Exception {
         EiINfo eiINfo=new EiINfo();
-        for (Tsder01Upload er01Upload:er01UploadS){
-            Tsder01 tsder01 = new Tsder01();
-            BeanUtils.copyProperties(er01Upload,tsder01);
-            this.saveTsder01(tsder01);
+        try{
+            for (Tsder01Upload er01Upload:er01UploadS){
+                Tsder01 tsder01 = new Tsder01();
+                BeanUtils.copyProperties(er01Upload,tsder01);
+                if(tsder01.getMemberName()!=null) {
+                    this.saveTsder01(tsder01);
+                }
+            }
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("导入人员信息成功！");
+        } catch (Exception e) {
+            throw new Exception("导入人员信息失败！:"+e.getMessage());
         }
-        eiINfo.setSuccess("1");
-        eiINfo.setMessage("导入信息成功！");
         return eiINfo;
     }
 }

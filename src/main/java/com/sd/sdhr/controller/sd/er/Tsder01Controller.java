@@ -116,18 +116,26 @@ public class Tsder01Controller {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public void importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
-        List<Tsder01Upload> list = EasyExcel.read(file.getInputStream())
-                .head(Tsder01Upload.class)
-                .sheet()
-                .doReadSync();
-        //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
-        // 往后端塞值
-        if (list==null || list.size()<1){
-            throw new Exception("导入会错！没有获取到导入清单信息！");
-        }
-        EiINfo eiINfo = tsder01Service.saveTsder01sByImp(list);
-    }
+    public Object importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
+        EiINfo outINfo = new EiINfo();
+        try {
+            List<Tsder01Upload> list = EasyExcel.read(file.getInputStream())
+                    .head(Tsder01Upload.class)
+                    .sheet()
+                    .doReadSync();
+            //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
+            // 往后端塞值
+            if (list==null || list.size()<1){
+                throw new Exception("导入出错！没有获取到导入清单信息！");
+            }
 
+            EiINfo eiINfo = tsder01Service.saveTsder01sByImp(list);
+            outINfo.setSuccess("1");
+        } catch (Exception e) {
+            outINfo.setSuccess("-1");
+            outINfo.setMessage(e.getMessage());
+        }
+        return outINfo;
+    }
 
 }

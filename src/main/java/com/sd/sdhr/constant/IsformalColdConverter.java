@@ -29,7 +29,9 @@ public class IsformalColdConverter implements Converter<String> {
         statusMap.put("01", "学士");
         statusMap.put("02", "硕士");
         statusMap.put("03", "博士");
-
+        statusMap.put("04", "专科");
+        statusMap.put("05", "本科");
+        statusMap.put("06", "无学位");
     }
 
 

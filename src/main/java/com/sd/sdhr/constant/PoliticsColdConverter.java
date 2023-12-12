@@ -32,6 +32,7 @@ public class PoliticsColdConverter implements Converter<String> {
         statusMap.put("A", "A型");
         statusMap.put("B", "B型");
         statusMap.put("AB", "AB型");
+        statusMap.put("NO", "未知");
         //婚姻状况
         statusMap.put("Y", "已婚");
         statusMap.put("N", "未婚");

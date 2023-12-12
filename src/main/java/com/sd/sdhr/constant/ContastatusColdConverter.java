@@ -23,11 +23,11 @@ public class ContastatusColdConverter implements Converter<String> {
     private static Map<String,String> statusMap = new HashMap();
     static {
         //
-        statusMap.put("10", "未联系");
-        statusMap.put("20", "已入选");
-        statusMap.put("30", "电联通过");
-        statusMap.put("40", "面试通过");
-        statusMap.put("50", "已关闭");
+        statusMap.put("10", "10-未联系");
+        statusMap.put("20", "20-已入选");
+        statusMap.put("30", "30-电联通过");
+        statusMap.put("40", "40-面试通过");
+        statusMap.put("50", "50-已关闭");
 
         statusMap.put("Y", "录用");
         statusMap.put("S", "电联通过");
