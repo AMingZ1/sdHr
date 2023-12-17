@@ -103,7 +103,7 @@ public class Tsder01ServiceImpl implements Tsder01Service {
             int month = calendar.get(Calendar.MONTH) + 1;
             StringBuilder memberId=new StringBuilder("DSSH");
             //查询当前生成流水号信息
-            int backNum=tsder01Mapper.queryCountByMemberIdLike(memberId.toString());
+            int backNum=tsder01Mapper.queryCountByMemberIdLike2(memberId.toString());
             String serialNum= String.format("%05d", backNum+1);
             memberId.append(serialNum);
             tsder01.setMemberId(memberId.toString());

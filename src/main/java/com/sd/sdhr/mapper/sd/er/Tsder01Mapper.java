@@ -9,6 +9,10 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface Tsder01Mapper extends BaseMapper<Tsder01> {
 
-    @Select("select ifnull(right(max(MEMBER_ID),4),0) row from tsder01  where MEMBER_ID like #{memberId}||'%' ")
+    @Select("select ifnull(right(max(MEMBER_ID),5),0) row from tsder01  where MEMBER_ID like #{memberId}||'%' ")
     int queryCountByMemberIdLike(@Param("memberId") String memberId);
+
+
+    @Select("select ifnull(right(max(MEMBER_ID),5),0) row from tsder01  where MEMBER_ID like 'DSSH%' ")
+    int queryCountByMemberIdLike2(@Param("memberId") String memberId);
 }

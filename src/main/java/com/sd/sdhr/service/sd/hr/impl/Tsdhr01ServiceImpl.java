@@ -225,7 +225,7 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
                 throw new Exception(i+1+"行,岗位名称为空! 无法导入");
             }
             if (StringUtils.isEmpty(tsdhr01Upload.getRequireNum().toString())){
-                throw new Exception(i+1+"行,希求数量为空! 无法导入");
+                throw new Exception(i+1+"行,需求数量为空! 无法导入");
             }
             if (StringUtils.isEmpty(tsdhr01Upload.getJobRequire())){
                 throw new Exception(i+1+"行,岗位需求为空! 无法导入");

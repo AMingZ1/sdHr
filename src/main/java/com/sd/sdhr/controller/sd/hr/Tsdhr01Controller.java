@@ -2,6 +2,7 @@ package com.sd.sdhr.controller.sd.hr;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.sd.sdhr.pojo.sd.er.common.Tsder01Upload;
 import com.sd.sdhr.pojo.sd.hr.Tsdhr01;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Export;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr01Request;
@@ -119,17 +120,27 @@ public class Tsdhr01Controller {
      */
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     @ResponseBody
-    public void importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
-        List<Tsdhr01Upload> list = EasyExcel.read(file.getInputStream())
-                .head(Tsdhr01Upload.class)
-                .sheet()
-                .doReadSync();
-        //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
-        // 往后端塞值
-        if (list==null || list.size()<1){
-            throw new Exception("导入会错！没有获取到导入清单信息！");
+    public Object importMemberList(@RequestPart("file") MultipartFile file) throws Exception {
+        EiINfo outINfo = new EiINfo();
+        try {
+
+            List<Tsdhr01Upload> list = EasyExcel.read(file.getInputStream())
+                    .head(Tsdhr01Upload.class)
+                    .sheet()
+                    .doReadSync();
+
+            //List<Tsdhr01Upload> list2 =EasyExcel.read(file.getInputStream(), Tsdhr01Upload.class, null).sheet(0).doReadSync();
+            // 往后端塞值
+            if (list==null || list.size()<1){
+                    throw new Exception("导入会错！没有获取到导入清单信息！");
+            }
+                EiINfo eiINfo = tsdhr01Service.saveTsdhr01sByImp(list);
+            outINfo.setSuccess("1");
+        }  catch (Exception e) {
+            outINfo.setSuccess("-1");
+            outINfo.setMessage(e.getMessage());
         }
-        EiINfo eiINfo = tsdhr01Service.saveTsdhr01sByImp(list);
+        return outINfo;
     }
 
 
