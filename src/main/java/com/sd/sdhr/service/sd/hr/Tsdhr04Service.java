@@ -21,6 +21,8 @@ public interface Tsdhr04Service {
 
     EiINfo saveTsdhr04(Tsdhr04 tsdhr04)throws Exception;
 
+    String saveTsdhr042(Tsdhr04 tsdhr04)throws Exception;
+
     EiINfo deleteTsdhr04ByMap(Tsdhr04 tsdhr04)throws Exception;
 
     EiINfo updateTsdhr04(Tsdhr04 tsdhr04)throws Exception;

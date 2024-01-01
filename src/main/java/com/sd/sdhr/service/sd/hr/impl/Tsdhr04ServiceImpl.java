@@ -292,4 +292,50 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
         tsdhr04Up.setRecModifyTime(curDateTime);
         tsdhr04Mapper.update(tsdhr04Up,wrapper);
     }
+
+
+    @Override
+    @Transactional
+    public String saveTsdhr042(Tsdhr04 tsdhr04) throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        if (!StringUtils.isEmpty(tsdhr04.getItvNo())){
+            throw new Exception("面试记录号不为空无法新增！面试记录号："+ tsdhr04.getItvNo());
+        }
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        // 获取当前月
+        int month = calendar.get(Calendar.MONTH) + 1;
+        StringBuilder itvNo=new StringBuilder();
+        String an=year.substring(year.length()-2);
+        itvNo=itvNo.append(an).append("C").append(month);
+        //查询当前生成流水号信息
+        int backNum= tsdhr04Mapper.queryCountByItvNoLike(itvNo.toString());
+        String serialNum= String.format("%04d", backNum+1);
+        itvNo.append(serialNum);
+        tsdhr04.setItvNo(itvNo.toString());
+        // 注入信息
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr04.setRecCreator(userId);
+        tsdhr04.setRecCreateName(userName);
+        tsdhr04.setRecCreateTime(curDateTime);
+        tsdhr04.setRecModifier(userId);
+        tsdhr04.setRecModifyName(userName);
+        tsdhr04.setRecModifyTime(curDateTime);
+        tsdhr04.setDeleteFlag("0");
+        int backInsert = tsdhr04Mapper.insert(tsdhr04);
+        eiINfo.setMessage(String.valueOf(backInsert));
+        if (backInsert==1){
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增成功！");
+        }else {
+            throw new Exception("insert返回出错！");
+        }
+        return itvNo.toString();
+    }
 }

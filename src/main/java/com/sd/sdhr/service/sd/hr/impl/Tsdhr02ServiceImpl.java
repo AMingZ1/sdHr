@@ -13,6 +13,7 @@ import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Request;
 import com.sd.sdhr.pojo.sd.hr.common.Tsdhr02Upload;
 import com.sd.sdhr.pojo.sd.hr.respomse.EiINfo;
 import com.sd.sdhr.service.common.JwtUtil;
+import com.sd.sdhr.service.sd.hr.Tsdhr01Service;
 import com.sd.sdhr.service.sd.hr.Tsdhr02Service;
 import com.sd.sdhr.service.sd.hr.Tsdhr04Service;
 import io.jsonwebtoken.Claims;
@@ -40,6 +41,9 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
     private Tsdhr01Mapper tsdhr01Mapper;
     @Autowired
     private Tsdhr04Service tsdhr04Service;
+
+    @Autowired
+    private Tsdhr01Service tsdhr01Service;
 
     @Autowired
     HttpServletRequest request; //通过注解获取一个request
@@ -165,6 +169,12 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
         tsdhr02.setRecModifyName(userName);
         tsdhr02.setRecModifyTime(curDateTime);
         tsdhr02.setDeleteFlag("0");
+        //部门，岗位
+        Tsdhr01 tsdhr01 = tsdhr01Service.queryTsdhr01ByReqNo(tsdhr02.getReqNo());
+        if(tsdhr01 != null){
+            tsdhr02.setDeptName(tsdhr01.getDeptName());
+            tsdhr02.setItvJob(tsdhr01.getItvJob());
+        }
         int backInsert =tsdhr02Mapper.insert(tsdhr02);
         eiINfo.setMessage(String.valueOf(backInsert));
         if (backInsert==1){
@@ -297,4 +307,66 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
         tsdhr04Service.saveTsdhr04(tsdhr04);
 
     }
+
+
+
+    @Override
+    @Transactional
+    public String saveTsdhr022(Tsdhr02 tsdhr02)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+        if (!StringUtils.isEmpty(tsdhr02.getPlanNo())){
+            throw new Exception("电联记录号不为空无法新增！面试记录号："+tsdhr02.getPlanNo());
+        }
+        //拿到当前年月日；
+        Calendar calendar = Calendar.getInstance();
+        // 获取当前年
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        // 获取当前月
+        int month = calendar.get(Calendar.MONTH) + 1;
+        StringBuilder planNo=new StringBuilder();
+        String an=year.substring(year.length()-2);
+        planNo=planNo.append(an).append("B").append(month);
+        //查询当前生成流水号信息
+        int backNum=tsdhr02Mapper.queryCountByPlanNoLike(planNo.toString());
+        String serialNum= String.format("%04d", backNum+1);
+        planNo.append(serialNum);
+        tsdhr02.setPlanNo(planNo.toString());
+        // 注入信息
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr02.setRecCreator(userId);
+        tsdhr02.setRecCreateName(userName);
+        tsdhr02.setRecCreateTime(curDateTime);
+        tsdhr02.setRecModifier(userId);
+        tsdhr02.setRecModifyName(userName);
+        tsdhr02.setRecModifyTime(curDateTime);
+        tsdhr02.setDeleteFlag("0");
+        //部门，岗位
+        Tsdhr01 tsdhr01 = tsdhr01Service.queryTsdhr01ByReqNo(tsdhr02.getReqNo());
+        if(tsdhr01 != null){
+            tsdhr02.setDeptName(tsdhr01.getDeptName());
+            tsdhr02.setItvJob(tsdhr01.getItvJob());
+        }
+
+        int backInsert =tsdhr02Mapper.insert(tsdhr02);
+        eiINfo.setMessage(String.valueOf(backInsert));
+        if (backInsert==1){
+            eiINfo.setSuccess("1");
+            eiINfo.setMessage("新增成功！");
+        }else {
+            throw new Exception("insert新增失败！");
+        }
+
+        return planNo.toString();
+    }
+
+
+    @Override
+    public Tsdhr02 queryTsdhr02ByPlanNo(String planNo) {
+        return tsdhr02Mapper.queryTsdhr02ByPlanNo(planNo);
+    }
+
 }

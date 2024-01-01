@@ -103,7 +103,7 @@ public class Tsdhr01  implements Serializable {
 	/**
 	 * 是否紧急
 	 */
-	@ExcelProperty(value = "是否紧急",index = 12)
+	@ExcelProperty(value = "是否紧急",index = 12,converter = OtherColdConverter.class)
 	private String isEme;
 
 	/**

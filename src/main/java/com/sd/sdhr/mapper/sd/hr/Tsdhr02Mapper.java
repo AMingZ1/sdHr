@@ -12,4 +12,8 @@ public interface Tsdhr02Mapper extends BaseMapper<Tsdhr02> {
 
     @Select("select ifnull(right(max(PLAN_NO),4),0) row from tsdhr02  where PLAN_NO like '%'||#{planNO}||'%' ")
     int queryCountByPlanNoLike(@Param("planNO") String planNO);
+
+
+    @Select("select * from tsdhr02  where PLAN_NO=#{planNo}")
+    Tsdhr02 queryTsdhr02ByPlanNo(@Param("planNo") String planNo);
 }
