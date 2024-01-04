@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -219,6 +220,8 @@ public class Tsdhr04Controller {
                 tsdhr04.setItvDept(tsdhr02.getDeptName());
                 tsdhr04.setItvJob(tsdhr02.getItvJob());
                 tsdhr04.setItvDate(tsdhr02.getItvDate());
+                tsdhr04.setTel(tsdhr02.getTel());
+                tsdhr04.setHopeSalary(new BigDecimal(tsdhr02.getHopeSalary()));
             }
             tsdhr04.setPlanNo(planNo);
 

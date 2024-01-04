@@ -224,6 +224,7 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
         tsdhr04Up.setEvaluation(tsdhr04.getEvaluation());
         tsdhr04Up.setHopeSalary(tsdhr04.getHopeSalary());
         tsdhr04Up.setEvaluation(tsdhr04.getEvaluation());
+        tsdhr04Up.setNowStatus(tsdhr04.getNowStatus());
         tsdhr04Up.setRemark(tsdhr04.getRemark());
 
         //
