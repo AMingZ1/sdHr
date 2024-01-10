@@ -14,4 +14,6 @@ public interface Tsdhr01Mapper extends BaseMapper<Tsdhr01> {
 
     @Select("select ifnull(right(max(REQ_NO),4),0) row from tsdhr01  where REQ_NO like '%'||#{reqNo}||'%' ")
     int queryCountByReqNoLike(@Param("reqNo") String reqNo);
+
+
 }

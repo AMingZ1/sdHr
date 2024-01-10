@@ -40,9 +40,29 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
     HttpServletRequest request; //通过注解获取一个request
 
     @Override
-    public List<Tsdhr01> getAllTsdhr01() {
-        List<Map<String, Object>> maps = tsdhr01Mapper.selectMaps(new QueryWrapper<>());
-        return tsdhr01Mapper.selectList(null);
+    public List<Tsdhr01> getAllTsdhr01(Tsdhr01Request tsdhr01) {
+        //模糊查询条件
+        QueryWrapper<Tsdhr01> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("Delete_Flag",tsdhr01.isQueryHis()?"1":"0");//true 只查历史
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getYear()),"YEAR",tsdhr01.getYear());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getDeptName()),"DEPT_NAME",tsdhr01.getDeptName());
+        queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getItvJob()),"ITV_JOB",tsdhr01.getItvJob());
+        queryWrapper.ge(!StringUtils.isEmpty(tsdhr01.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr01.getStartRecCreateTime());
+        queryWrapper.le(!StringUtils.isEmpty(tsdhr01.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr01.getEndRecCreateTime());
+
+        List<Tsdhr01> list=tsdhr01Mapper.selectList(queryWrapper);
+        //格式化数据
+        for(int i=0;i<list.size();i++){
+            list.get(i).setRecCreateTime(
+                    list.get(i).getRecCreateTime().substring(0,8) );
+
+            list.get(i).setPlanEndDate(
+                    list.get(i).getPlanEndDate().substring(0,4)+"/"+
+                            list.get(i).getPlanEndDate().substring(4,6)+"/"+
+                            list.get(i).getPlanEndDate().substring(6,8));
+        }
+
+        return list;
     }
 
     @Override
@@ -120,6 +140,11 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
             queryWrapper.like(!StringUtils.isEmpty(tsdhr01.getItvJob()),"ITV_JOB",tsdhr01.getItvJob());
             //queryWrapper.like(!tsdhr01.getReqNo().isEmpty(),"REQ_NO",tsdhr01.getReqNo());
 
+
+            queryWrapper.ge(!StringUtils.isEmpty(tsdhr01.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr01.getStartRecCreateTime());
+            queryWrapper.le(!StringUtils.isEmpty(tsdhr01.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr01.getEndRecCreateTime());
+
+
             //eiINfo.setPageNum(eiINfo.getPageNum()+1);
             PageHelper.startPage(tsdhr01.getPageNum(),tsdhr01.getPageSize());
             List<Tsdhr01> list=tsdhr01Mapper.selectList(queryWrapper);
@@ -127,6 +152,10 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
                 PageInfo pageInfo=new PageInfo(list);
                 eiINfo.setMessage("查询成功!");
                 eiINfo.setTotalNum(pageInfo.getTotal());
+            }
+            for(int i=0;i<list.size();i++){
+                list.get(i).setRecCreateTime(
+                        list.get(i).getRecCreateTime().substring(0,8) );
             }
             eiINfo.setData(list);
             eiINfo.setSuccess("1");
@@ -163,6 +192,33 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
         eiINfo.setSuccess("1");
         eiINfo.setMessage("删除成功！");
 
+        return eiINfo;
+    }
+
+    @Override
+    @Transactional
+    public EiINfo deleteTsdhr01ByReqNos(String reqNos) throws Exception {
+        EiINfo eiINfo=new EiINfo();
+
+        UpdateWrapper<Tsdhr01> wrapper  =new UpdateWrapper<>();;
+
+        String userName = (String) request.getSession().getAttribute("userName");
+        String userId = (String) request.getSession().getAttribute("userId");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+
+        String []   array= reqNos.split(",");
+        wrapper.in("REQ_NO",array);
+
+        Tsdhr01 tsdhr01Up =new Tsdhr01();;
+        tsdhr01Up.setDeleteFlag("1");
+        tsdhr01Up.setDeleteName(userName);
+        tsdhr01Up.setDeleter(userId);
+        tsdhr01Up.setDeleteTime(curDateTime);
+        tsdhr01Mapper.update(tsdhr01Up,wrapper);
+
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
         return eiINfo;
     }
 

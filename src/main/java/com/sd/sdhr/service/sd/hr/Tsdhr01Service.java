@@ -11,7 +11,7 @@ import java.util.Map;
 public interface Tsdhr01Service {
 
     //获得所有的岗位需求信息
-    List<Tsdhr01> getAllTsdhr01();
+    List<Tsdhr01> getAllTsdhr01(Tsdhr01Request tsdhr01Request);
 
     //获得所有的岗位需求信息
     List<Tsdhr01> queryExportAllTsdhr01(Tsdhr01Request tsdhr01Request);
@@ -32,6 +32,9 @@ public interface Tsdhr01Service {
     EiINfo getAllTsdhr01Test(Tsdhr01Request tsdhr01);
 
     EiINfo deleteTsdhr01ByMap(Tsdhr01 tsdhr01) throws Exception;
+
+    EiINfo deleteTsdhr01ByReqNos(String reqNos) throws Exception;
+
 
     // 修改一个岗位需求信息
     EiINfo updateTsdhr01(Tsdhr01 tsdhr01)throws Exception;

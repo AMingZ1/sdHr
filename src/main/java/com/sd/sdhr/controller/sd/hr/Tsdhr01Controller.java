@@ -81,13 +81,27 @@ public class Tsdhr01Controller {
         return outINfo;
     }
 
+    @RequestMapping(value = "/deletesSdhr01")
+    public Object deletesTsdhr01(@RequestBody  Tsdhr01 tsdhr01){
+        log.info("批量删除岗位信息："+tsdhr01.getReqNo());
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr01Service.deleteTsdhr01ByReqNos(tsdhr01.getReqNo());
+        }catch (Exception e){
+            log.error("批量删除岗位信息错误："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("操作失败！"+e.getMessage());
+        }
+        return outINfo;
+    }
+
     //导出
     @RequestMapping(value = "/export")
     public void exportTsdhrXls(Tsdhr01Request tsdhr01, HttpServletResponse response){
 
         try {
             //List<Tsdhr01> allTsdhr01 = tsdhr01Service.queryExportAllTsdhr01(tsdhr01);
-            List<Tsdhr01> allTsdhr01 = tsdhr01Service.getAllTsdhr01();
+            List<Tsdhr01> allTsdhr01 = tsdhr01Service.getAllTsdhr01(tsdhr01);
             //将User映射为导出的实体类
            /* List<Tsdhr01Export> tsdhr01ss=new ArrayList<>();
             for (Tsdhr01 thr01:allTsdhr01){
