@@ -118,6 +118,24 @@ public class Tsdhr04Controller {
         return outINfo;
     }
 
+    /**
+     * 批量删除面试测评信息.
+     * @param tsdhr04：面试测评对象
+     * @return
+     */
+    @RequestMapping(value = "/deletesSdhr04")
+    public Object deletesTsdhr04( Tsdhr04 tsdhr04){
+        log.info("删除面试测评信息："+tsdhr04);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr04Service.deleteTsdhr04ByItvNos(tsdhr04.getItvNo());
+        }catch (Exception e){
+            log.error("删除面试测评信息失败："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("删除面试测评信息失败:"+e.getMessage());
+        }
+        return outINfo;
+    }
 
     /**
      * 生成Offer信息.

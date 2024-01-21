@@ -49,6 +49,9 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
             queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveReason()),"ARCHIVE_REASON", tsdhr03.getArchiveReason());
             queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveStatusbfr()),"ARCHIVE_STATUSBFR", tsdhr03.getArchiveStatusbfr());
             queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getEducationBckr()),"EDUCATION_BCKR", tsdhr03.getEducationBckr());
+            queryWrapper.ge(!StringUtils.isEmpty(tsdhr03.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr03.getStartRecCreateTime());
+            queryWrapper.le(!StringUtils.isEmpty(tsdhr03.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr03.getEndRecCreateTime());
+
 
             PageHelper.startPage(tsdhr03.getPageNum(),tsdhr03.getPageSize());
             List<Tsdhr03> list= tsdhr03Mapper.selectList(queryWrapper);
@@ -78,10 +81,34 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
         queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveReason()),"ARCHIVE_REASON", tsdhr03.getArchiveReason());
         queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getArchiveStatusbfr()),"ARCHIVE_STATUSBFR", tsdhr03.getArchiveStatusbfr());
         queryWrapper.eq(!StringUtils.isEmpty(tsdhr03.getEducationBckr()),"EDUCATION_BCKR", tsdhr03.getEducationBckr());
+
+        queryWrapper.ge(!StringUtils.isEmpty(tsdhr03.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr03.getStartRecCreateTime());
+        queryWrapper.le(!StringUtils.isEmpty(tsdhr03.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr03.getEndRecCreateTime());
         List<Tsdhr03> list= tsdhr03Mapper.selectList(queryWrapper);
+
+        //格式化数据
+        for(int i=0;i<list.size();i++){
+            if(isNotEmpty(list.get(i).getArchiveDate())){
+                list.get(i).setArchiveDate(
+                        list.get(i).getArchiveDate().substring(0,4)+"/"+
+                                list.get(i).getArchiveDate().substring(4,6)+"/"+
+                                list.get(i).getArchiveDate().substring(6,8));
+            }
+
+        }
         return list;
     }
+    public static boolean isNotEmpty(String str) {
+        if(str == null ){
+            return false;
+        }
 
+        if(str.trim().length()  == 0 ){
+            return false;
+        }
+
+        return true;
+    }
     @Override
     public Tsdhr03 selectTsdhr03ById(Tsdhr03 tsdhr03) {
         return null;
@@ -179,6 +206,32 @@ public class Tsdhr03ServiceImpl implements Tsdhr03Service {
         return eiINfo;
     }
 
+    @Override
+    @Transactional
+    public EiINfo deleteTsdhr03ByMemberNos(String MemberNos)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+
+        UpdateWrapper<Tsdhr03> wrapper=new UpdateWrapper<>();
+        String []   array= MemberNos.split(",");
+        wrapper.in("MEMBER_NO",array);
+
+
+        Tsdhr03 tsdhr03Up =new Tsdhr03();
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr03Up.setDeleteFlag("1");
+        tsdhr03Up.setDeleteName(userName);
+        tsdhr03Up.setDeleter(userId);
+        tsdhr03Up.setDeleteTime(curDateTime);
+        tsdhr03Mapper.update(tsdhr03Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
+
+        return eiINfo;
+    }
     @Override
     @Transactional
     public EiINfo updateTsdhr03(Tsdhr03 tsdhr03)throws Exception {

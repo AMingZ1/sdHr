@@ -101,6 +101,20 @@ public class Tsdhr02Controller {
         return outINfo;
     }
 
+    @RequestMapping(value = "/deletesSdhr02")
+    public Object deletesTsdhr02( Tsdhr02 tsdhr02){
+        log.info("删除电联信息："+tsdhr02);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr02Service.deleteTsdhr02ByPlanNos(tsdhr02.getPlanNo());
+        }catch (Exception e){
+            log.error("删除电联信息错误："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("删除操作失败！"+e.getMessage());
+        }
+        return outINfo;
+    }
+
     //导出
     @RequestMapping(value = "/export")
     public void exportTsdhrXls(Tsdhr02Request tsdhr02, HttpServletResponse response){

@@ -81,8 +81,14 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
             if (contactStatusList.size()>0){
                 queryWrapper.in(!StringUtils.isEmpty(tsdhr02.getContactStatus()),"CONTACT_STATUS",contactStatusList);
             }
+            queryWrapper.ge(!StringUtils.isEmpty(tsdhr02.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr02.getStartRecCreateTime());
+            queryWrapper.le(!StringUtils.isEmpty(tsdhr02.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr02.getEndRecCreateTime());
+
+
             PageHelper.startPage(tsdhr02.getPageNum(),tsdhr02.getPageSize());
             List<Tsdhr02> list=tsdhr02Mapper.selectList(queryWrapper);
+
+
             if (!CollectionUtils.isEmpty(list)){
                 PageInfo pageInfo=new PageInfo(list);
                 eiINfo.setTotalNum(pageInfo.getTotal());
@@ -126,10 +132,53 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
         if (contactStatusList.size()>0){
             queryWrapper.in(!StringUtils.isEmpty(tsdhr02.getContactStatus()),"CONTACT_STATUS",contactStatusList);
         }
+        queryWrapper.ge(!StringUtils.isEmpty(tsdhr02.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr02.getStartRecCreateTime());
+        queryWrapper.le(!StringUtils.isEmpty(tsdhr02.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr02.getEndRecCreateTime());
+
         List<Tsdhr02> list=tsdhr02Mapper.selectList(queryWrapper);
+
+        //格式化数据
+        for(int i=0;i<list.size();i++){
+            //联系时间
+            if(isNotEmpty(list.get(i).getContactDate())){
+                list.get(i).setContactDate(
+                        list.get(i).getContactDate().substring(0,4)+"/"+
+                                list.get(i).getContactDate().substring(4,6)+"/"+
+                                list.get(i).getContactDate().substring(6,8));
+            }
+            //面试时间
+            if(isNotEmpty(list.get(i).getItvDate())){
+                list.get(i).setItvDate(
+                        list.get(i).getItvDate().substring(0,4)+"/"+
+                                list.get(i).getItvDate().substring(4,6)+"/"+
+                                list.get(i).getItvDate().substring(6,8));
+            }
+            //预计到岗时间
+            if(isNotEmpty(list.get(i).getArrivalDate())){
+                list.get(i).setArrivalDate(
+                        list.get(i).getArrivalDate().substring(0,4)+"/"+
+                                list.get(i).getArrivalDate().substring(4,6)+"/"+
+                                list.get(i).getArrivalDate().substring(6,8));
+            }
+
+        }
+
+
+
         return list;
     }
 
+    public static boolean isNotEmpty(String str) {
+        if(str == null ){
+            return false;
+        }
+
+        if(str.trim().length()  == 0 ){
+            return false;
+        }
+
+        return true;
+    }
     @Override
     public Tsdhr02 selectTsdhr02ById(Tsdhr02 tsdhr02) {
         return tsdhr02Mapper.selectById(tsdhr02.getPlanNo());
@@ -212,6 +261,37 @@ public class Tsdhr02ServiceImpl implements Tsdhr02Service {
 
         return eiINfo;
     }
+
+
+    @Override
+    @Transactional
+    public EiINfo deleteTsdhr02ByPlanNos(String planNos)throws Exception {
+        EiINfo eiINfo=new EiINfo();
+
+        UpdateWrapper<Tsdhr02> wrapper=new UpdateWrapper<>();
+        String []   array= planNos.split(",");
+        wrapper.in("PLAN_NO",array);
+
+
+        Tsdhr02 tsdhr02Up=new Tsdhr02();
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr02Up.setDeleteFlag("1");
+        tsdhr02Up.setDeleteName(userName);
+        tsdhr02Up.setDeleter(userId);
+        tsdhr02Up.setDeleteTime(curDateTime);
+
+        tsdhr02Mapper.update(tsdhr02Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
+        return eiINfo;
+    }
+
+
+
 
     @Override
     @Transactional

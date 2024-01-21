@@ -26,6 +26,9 @@ public interface Tsdhr02Service {
 
     EiINfo deleteTsdhr02ByMap(Tsdhr02 tsdhr02)throws Exception;
 
+    EiINfo deleteTsdhr02ByPlanNos(String planNos)throws Exception;
+
+
     EiINfo updateTsdhr02(Tsdhr02 tsdhr02)throws Exception;
 
     // 生成人才库数据

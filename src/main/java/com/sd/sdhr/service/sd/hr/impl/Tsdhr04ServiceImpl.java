@@ -57,13 +57,20 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
             //模糊查询条件
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME", tsdhr04.getMemberName());
-            queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
             queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
             queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getItvStatus()),"ITV_STATUS", tsdhr04.getItvStatus());
             queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getNowStatus()),"NOW_STATUS", tsdhr04.getNowStatus());
 
+            queryWrapper.ge(!StringUtils.isEmpty(tsdhr04.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr04.getStartRecCreateTime());
+            queryWrapper.le(!StringUtils.isEmpty(tsdhr04.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr04.getEndRecCreateTime());
+            queryWrapper.ge(!StringUtils.isEmpty(tsdhr04.getStartItvDate()),"LEFT(ITV_DATE,8)",tsdhr04.getStartItvDate());
+            queryWrapper.le(!StringUtils.isEmpty(tsdhr04.getEndItvDate()),"LEFT(ITV_DATE,8)",tsdhr04.getEndItvDate());
+
+
             PageHelper.startPage(tsdhr04.getPageNum(),tsdhr04.getPageSize());
             List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
+
+
             if (!CollectionUtils.isEmpty(list)){
                 PageInfo pageInfo=new PageInfo(list);
                 eiINfo.setTotalNum(pageInfo.getTotal());
@@ -91,12 +98,57 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
         //模糊查询条件
         queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvNo()),"ITV_NO", tsdhr04.getItvNo());
         queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getMemberName()),"MEMBER_NAME", tsdhr04.getMemberName());
-        queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvDept()),"ITV_DEPT", tsdhr04.getItvDept());
         queryWrapper.like(!StringUtils.isEmpty(tsdhr04.getItvJob()),"ITV_JOB", tsdhr04.getItvJob());
         queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getItvStatus()),"ITV_STATUS", tsdhr04.getItvStatus());
         queryWrapper.eq(!StringUtils.isEmpty(tsdhr04.getNowStatus()),"NOW_STATUS", tsdhr04.getNowStatus());
+        queryWrapper.ge(!StringUtils.isEmpty(tsdhr04.getStartRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr04.getStartRecCreateTime());
+        queryWrapper.le(!StringUtils.isEmpty(tsdhr04.getEndRecCreateTime()),"LEFT(REC_CREATE_TIME,8)",tsdhr04.getEndRecCreateTime());
+        queryWrapper.ge(!StringUtils.isEmpty(tsdhr04.getStartItvDate()),"LEFT(ITV_DATE,8)",tsdhr04.getStartItvDate());
+        queryWrapper.le(!StringUtils.isEmpty(tsdhr04.getEndItvDate()),"LEFT(ITV_DATE,8)",tsdhr04.getEndItvDate());
+
         List<Tsdhr04> list= tsdhr04Mapper.selectList(queryWrapper);
+
+        //格式化数据
+        for(int i=0;i<list.size();i++){
+            //创建时间
+            if(isNotEmpty(list.get(i).getRecCreateTime())){
+                list.get(i).setRecCreateTime(
+                        list.get(i).getRecCreateTime().substring(0,4)+"/"+
+                                list.get(i).getRecCreateTime().substring(4,6)+"/"+
+                                list.get(i).getRecCreateTime().substring(6,8));
+            }
+
+            //面试时间
+            if(isNotEmpty(list.get(i).getItvDate())){
+                list.get(i).setItvDate(
+                        list.get(i).getItvDate().substring(0,4)+"/"+
+                                list.get(i).getItvDate().substring(4,6)+"/"+
+                                list.get(i).getItvDate().substring(6,8));
+            }
+
+            //报道时间
+            if(isNotEmpty(list.get(i).getArrivalDate())){
+                list.get(i).setArrivalDate(
+                        list.get(i).getArrivalDate().substring(0,4)+"/"+
+                                list.get(i).getArrivalDate().substring(4,6)+"/"+
+                                list.get(i).getArrivalDate().substring(6,8));
+            }
+
+        }
+
         return list;
+    }
+
+    public static boolean isNotEmpty(String str) {
+        if(str == null ){
+            return false;
+        }
+
+        if(str.trim().length()  == 0 ){
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -189,6 +241,35 @@ public class Tsdhr04ServiceImpl implements Tsdhr04Service {
 
         return eiINfo;
     }
+
+    @Override
+    @Transactional
+    public EiINfo deleteTsdhr04ByItvNos(String itvNos)throws Exception {
+
+        EiINfo eiINfo=new EiINfo();
+
+        UpdateWrapper<Tsdhr04> wrapper=new UpdateWrapper<>();
+        String []   array= itvNos.split(",");
+        wrapper.in("ITV_NO",array);
+
+
+        Tsdhr04 tsdhr04Up =new Tsdhr04();
+        Claims claims = JwtUtil.verifyJwt(request);
+        String userId = claims.get("userId").toString();
+        String userName =  claims.get("userName").toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String curDateTime = formatter.format(new Date());
+        tsdhr04Up.setDeleteFlag("1");
+        tsdhr04Up.setDeleteName(userName);
+        tsdhr04Up.setDeleter(userId);
+        tsdhr04Up.setDeleteTime(curDateTime);
+        tsdhr04Mapper.update(tsdhr04Up,wrapper);
+        eiINfo.setSuccess("1");
+        eiINfo.setMessage("删除成功！");
+
+        return eiINfo;
+    }
+
 
     @Override
     @Transactional

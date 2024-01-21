@@ -27,6 +27,9 @@ public interface Tsdhr03Service {
 
     EiINfo deleteTsdhr03ByMap(Tsdhr03 tsdhr03)throws Exception;
 
+    EiINfo deleteTsdhr03ByMemberNos(String MemberNos)throws Exception;
+
+
     EiINfo updateTsdhr03(Tsdhr03 tsdhr03)throws Exception;
 
     String saveTsdhr032(Tsdhr03 tsdhr03)throws Exception;

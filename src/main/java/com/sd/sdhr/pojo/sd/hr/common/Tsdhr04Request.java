@@ -12,4 +12,23 @@ public class Tsdhr04Request extends Tsdhr04 {
     private int  pageSize=10;
 
     private int pageNum=1;
+
+    /**
+     * 创建时间
+     */
+    private String startRecCreateTime;
+    /**
+     * 创建时间
+     */
+    private String endRecCreateTime;
+
+
+    /**
+     * 面试时间
+     */
+    private String startItvDate;
+    /**
+     * 面试时间
+     */
+    private String endItvDate;
 }

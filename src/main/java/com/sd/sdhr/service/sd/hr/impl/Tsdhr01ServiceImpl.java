@@ -53,16 +53,27 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
         List<Tsdhr01> list=tsdhr01Mapper.selectList(queryWrapper);
         //格式化数据
         for(int i=0;i<list.size();i++){
-            list.get(i).setRecCreateTime(
-                    list.get(i).getRecCreateTime().substring(0,8) );
-
-            list.get(i).setPlanEndDate(
-                    list.get(i).getPlanEndDate().substring(0,4)+"/"+
-                            list.get(i).getPlanEndDate().substring(4,6)+"/"+
-                            list.get(i).getPlanEndDate().substring(6,8));
+            if(isNotEmpty(list.get(i).getPlanEndDate())){
+                list.get(i).setPlanEndDate(
+                        list.get(i).getPlanEndDate().substring(0,4)+"/"+
+                                list.get(i).getPlanEndDate().substring(4,6)+"/"+
+                                list.get(i).getPlanEndDate().substring(6,8));
+            }
         }
 
         return list;
+    }
+
+    public static boolean isNotEmpty(String str) {
+        if(str == null ){
+            return false;
+        }
+
+        if(str.trim().length()  == 0 ){
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -152,10 +163,6 @@ public class Tsdhr01ServiceImpl implements Tsdhr01Service {
                 PageInfo pageInfo=new PageInfo(list);
                 eiINfo.setMessage("查询成功!");
                 eiINfo.setTotalNum(pageInfo.getTotal());
-            }
-            for(int i=0;i<list.size();i++){
-                list.get(i).setRecCreateTime(
-                        list.get(i).getRecCreateTime().substring(0,8) );
             }
             eiINfo.setData(list);
             eiINfo.setSuccess("1");

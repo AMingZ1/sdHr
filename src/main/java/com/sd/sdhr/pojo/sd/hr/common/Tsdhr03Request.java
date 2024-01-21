@@ -12,4 +12,14 @@ public class Tsdhr03Request extends Tsdhr03 {
     private int  pageSize=10;
 
     private int pageNum=1;
+
+    /**
+     * 创建时间
+     */
+    private String startRecCreateTime;
+    /**
+     * 创建时间
+     */
+    private String endRecCreateTime;
+
 }

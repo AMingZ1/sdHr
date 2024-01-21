@@ -98,6 +98,20 @@ public class Tsdhr03Controller {
         return outINfo;
     }
 
+    @RequestMapping(value = "/deletesSdhr03")
+    public Object deletesTsdhr03(@RequestBody Tsdhr03 tsdhr03){
+        log.info("删除人才库信息："+tsdhr03);
+        EiINfo outINfo = new EiINfo();
+        try {
+            outINfo=tsdhr03Service.deleteTsdhr03ByMemberNos(tsdhr03.getMemberNo());
+        }catch (Exception e){
+            log.error("删除人才库信息错误："+e);
+            outINfo.setSuccess("-1");
+            outINfo.setMessage("删除人才库信息失败:"+e.getMessage());
+        }
+        return outINfo;
+    }
+
     //导出
     @RequestMapping(value = "/export")
     public void exportTsdhrXls(Tsdhr03Request tsdhr03, HttpServletResponse response){
